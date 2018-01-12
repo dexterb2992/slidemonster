@@ -15,6 +15,10 @@ class CreateSlidesTable extends Migration
     {
         Schema::create('slides', function (Blueprint $table) {
             $table->increments('id');
+            
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->string('title');
             $table->text('content');
             $table->string('type')->comment('adcontent, optin, social');
@@ -23,7 +27,7 @@ class CreateSlidesTable extends Migration
             $table->string('border_color')->nullable();
             $table->string('background_color')->nullable();
             $table->text('background_image')->nullable();
-            
+
             /* opt-in attributes */
             $table->text('autoresponder_code')->nullable()->comment('opt-in attributes');
             $table->string('name')->nullable()->comment('opt-in attributes');

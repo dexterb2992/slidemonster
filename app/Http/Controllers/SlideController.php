@@ -24,7 +24,10 @@ class SlideController extends Controller
      */
     public function create()
     {
-        //
+        return [
+            'success' => 1,
+            'form' => Slide::form()
+        ];
     }
 
     /**

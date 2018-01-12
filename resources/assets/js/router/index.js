@@ -1,14 +1,15 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
-import Login from '../views/Auth/Login.vue'
-import Register from '../views/Auth/Register.vue'
-import NotFound from '../views/NotFound.vue'
-import VideoIntroIndex from '../views/VideoIntro/Index.vue'
-import VideoIntroForm from '../views/VideoIntro/Form.vue'
-import Profile from '../views/Profile.vue'
+import Login from '../views/Auth/Login.vue';
+import Register from '../views/Auth/Register.vue';
+import NotFound from '../views/NotFound.vue';
+import VideoIntroIndex from '../views/VideoIntro/Index.vue';
+import VideoIntroForm from '../views/VideoIntro/Form.vue';
+import Profile from '../views/Profile.vue';
+import SlideForm from '../views/Slide/Form.vue';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const router = new VueRouter({
 	mode: 'history',
@@ -17,6 +18,9 @@ const router = new VueRouter({
 		{ path: '/video-intros/create', component: VideoIntroForm, meta: { mode: 'create' } },
 		{ path: '/video-intros/:id/edit', component: VideoIntroForm, meta: { mode: 'edit' } },
 		{ path: '/video-intros/:id' },
+
+		{ path: '/slides/create', component: SlideForm, meta: { mode: 'create' } },
+
 		{ path: '/', component: VideoIntroIndex },
 		{ path: '/register', component: Register },
 		{ path: '/login', component: Login },
@@ -24,6 +28,6 @@ const router = new VueRouter({
 		{ path: '/not-found', component: NotFound },
 		{ path: '*', component: NotFound },
 	]
-})
+});
 
 export default router

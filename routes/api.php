@@ -7,3 +7,7 @@ Route::get('profile', 'UserController@index')->middleware('auth:api');
 Route::post('profile', 'UserController@update')->middleware('auth:api');
 Route::resource('video-intros', 'VideoIntroController')
     ->middleware('auth:api');
+
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('slides/form', 'SlideController@create');
+});

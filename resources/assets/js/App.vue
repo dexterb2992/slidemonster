@@ -36,7 +36,7 @@
                         </li>
                         
                         <li class="nav-item"  v-if="auth">
-                            <router-link to="/video-intros/create" class="nav-link">Add new</router-link>
+                            <router-link to="/slides/create" class="nav-link">Add new</router-link>
                         </li>
 
                         <li class="nav-item" v-if="auth">
@@ -79,7 +79,8 @@
                     </button>
                 </div>
             </div>
-			<router-view></router-view>
+
+            <router-view></router-view>
 		</div>
 		
 	</div>
