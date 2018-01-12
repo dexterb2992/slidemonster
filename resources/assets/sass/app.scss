@@ -1,0 +1,45 @@
+@import 'now-ui-kit.scss';
+
+.error-control, .error__control {
+    color: $danger-color;
+    font-size: 80%;
+}
+
+.error {
+    &__control {
+        color: $danger-color;
+        font-weight: bold;
+    }
+    &__bg {
+        background: #ffcdd2!important;
+    }
+}
+
+.btn-see-in-action {
+    margin-left: 14px;
+    margin-top: 20px;
+    text-transform: capitalize;
+}
+
+.flash {
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 2px;
+}
+
+.not__found {
+    box-shadow: rgba(0, 0, 0, 0.09) 0 1px 0;
+    background: #fff;
+    padding: 15px;
+    width: 960px;
+    margin: 30px auto;
+}
+
+.login-page {
+    .checkbox label::after {
+        color: #ffffff80;
+    }
+}
