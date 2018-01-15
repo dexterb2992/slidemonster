@@ -30,7 +30,67 @@
 </head>
 
 <body class="sidebar-collapse">
-    @yield('content')
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-primary fixed-top">
+        <div class="container">
+            <div class="dropdown button-dropdown">
+                <a href="#slide-monster" class="dropdown-toggle" id="navbarDropdown" data-toggle="{{ auth()->check() ? 'dropdown' : '' }}">
+                    <span class="button-bar"></span>
+                    <span class="button-bar"></span>
+                    <span class="button-bar"></span>
+                </a>
+                @if(auth()->check())
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-header">{{ auth()->user()->name }}</a>
+                    <a href="profile" class="dropdown-item">Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="nav-link" href="api/logout"><i class="fa fa-sign-out"></i> Logout</a>
+                </div>
+                @endif
+            </div>
+            <div class="navbar-translate">
+                <a href="navbar-brand" href="{{ env('VUE_BASE_URL') }}">{{ env('APP_NAME') }}</a>
+                <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar bar1"></span>
+                    <span class="navbar-toggler-bar bar2"></span>
+                    <span class="navbar-toggler-bar bar3"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse justify-content-end" id="navigation" data-nav-image="img/blurred-image-1.jpg">
+                <ul class="navbar-nav">
+                @guest
+                    <li v-if="guest" class="nav-item">
+                        <a href="login" class="nav-link">Login</a>
+                    </li>
+                    <li v-if="guest" class="nav-item">
+                        <a href="register" class="nav-link">Register</a>
+                    </li>
+                @endguest
+                
+                @if(auth()->check())
+                    <li class="nav-item">
+                        <a href="slides/create" class="nav-link">Add new</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="register" class="nav-link">Profile</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="api/logout"><i class="fa fa-sign-out"></i> Logout</a>
+                    </li>
+                @endif
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navbar -->
+    
+    <div class="wrapper">
+   
+        @yield('content')
+        @yield('scripts')
+    </div>
 </body>
 <!--   Core JS Files   -->
 <script src="{{ asset('js/core/jquery.3.2.1.min.js') }}"></script>

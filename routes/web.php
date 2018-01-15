@@ -1,7 +1,6 @@
 <?php
 Route::get('try', function () {
-    $form = new App\Slide;
-    dd($form);
+    return view('auth.passwords.reset')->withToken('asdsad');
 });
 
 // Password reset routes

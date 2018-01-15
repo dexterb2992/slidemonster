@@ -13,7 +13,7 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon">
-                                            <i class="now-ui-icons users_circle-08"></i>
+                                            <i class="fa fa-user-circle"></i>
                                         </span>
                                         <input id="name" type="text" placeholder="Name" class="form-control"  v-model="form.name">
                                     </div>
