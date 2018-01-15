@@ -56,7 +56,7 @@ export function showErrorMsg(msg, headingTxt, timeout, position) {
     $.toast({
         heading: typeof (headingTxt) != 'undefined' ? headingTxt : 'Error',
         text: msg,
-        position: typeof (positioln) != 'undefined'? position : globalPosition,
+        position: typeof (positioln) != 'undefined'? position : toastPosition,
         bgColor: '#ff3636cc',
         icon: 'error',
         hideAfter: timeout
@@ -71,7 +71,7 @@ export function showInfoMsg(msg, headingTxt, timeout, position) {
     $.toast({
         heading: typeof (headingTxt) != 'undefined' ? headingTxt : 'Information',
         text: msg,
-        position: typeof (positioln) != 'undefined'? position : globalPosition,
+        position: typeof (positioln) != 'undefined'? position : toastPosition,
         bgColor: '#56b9ff',
         icon: 'info',
         hideAfter: timeout
@@ -86,7 +86,7 @@ export function showWarningMsg(msg, headingTxt, timeout, position) {
     $.toast({
         heading: typeof (headingTxt) != 'undefined' ? headingTxt : 'Success',
         text: msg,
-        position: typeof (positioln) != 'undefined'? position : globalPosition,
+        position: typeof (positioln) != 'undefined'? position : toastPosition,
         bgColor: '#ffc15e',
         icon: 'warning',
         hideAfter: timeout

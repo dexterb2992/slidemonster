@@ -1,52 +1,55 @@
 <template>
-    <div>
+    <div class="slide-form-wrapper">
         <div class="container">
-            <form>
+            <form class="">
                 <div class="section">
-                    <div class="form-group">
-                        <label>Title</label>
-                        <input type="text" v-model="form.title" class="form-control">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label class="col">Title</label>
+                            <input type="text" v-model="form.title" class="form-control col" placeholder="Title">
+                        </div>
+                        <div class="form-group col">
+                            <label class="col">Type</label>
+                            <select v-model="form.type" class="form-control col">
+                                <option v-for="(type, key) in types" :key="key" :value="key">{{ type }}</option>
+                            </select>
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label>Content</label>
-                        <textarea v-model="form.content" class="form-control"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Type</label>
-                        <select v-model="form.type" class="form-control">
-                            <option v-for="(type, key) in types" :key="key" :value="key">{{ type }}</option>
-                        </select>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label>Content</label>
+                            <textarea v-model="form.content" class="form-control" placeholder="Add your content..."></textarea>
+                        </div>
                     </div>
                 </div>
 
                 <div class="section">
                     <legend>Design</legend>
-                    <div class="form-group">
-                        <label>Border</label>
-                        <div class="row">
-                            <div class="col">
-                                Width: 
-                                <div class="input-group">
-                                    <input type="text" v-model="form.border_width" class="form-control">
-                                    <div class="input-group-addon">
-                                        <div class="input-group-text">px</div>
-                                    </div>
+                    <h5>Border</h5>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label class="col">Width: </label>
+                            <div class="input-group col">
+                                <input type="text" v-model="form.border_width" class="form-control" placeholder="Border width">
+                                <div class="input-group-addon">
+                                    <div class="input-group-text">px</div>
                                 </div>
                             </div>
-                            
-                            <div class="col">
-                                Style: 
-                                <select class="form-control" v-model="form.border_style">
-                                    <option v-for="(borderStyle, key) in borderStyles" :key="key" :value="key">
-                                        {{ borderStyle }}
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="col">
-                                Color:
-                                <input type="color" class="form-control" v-model="form.border_color">
+                        </div>
+                        <div class="form-group col">
+                            <label class="col">Style</label>
+                            <select class="form-control col" v-model="form.border_style">
+                                <option disabled>Border Style</option>
+                                <option v-for="(borderStyle, key) in borderStyles" :key="key" :value="key">
+                                    {{ borderStyle }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col">
+                            <label class="col">Color: </label>
+                            <div id="border_color" class="input-group colorpicker-component">
+                                <input type="text" class="form-control" placeholder="Border color" />
+                                <span class="input-group-addon"><i></i></span>
                             </div>
                         </div>
                     </div>
@@ -55,13 +58,17 @@
                             Choose a background color, Or choose a background image...
                         </label>
                         <div class="row">
-                            <div class="col">
-                                <input class="form-control" type="color" v-model="form.background_color">
+                            <div class="col-md-3">
+                                <div id="background_color" class="input-group colorpicker-component">
+                                    <input type="text" class="form-control" placeholder="Background color" />
+                                    <span class="input-group-addon"><i></i></span>
+                                </div>
+
                             </div>
                             <div class="col">
-                                <span v-for="(backgroundImage, key) in backgroundImages" :key="key">
-                                    <input class="form-control" :value="key" v-model="form.background_image">
-                                    {{ backgroundImage }}
+                                <span v-for="(backgroundImage, key) in backgroundImages" :key="key" class="radio col">
+                                    <input type="radio" class="form-control" :id="'rad_'+key" :value="key" v-model="form.background_image">
+                                    <label :for="'rad_'+key">{{ backgroundImage }}</label>
                                 </span>
                             </div>
                         </div>
@@ -72,50 +79,50 @@
                     <legend>Optin</legend>
 
                     <div class="form-group row">
-                        <label class="col-md-4">Paste Your Autoresponder Code</label>
-                        <textarea class="form-control col-md-8" v-model="form.autoresponder_code"></textarea>
+                        <label class="col">Paste Your Autoresponder Code</label>
+                        <textarea class="form-control" v-model="form.autoresponder_code"></textarea>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-md-4">Name Field</label>
-                        <input type="text" class="form-control col-md-8" v-model="form.name">
+                        <label class="col">Name Field</label>
+                        <input type="text" class="form-control" v-model="form.name">
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-4">Email Field</label>
-                        <input type="text" class="form-control col-md-8" v-model="form.email">
+                        <label class="col">Email Field</label>
+                        <input type="text" class="form-control" v-model="form.email">
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-4">AR Post URL</label>
-                        <input type="text" class="form-control col-md-8" v-model="form.post_url">
+                        <label class="col">AR Post URL</label>
+                        <input type="text" class="form-control" v-model="form.post_url">
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-4">Hidden Fields</label>
-                        <textarea class="form-control col-md-8" v-model="form.hidden_fields"></textarea>
+                        <label class="col">Hidden Fields</label>
+                        <textarea class="form-control" v-model="form.hidden_fields"></textarea>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-4">Name Field Label</label>
-                        <div class="col-md-8">
+                        <label class="col">Name Field Label</label>
+                        <div class="col">
                             <input type="text" class="form-control" v-model="form.name_label">
                             <small class="help-text">Text that appears in the name field</small>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-4">Email Field Label</label>
-                        <div class="col-md-8">
+                        <label class="col">Email Field Label</label>
+                        <div class="col">
                             <input type="text" class="form-control" v-model="form.email_label">
                             <small class="help-text">Text that appears in the email field</small>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-4">Button Label</label>
-                        <div class="col-md-8">
+                        <label class="col">Button Label</label>
+                        <div class="col">
                             <input type="text" class="form-control" v-model="form.button_label">
                             <small class="help-text">Text that appears in the button</small>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-md-4">Submit Button Color</label>
+                        <label class="col">Submit Button Color</label>
                         <div v-for="(buttonColor, key) in buttonColors" :key="key" class="col-md-8">
                             <a :class="'btn '+buttonColor">{{ key }}</a>
                             <input type="radio" class="form-control" v-model="form.button_color" :value="key">
@@ -123,9 +130,9 @@
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-md-4">Button Style</label>
-                        <div v-for="(buttonStyle, key) in buttonStyles" :key="key" class="col-md-8">
-                            <a :class="'btn '+buttonStyle">{{ key }}</a>
+                        <label class="col">Button Style</label>
+                        <div v-for="(buttonStyle, key) in buttonStyles" :key="key" class="col">
+                            <a :class="'btn '+buttonStyle" @click="form.button_color = key">{{ key }}</a>
                             <input type="radio" class="form-control" v-model="form.button_color" :value="key">
                         </div>
                     </div>
@@ -135,34 +142,34 @@
                     <legend>Social</legend>
                     <small class="help">Enter your social profile URL. Leave empty to disable.</small>
 
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label class="col-md-4">Twitter</label>
-                        <input type="url" class="form-control col-md-8" v-model="form.twitter">
+                        <input type="url" class="form-control" v-model="form.twitter">
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label class="col-md-4">Facebook</label>
-                        <input type="url" class="form-control col-md-8" v-model="form.facebook">
+                        <input type="url" class="form-control" v-model="form.facebook">
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label class="col-md-4">Pinterest</label>
-                        <input type="url" class="form-control col-md-8" v-model="form.pinterest">
+                        <input type="url" class="form-control" v-model="form.pinterest">
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label class="col-md-4">LinkedIn</label>
-                        <input type="url" class="form-control col-md-8" v-model="form.linkedin">
+                        <input type="url" class="form-control" v-model="form.linkedin">
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label class="col-md-4">Youtube</label>
-                        <input type="url" class="form-control col-md-8" v-model="form.youtube">
+                        <input type="url" class="form-control" v-model="form.youtube">
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label class="col-md-4">RSS</label>
-                        <input type="url" class="form-control col-md-8" v-model="form.rss">
+                        <input type="url" class="form-control" v-model="form.rss">
                     </div>
                 </div>
             </form>
@@ -222,6 +229,19 @@
 
         mounted() {
             this.init();
+
+            var _this = this;
+            $('#background_color').colorpicker({
+                color: _this.form.background_color
+            }).on('changeColor', function (e) {
+                _this.form.background_color = e.color.toHex();
+            });
+
+            $('#border_color').colorpicker({
+                color: _this.form.border_color
+            }).on('changeColor', function (e) {
+                _this.form.border_color = e.color.toHex();
+            });
         },
 
         methods: {
