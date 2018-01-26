@@ -30,8 +30,8 @@ class CreateSlidesTable extends Migration
 
             /* opt-in attributes */
             $table->text('autoresponder_code')->nullable()->comment('opt-in attributes');
-            $table->string('name')->nullable()->comment('opt-in attributes');
-            $table->string('email')->nullable()->comment('opt-in attributes');
+            $table->string('name_field')->nullable()->comment('opt-in attributes');
+            $table->string('email_field')->nullable()->comment('opt-in attributes');
             $table->text('post_url')->nullable()->comment('opt-in attributes');
             $table->text('hidden_fields')->nullable()->comment('opt-in attributes');
             $table->string('name_label')->nullable()->comment('opt-in attributes');
@@ -39,7 +39,7 @@ class CreateSlidesTable extends Migration
             $table->string('button_label')->nullable()->comment('opt-in attributes');
             $table->string('button_color')->nullable()->comment('opt-in attributes');
             $table->string('button_style')->nullable()
-                ->comment('opt-in attributes [rounded, regular, medium, small, large]');
+                ->comment('opt-in attributes [round, simple, medium, small, large]');
 
             /* social attributes */
             $table->text('twitter')->nullable()->comment('social attributes');

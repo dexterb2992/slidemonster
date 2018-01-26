@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -27,13 +29,8 @@ class User extends Authenticatable
         'password', 'remember_token', 'api_token'
     ];
 
-    public function recipes()
+    public function slides()
     {
-        return $this->hasMany(Recipe::class);
-    }
-
-    public function videoIntros()
-    {
-        return $this->hasMany(VideoIntro::class);
+        return $this->hasMany(Slide::class);
     }
 }

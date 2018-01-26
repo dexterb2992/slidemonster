@@ -1,0 +1,165 @@
+@import url('http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css');
+
+#status_div{
+    display:none;
+}
+.hidden{
+  display:none !important;
+}
+
+.clearfix{
+  clear:both;
+}
+.error_msg{
+    padding: 9px 6px 10px;
+background: coral;
+border: 1px dotted red;
+border-radius: 2px;
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+color:#fff;
+}
+.conf_msg{
+    padding: 9px 6px 10px;
+    background: #CF9;
+    border: 1px dotted #9C0;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    color:#fff;
+}
+#status_ajax{
+    display:none;
+}
+.spp_slideup_container{
+    position: fixed;
+    font-family: "Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+    bottom: 0px;
+    z-index: 10000;
+    line-height: 11px;
+    width: 100%;
+    display: none;
+    /*right: 5px;
+    display:none;
+    display:pointer;*/
+}
+.spp_slideup_container .block_content{
+    /*position:absolute;*/
+    margin:1em auto 0.5em auto;
+    top:0px;
+    left:0px;
+    width: 50.44666316342617%;
+    line-height: 150%;
+}
+.spp_slideup_container p {
+    margin-bottom: .5em;
+}
+#spp-slup-close {
+    float: right;
+    margin: 5px 5px 0 0;
+    padding: 10px;
+    cursor: pointer;
+}
+/*
+ * Designs
+ */
+#spp_slup_type_2 #spp-slup-close {
+    padding: 0;
+}
+#spp_slup_type_2 input {
+    box-sizing: border-box;
+}
+.spp-slug-ar label.add-on {
+    margin-right: .3em;
+}
+#slup-name {
+    margin-right: 1em;
+}
+.spp_slup_medium #slup-name, .spp_slup_medium #slup-email {
+    padding: .22em;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+#slup-name, #slup-email {
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.spp-slup-ar, .spp-slup-social {
+    text-align: center;
+}
+.icon-larger:before {
+    font-size: 28px;
+}
+.icon-larger {
+    margin: 0 15px 0 0;
+}
+.icon-twitter-sign {
+    color: #00ACEE;
+}
+.icon-twitter-sign:hover {
+    color: #008FC5;
+}
+.icon-facebook-sign {
+    color: #374F8A;
+}
+.icon-facebook-sign:hover {
+    color: #293B68;
+}
+.icon-pinterest-sign {
+    color: #CB2027;
+}
+.icon-pinterest-sign:hover {
+    color: #A01A20;
+}
+.icon-linkedin-sign {
+    color: #1582BB;
+}
+.icon-linkedin-sign:hover {
+    color: #136B99;
+}
+.icon-youtube-sign {
+    color: #CC181E;
+}.icon-youtube-sign:hover {
+    color: #AA1318;
+}
+.icon-rss-sign {
+    color: #E4722D;
+}
+.icon-rss-sign:hover {
+    color: #BD6027;
+}
+/*
+ * Background images
+ */
+.gold_scale {
+    background-image: url('../images/backgrounds/gold_scale.png');
+    background-repeat: repeat;
+}
+.light_wool {
+    background-image: url('../images/backgrounds/light_wool.png');
+    background-repeat: repeat;
+}
+.paper_2 {
+    background-image: url('../images/backgrounds/paper_2.png');
+    background-repeat: repeat;
+}
+.paper_3 {
+    background-image: url('../images/backgrounds/paper_3.png');
+    background-repeat: repeat;
+}
+.ps_neutral {
+    background-image: url('../images/backgrounds/ps_neutral.png');
+    background-repeat: repeat;
+}
+.tweed {
+    background-image: url('../images/backgrounds/tweed.png');
+    background-repeat: repeat;
+    color: #fff;
+}
+/*
+ * Font Awesome tweaks
+ */
+#spp-slup-close.icon-larger:before {
+    font-size: 16px;
+}

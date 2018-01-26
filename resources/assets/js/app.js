@@ -6,6 +6,7 @@ import App from './App.vue';
 import router from './router';
 
 require('./helpers/toast.min.js');
+require('bootstrap-switch');
 
 window.Event = new class {
     constructor() {
@@ -41,6 +42,7 @@ window.app = new Vue({
     methods: {
         init() {
             $('[data-toggle="tooltip"]').tooltip();
+            $.fn.bootstrapSwitch.defaults.onColor = 'success';
         },
         pageLoadedListener(pageClass) {
             if (pageClass == 'login-page' || pageClass == 'profile-page') {

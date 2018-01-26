@@ -53,32 +53,34 @@
         <!-- End Navbar -->
 	    
 		<div class="wrapper">
-			<div class="__flash alert alert-success" role="alert" v-if="flash.success">
+            <div class="section">
                 <div class="container">
-                    <div class="alert-icon">
-                        <i class="now-ui-icons ui-2_like"></i>
+                    <div class="alert alert-success" role="alert" v-if="flash.success">
+                        <div class="alert-icon">
+                            <i class="now-ui-icons ui-2_like"></i>
+                        </div>
+                        <strong>Well done!</strong> {{flash.success}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="now-ui-icons ui-1_simple-remove"></i>
+                            </span>
+                        </button>
                     </div>
-                    <strong>Well done!</strong> {{flash.success}}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">
-                            <i class="now-ui-icons ui-1_simple-remove"></i>
-                        </span>
-                    </button>
+
+                    <div class="alert alert-danger" role="alert" v-if="flash.error">
+                        <div class="alert-icon">
+                            <i class="now-ui-icons objects_support-17"></i>
+                        </div>
+                        <strong>Oh snap!</strong> {{flash.error}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="now-ui-icons ui-1_simple-remove"></i>
+                            </span>
+                        </button>
+                    </div>
                 </div>
             </div>
-			<div class="__flash alert alert-danger" role="alert" v-if="flash.error">
-                <div class="container">
-                    <div class="alert-icon">
-                        <i class="now-ui-icons objects_support-17"></i>
-                    </div>
-                    <strong>Oh snap!</strong> {{flash.error}}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">
-                            <i class="now-ui-icons ui-1_simple-remove"></i>
-                        </span>
-                    </button>
-                </div>
-            </div>
+            
 
             <router-view></router-view>
 		</div>

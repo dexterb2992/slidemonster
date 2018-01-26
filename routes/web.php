@@ -1,6 +1,6 @@
 <?php
 Route::get('try', function () {
-    return view('auth.passwords.reset')->withToken('asdsad');
+    // return view('auth.passwords.reset')->withToken('asdsad');
 });
 
 // Password reset routes
