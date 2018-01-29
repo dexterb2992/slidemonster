@@ -23,7 +23,7 @@
                             <td>{{ key+1 }}</td>
                             <td>{{ slide.title }}</td>
                             <td>
-                                <router-link :to="`${base_url}slides/${slide.id}/edit`" class="btn btn-info">
+                                <router-link :to="`/slides/${slide.id}/edit`" class="btn btn-info">
                                     <i class="fa fa-edit"></i> Edit
                                 </router-link>
                                 <a class="btn btn-warning" href="javascript:void(0)" @click="showCode(key)">
