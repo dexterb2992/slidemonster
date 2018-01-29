@@ -3,7 +3,12 @@
         <div class="container">
             <form class="form-inner-wrapper" @submit.prevent="submitForm">
                 <div class="section">
-                    <h5 class="title">{{ action }}</h5>
+                    <h5 class="title">
+                        {{ action }}
+                        <router-link :to="base_url" class="btn btn-neutral btn-warning pull-right">
+                            <i class="fa fa-caret-left"></i> Back
+                        </router-link>
+                    </h5>
                 </div>
                 <div class="section">
                     <div class="row">
@@ -11,7 +16,6 @@
                             <div :class="errorClass('title')">
                                 <label>Name</label>
                                 <input type="text" v-model="form.title" class="form-control" placeholder="Title">
-                                <!-- <div v-if="hasError('title')" class="form-control-feedback">{{errors.title[0]}}</div> -->
                             </div>
                             <div :class="errorClass('type')">
                                 <label>Type</label>
@@ -248,6 +252,7 @@
     export default {
         data() {
             return {
+                base_url: window.base_url,
                 initializeURL: `${base_url}api/slides/create`,
                 storeURL: `${base_url}api/slides`,
                 action: 'Create',
