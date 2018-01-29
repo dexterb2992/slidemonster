@@ -2,7 +2,12 @@
     <div class="slide-form-wrapper container">
         <div class="form-inner-wrapper">
             <div class="section">
-                <h5 class="title">Slides</h5>
+                <h5 class="title">
+                    Slides
+                    <router-link to="/slides/create" class="btn btn-neutral btn-info pull-right">
+                        <i class="fa fa-plus"></i> Create new
+                    </router-link>
+                </h5>
             </div>
             <div class="section">
                 <table class="table table-bordered">
