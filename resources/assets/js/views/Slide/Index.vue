@@ -33,7 +33,7 @@
                         <tr v-if="slides.length < 1">
                             <td colspan="3">
                                 You currently don't have any slides. 
-                                <router-link :to="`${base_url}slides/create`">
+                                <router-link :to="`/slides/create`">
                                     <i class="fa fa-plus"></i> Create new
                                 </router-link>
                             </td>

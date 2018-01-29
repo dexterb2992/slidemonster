@@ -253,8 +253,8 @@
         data() {
             return {
                 base_url: window.base_url,
-                initializeURL: `${base_url}api/slides/create`,
-                storeURL: `${base_url}api/slides`,
+                initializeURL: `/api/slides/create`,
+                storeURL: `/api/slides`,
                 action: 'Create',
                 pageClass: 'page-index',
                 form: {},
@@ -313,7 +313,7 @@
                 this.action = 'Update'
             }
 
-            this.previewUrl = `${base_url}slides/${this.$route.params.id}`;
+            this.previewUrl = `/slides/${this.$route.params.id}`;
 
             this.init();
 
@@ -366,7 +366,7 @@
                 this.isProcessing = true;
                 post(this.storeURL, this.form).then((res) => {
                     handleResponse(res.data);
-                    this.$router.push(base_url);
+                    this.$router.push('/');
                 }, (err) => {
                     console.log(err);
                     handleErrorResponse(err.response.status);
