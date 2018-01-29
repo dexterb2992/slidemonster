@@ -85,12 +85,12 @@
                                         <i class="fa fa-close"></i> Stop rendering
                                     </span>
                                 </button>
-                                <span v-show="isInAction">
+                                <!-- <span v-show="isInAction">
                                     Demo mode
                                     <input type="checkbox" id="is_in_demo" class="bootstrap-switch"
                                         data-on-label="ON"
                                         data-off-label="OFF" v-model="isInDemo"/>
-                                </span>
+                                </span> -->
                             </div>
 
                             <div class="" v-if="form.type == 'optin'">
@@ -258,8 +258,8 @@
                 form: {},
                 errors: {},
                 isProcessing: false,
-                isInAction: false,
-                isInDemo: true,
+                isInAction: true,
+                // isInDemo: true,
                 types: {
                     'adcontent': 'Ad/Content',
                     'optin': 'Opt-in',
@@ -322,7 +322,7 @@
                 enableHex8: true
             });
 
-            this.initBootstrapSwitch();
+            // this.initBootstrapSwitch();
         },
 
         methods: {
@@ -335,7 +335,7 @@
                     handleErrorResponse(err.response.status);
                 });
 
-                this.checkDemoState();
+                // this.checkDemoState();
             },
             hasError(field) {
                 return this.errors.hasOwnProperty(field);
@@ -345,21 +345,21 @@
                 return this.hasError(field) ? defaultClass+' has-danger' : defaultClass;
             },
 
-            initBootstrapSwitch() {
-                $("#is_in_demo").bootstrapSwitch({
-                    onSwitchChange: (e, state) => {
-                        this.isInDemo = state;
-                        this.checkDemoState();
-                    }
-                });
-            },
-            checkDemoState() {
-                if (this.isInDemo) {
-                    $("#demo_content").css('position', 'fixed');
-                } else {
-                    $("#demo_content").css('position', 'relative');
-                }
-            },
+            // initBootstrapSwitch() {
+            //     $("#is_in_demo").bootstrapSwitch({
+            //         onSwitchChange: (e, state) => {
+            //             this.isInDemo = state;
+            //             this.checkDemoState();
+            //         }
+            //     });
+            // },
+            // checkDemoState() {
+            //     if (this.isInDemo) {
+            //         $("#demo_content").css('position', 'fixed');
+            //     } else {
+            //         $("#demo_content").css('position', 'relative');
+            //     }
+            // },
             submitForm() {
                 this.isProcessing = true;
                 post(this.storeURL, this.form).then((res) => {
