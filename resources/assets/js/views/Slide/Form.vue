@@ -253,8 +253,8 @@
         data() {
             return {
                 base_url: window.base_url,
-                initializeURL: `/api/slides/create`,
-                storeURL: `/api/slides`,
+                initializeURL: `${this.base_url}/api/slides/create`,
+                storeURL: `${this.base_url}/api/slides`,
                 action: 'Create',
                 pageClass: 'page-index',
                 form: {},
