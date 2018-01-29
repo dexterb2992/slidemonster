@@ -52,6 +52,7 @@
     export default {
         data() {
             return {
+                pageClass: 'page-index',
                 slides: {},
                 deleting: false,
                 base_url: base_url
@@ -61,6 +62,7 @@
 
         mounted() {
             this.init();
+            Event.fire('page-loaded', this.pageClass);
         },
 
         methods: {
