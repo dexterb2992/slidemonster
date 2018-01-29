@@ -5,7 +5,7 @@
                 <div class="section">
                     <h5 class="title">
                         {{ action }}
-                        <router-link :to="base_url" class="btn btn-neutral btn-warning pull-right">
+                        <router-link to="/" class="btn btn-neutral btn-warning pull-right">
                             <i class="fa fa-caret-left"></i> Back
                         </router-link>
                     </h5>
@@ -204,6 +204,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="section" v-if="isInAction"></div>
             </form>
         </div>
 
@@ -237,9 +238,6 @@
                 </div>
             </div>
         </div>
-        <div class="clear-fix"></div>
-        <div class="clear-fix"></div>
-        <div class="clear-fix"></div>
     </div>
 </template>
 
@@ -253,8 +251,8 @@
         data() {
             return {
                 base_url: window.base_url,
-                initializeURL: `${this.base_url}/api/slides/create`,
-                storeURL: `${this.base_url}/api/slides`,
+                initializeURL: `${base_url}api/slides/create`,
+                storeURL: `${base_url}api/slides`,
                 action: 'Create',
                 pageClass: 'page-index',
                 form: {},
