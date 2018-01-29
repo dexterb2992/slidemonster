@@ -55,7 +55,7 @@
                 pageClass: 'page-index',
                 slides: {},
                 deleting: false,
-                base_url: base_url
+                base_url: window.base_url
 
             };
         },
