@@ -1,16 +1,19 @@
 <template>
     <div class="slide-form-wrapper">
         <div class="container">
-            <form class="form-inner-wrapper" @submit.prevent="saveSlide">
-
+            <form class="form-inner-wrapper" @submit.prevent="submitForm">
+                <div class="section">
+                    <h5 class="title">{{ action }}</h5>
+                </div>
                 <div class="section">
                     <div class="row">
                         <div class="col-md-4 bordered-right">
-                            <div class="form-group">
+                            <div :class="errorClass('title')">
                                 <label>Name</label>
                                 <input type="text" v-model="form.title" class="form-control" placeholder="Title">
+                                <!-- <div v-if="hasError('title')" class="form-control-feedback">{{errors.title[0]}}</div> -->
                             </div>
-                            <div class="form-group">
+                            <div :class="errorClass('type')">
                                 <label>Type</label>
                                 <select v-model="form.type" class="form-control">
                                     <option v-for="(type, key) in types" :key="key" :value="key">{{ type }}</option>
@@ -22,7 +25,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Border Width: </label>
+                                <label>Border Width </label>
                                 <div class="input-group">
                                     <input type="number" v-model="form.border_width" class="form-control" placeholder="Border width">
                                     <div class="input-group-addon">
@@ -40,7 +43,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Border Color: </label>
+                                <label>Border Color </label>
                                 <div id="border_color" class="input-group colorpicker-component">
                                     <input type="text" class="form-control" placeholder="Border color" v-model="form.border_color" />
                                     <span class="input-group-addon"><i></i></span>
@@ -68,7 +71,7 @@
                             <div class="form-group pull-right">
                                 <button type="submit" class="btn btn-primary" :disabled="isProcessing">
                                     <i class="fa fa-refresh fa-spin" v-if="isProcessing"></i>
-                                    <i class="fa fa-check" v-if="!isProcessing"></i> Create
+                                    <i class="fa fa-check" v-if="!isProcessing"></i> {{ action }}
                                 </button>
                                 <button type="button" class="btn btn-info" @click="isInAction = !isInAction">
                                     <span v-if="!isInAction">
@@ -78,7 +81,7 @@
                                         <i class="fa fa-close"></i> Stop rendering
                                     </span>
                                 </button>
-                                <span v-if="isInAction">
+                                <span v-show="isInAction">
                                     Demo mode
                                     <input type="checkbox" id="is_in_demo" class="bootstrap-switch"
                                         data-on-label="ON"
@@ -153,7 +156,7 @@
                                 <div class="form-group">
                                     <label>Button Size</label><br/>
                                     <span v-for="(buttonSize, key) in buttonSizes" :key="key" class="col">
-                                        <a :class="'btn '+form.button_size+' '+buttonSize" @click="form.button_size = buttonSize"  href="javascript:void(0)">
+                                        <a :class="'btn '+form.button_style+' '+form.button_color+' '+buttonSize" @click="form.button_size = buttonSize"  href="javascript:void(0)">
                                             <i class="fa fa-check" v-if="form.button_size == buttonSize"></i> {{ key }}
                                         </a>
                                     </span>
@@ -200,9 +203,9 @@
             </form>
         </div>
 
-        <div v-if="isInAction" :style="isInDemo ? 'fixed !important' : 'relative !important'">
-            <div id="demo_content" :class="'spp_slideup_container '+form.background_image" :style="'border-top-width: '+form.border_width+'px; border-top-style: '+form.border_style+'; border-top-color: '+form.border_color+'; background-color: '+form.background_color+'; display: block; position: inherit !important;'">
-                <i id="spp-slup-close" class="icon-remove icon-larger" @click="isInAction = false"></i>
+        <div v-if="isInAction">
+            <div id="demo_content" :class="'spp_slideup_container '+form.background_image" :style="'border-top-width: '+form.border_width+'px; border-top-style: '+form.border_style+'; border-top-color: '+form.border_color+'; background-color: '+form.background_color+'; display: block;'">
+                <i id="spp-slup-close" class="icon-remove icon-larger" @click="isInAction = !isInAction"></i>
                 <div class="block_content">
                     {{ form.content }}
 
@@ -238,16 +241,22 @@
 
 <script>
     import {get, post} from '../../helpers/api';
-    import {showErrorMsg, handleErrorResponse} from '../../helpers/helper';
+    import {showErrorMsg, handleErrorResponse, handleResponse} from '../../helpers/helper';
+
+    require('bootstrap-switch');
 
     export default {
         data() {
             return {
+                initializeURL: `${base_url}api/slides/create`,
+                storeURL: `${base_url}api/slides`,
+                action: 'Create',
                 pageClass: 'page-index',
                 form: {},
+                errors: {},
                 isProcessing: false,
-                isInAction: true,
-                isInDemo: false,
+                isInAction: false,
+                isInDemo: true,
                 types: {
                     'adcontent': 'Ad/Content',
                     'optin': 'Opt-in',
@@ -283,6 +292,7 @@
                     large: 'btn-lg'
                 },
                 buttonStyles: {
+                    normal: 'btn',
                     round: 'btn-round',
                     simple: 'btn-simple',
                     hybrid: 'btn-round btn-simple'
@@ -292,6 +302,14 @@
         },
 
         mounted() {
+            if(this.$route.meta.mode === 'edit') {
+                this.initializeURL = base_url+`api/slides/${this.$route.params.id}/edit`
+                this.storeURL = base_url+`api/slides/${this.$route.params.id}?_method=PUT`
+                this.action = 'Update'
+            }
+
+            this.previewUrl = `${base_url}slides/${this.$route.params.id}`;
+
             this.init();
 
             var _this = this;
@@ -300,46 +318,56 @@
                 format: 'hex',
                 enableHex8: true
             });
-        },
 
-        watch: {
-            isInDemo() {
-                $("#is_in_demo").bootstrapSwitch({
-                    onSwitchChange: (e, state) => {
-                        this.isInDemo = state;
-                        this.$log(this.isInDemo);
-                    }
-                });
-                if (this.isInDemo) {
-                    $("#demo_content").css('position', 'fixed');
-                } else {
-                    $("#demo_content").css('position', 'relative');
-                }
-            }
+            this.initBootstrapSwitch();
         },
 
         methods: {
             init() {
                 Event.fire('page-loaded', this.pageClass);
-                get(window.base_url+'api/slides/form').then((res) => {
-                    if (res.data.success) {
-                        this.form = res.data.form;
-                    } else {
-                        if (res.data.hasOwnProperty('message')) {
-                            showErrorMsg(res.data.message);
-                        }
-                    }
+
+                get(this.initializeURL).then((res) => {
+                    this.form = res.data;
                 }, (err) => {
                     handleErrorResponse(err.response.status);
                 });
+
+                this.checkDemoState();
+            },
+            hasError(field) {
+                return this.errors.hasOwnProperty(field);
+            },
+            errorClass(field) {
+                var defaultClass = 'form-group';
+                return this.hasError(field) ? defaultClass+' has-danger' : defaultClass;
             },
 
-            saveSlide() {
+            initBootstrapSwitch() {
+                $("#is_in_demo").bootstrapSwitch({
+                    onSwitchChange: (e, state) => {
+                        this.isInDemo = state;
+                        this.checkDemoState();
+                    }
+                });
+            },
+            checkDemoState() {
+                if (this.isInDemo) {
+                    $("#demo_content").css('position', 'fixed');
+                } else {
+                    $("#demo_content").css('position', 'relative');
+                }
+            },
+            submitForm() {
                 this.isProcessing = true;
-                post(window.base_url+'api/slides/store', this.form).then((res) => {
-
+                post(this.storeURL, this.form).then((res) => {
+                    handleResponse(res.data);
+                    this.$router.push(base_url);
                 }, (err) => {
+                    console.log(err);
                     handleErrorResponse(err.response.status);
+                    if (err.response.status == 422) {
+                        this.errors = err.response.data.errors;
+                    }
                 }).then(() => {
                     this.isProcessing = false;
                 });

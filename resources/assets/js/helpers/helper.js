@@ -93,8 +93,7 @@ export function showWarningMsg(msg, headingTxt, timeout, position) {
     });
 }
 
-export function handleErrorResponse(status)
-{
+export function handleErrorResponse(status) {
     switch (status) {
         case 422:
             showErrorMsg("The given data was invalid.");
@@ -106,5 +105,13 @@ export function handleErrorResponse(status)
         default:
             showErrorMsg("Something went wrong while processing your request.");
             break;
+    }
+}
+
+export function handleResponse(response) {
+    if (response.success) {
+        showSuccessMsg(response.message);
+    } else {
+        showErrorMsg(response.message);
     }
 }

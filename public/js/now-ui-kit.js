@@ -57,7 +57,7 @@ $(document).ready(function() {
     });
 
     // Activate bootstrapSwitch
-    $('.bootstrap-switch').each(function() {
+    /*$('.bootstrap-switch').each(function() {
         $this = $(this);
         data_on_label = $this.data('on-label') || '';
         data_off_label = $this.data('off-label') || '';
@@ -66,7 +66,7 @@ $(document).ready(function() {
             onText: data_on_label,
             offText: data_off_label
         });
-    });
+    });*/
 
     if ($(window).width() >= 992) {
         big_image = $('.page-header-image[data-parallax="true"]');

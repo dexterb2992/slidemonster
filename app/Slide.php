@@ -14,7 +14,7 @@ class Slide extends Model
             'title' => '',
             'content' => '',
             'type' => 'adcontent',
-            'border_width' => '',
+            'border_width' => 0,
             'border_style' => 'solid',
             'border_color' => '',
             'background_color' => '',

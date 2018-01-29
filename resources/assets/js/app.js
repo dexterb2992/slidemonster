@@ -6,7 +6,6 @@ import App from './App.vue';
 import router from './router';
 
 require('./helpers/toast.min.js');
-require('bootstrap-switch');
 
 window.Event = new class {
     constructor() {
@@ -20,7 +19,9 @@ window.Event = new class {
     listen(event, callback) {
         this.vue.$on(event, callback);
     }
-}
+};
+
+const base_url = window.base_url;
 
 window.app = new Vue({
     el: '#root',
@@ -42,7 +43,6 @@ window.app = new Vue({
     methods: {
         init() {
             $('[data-toggle="tooltip"]').tooltip();
-            $.fn.bootstrapSwitch.defaults.onColor = 'success';
         },
         pageLoadedListener(pageClass) {
             if (pageClass == 'login-page' || pageClass == 'profile-page') {
@@ -56,7 +56,7 @@ window.app = new Vue({
             $('body').attr("class", "sidebar-collapse "+pageClass);
         },
         profileUpdatedListener() {
-            $children[0].loggedUserName = localStorage.getItem('user_name')
+            $children[0].loggedUserName = localStorage.getItem('user_name');
         }
     }
 });

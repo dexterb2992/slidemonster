@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Slide;
 use Illuminate\Http\Request;
+use Auth;
+
+use App\Slide;
+use App\Http\Requests\SlideRequest;
 
 class SlideController extends Controller
 {
@@ -14,7 +17,9 @@ class SlideController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+
+        return $user->slides()->get();
     }
 
     /**
@@ -24,10 +29,7 @@ class SlideController extends Controller
      */
     public function create()
     {
-        return [
-            'success' => 1,
-            'form' => Slide::form()
-        ];
+        return Slide::form();
     }
 
     /**
@@ -36,9 +38,22 @@ class SlideController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SlideRequest $request)
     {
-        //
+        $slide = new Slide($request->all());
+        $slide->user_id = Auth::user()->id;
+
+        if ($slide->save()) {
+            return [
+                'success' => 1,
+                'message' => 'Slide successfully created.'
+            ];
+        }
+
+        return [
+            'success' => 0,
+            'message' => "Something went wrong while trying to create a new slide."
+        ];
     }
 
     /**
@@ -49,7 +64,7 @@ class SlideController extends Controller
      */
     public function show(Slide $slide)
     {
-        //
+        return $slide;
     }
 
     /**
@@ -60,7 +75,7 @@ class SlideController extends Controller
      */
     public function edit(Slide $slide)
     {
-        //
+        return $slide;
     }
 
     /**
@@ -72,7 +87,17 @@ class SlideController extends Controller
      */
     public function update(Request $request, Slide $slide)
     {
-        //
+        if ($slide->update($request->all())) {
+            return [
+                'success' => 1,
+                'message' => 'Slide successfully updated.'
+            ];
+        }
+
+        return [
+            'success' => 0,
+            'message' => "Something went wrong while trying to create a new slide."
+        ];
     }
 
     /**
@@ -83,6 +108,16 @@ class SlideController extends Controller
      */
     public function destroy(Slide $slide)
     {
-        //
+        if ($slide->delete()) {
+            return [
+                'success' => 1,
+                'message' => "Successfully deleted."
+            ];
+        }
+
+        return [
+            'success' => 0,
+            'message' => "Something went wrong while trying to delete your slide. Please try again later."
+        ];
     }
 }

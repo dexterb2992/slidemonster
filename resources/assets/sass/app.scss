@@ -57,10 +57,11 @@
 
 .form-inner-wrapper {
     .section:first-child {
-        margin-top: 20px;
+        margin-top: 70px;
     }
     .section {
         border: solid #f7f7f9;
+        margin-bottom: 4px;
     }    
 
     @media (min-width: 576px) {

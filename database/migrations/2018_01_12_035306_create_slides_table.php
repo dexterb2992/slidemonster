@@ -20,7 +20,7 @@ class CreateSlidesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->string('title');
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->string('type')->comment('adcontent, optin, social');
             $table->float('border_width')->default(0);
             $table->string('border_style', 6)->comment('none, solid, dashed, dotted');
@@ -39,7 +39,8 @@ class CreateSlidesTable extends Migration
             $table->string('button_label')->nullable()->comment('opt-in attributes');
             $table->string('button_color')->nullable()->comment('opt-in attributes');
             $table->string('button_style')->nullable()
-                ->comment('opt-in attributes [round, simple, medium, small, large]');
+                ->comment('opt-in attributes [round, simple, hybrid]');
+            $table->string('button_size')->nullable()->comment('optin attributes [small, medium, large]');
 
             /* social attributes */
             $table->text('twitter')->nullable()->comment('social attributes');

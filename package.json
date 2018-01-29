@@ -18,6 +18,7 @@
     "bootstrap-switch": "^3.3.4",
     "jquery": "^3.1.1",
     "vue": "^2.2.2",
+    "vue-laravel-validator": "^1.0.4",
     "vue-nprogress": "^0.1.5",
     "vue-router": "^2.3.0"
   }

@@ -53,7 +53,7 @@
         <!-- End Navbar -->
 	    
 		<div class="wrapper">
-            <div class="section">
+            <div class="section" v-if="flash.error != null || flash.success != null">
                 <div class="container">
                     <div class="alert alert-success" role="alert" v-if="flash.success">
                         <div class="alert-icon">

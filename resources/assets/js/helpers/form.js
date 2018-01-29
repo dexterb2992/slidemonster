@@ -1,16 +1,16 @@
 export function toMultiPartedForm(form, mode) {
 	if(mode === 'edit' && typeof form.image === 'string') {
-		const temp = JSON.parse(JSON.stringify(form))
-		delete temp.image
-		return temp
+		const temp = JSON.parse(JSON.stringify(form));
+		delete temp.image;
+		return temp;
 	} else {
-		return objectToFormData(form)
+		return objectToFormData(form);
 	}
 }
 
 export function objectToFormData(obj, form, namespace) {
-    let fd = form || new FormData()
-    let formKey
+    let fd = form || new FormData();
+    let formKey;
     for(var property in obj) {
         if(obj.hasOwnProperty(property)) {
             if(namespace) {
@@ -29,5 +29,5 @@ export function objectToFormData(obj, form, namespace) {
             }
         }
     }
-    return fd
+    return fd;
 }
