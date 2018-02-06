@@ -26,9 +26,9 @@
                                 <router-link :to="`/slides/${slide.id}/edit`" class="btn btn-info">
                                     <i class="fa fa-edit"></i> Edit
                                 </router-link>
-                                <a class="btn btn-warning" href="javascript:void(0)" @click="showCode(key)">
+                                <modal-trigger class="btn btn-warning" dataTarget="#viewCode">
                                     <i class="fa fa-code"></i> Code
-                                </a>
+                                </modal-trigger>
                                 <a href="javascript:void(0)" class="btn btn-danger" :disabled="deleting" @click="deleteSlide(key)">
                                     <i class="fa fa-spin fa-refresh" v-if="deleting"></i>
                                     <i class="fa fa-trash" v-if="!deleting"></i> Delete
@@ -46,13 +46,22 @@
                     </tbody>
                 </table>
             </div>
+            <modal id="viewCode" title="Client-side Code" isLarge="true">
+                <p class="text-info">Add this code anywhere inside your html <code>&lt;body&gt;</code> tag.</p>
+                <code>
+                    &lt;script type="text/javascript" id="slidemonster" data-id="{{ selectedSlide.id }}" data-key="{{ apiToken }}" src="{{ app_url }}"&gt;&lt;/script&gt;
+                </code>
+            </modal>
         </div>
     </div>
 </template>
 
 <script>
     import {get, post, del} from '../../helpers/api';
+    import Auth from '../../store/auth';
     import {handleErrorResponse, showErrorMsg, showSuccessMsg, showWarningMsg} from '../../helpers/helper';
+    import ModalTrigger from '../../components/ModalTrigger.vue';
+    import Modal from '../../components/Modal.vue';
 
     export default {
         data() {
@@ -60,11 +69,18 @@
                 pageClass: 'page-index',
                 slides: {},
                 deleting: false,
-                base_url: window.base_url
-
+                base_url: window.base_url,
+                app_url: window.app_url,
+                selectedSlide: {
+                    id: 0
+                },
+                apiToken: Auth.state.api_token
             };
         },
-
+        components: {
+            'modal-trigger': ModalTrigger,
+            'modal': Modal
+        },
         mounted() {
             this.init();
             Event.fire('page-loaded', this.pageClass);

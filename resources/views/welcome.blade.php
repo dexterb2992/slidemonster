@@ -26,6 +26,7 @@
 
     <script>
         window.base_url = "{{ env('VUE_BASE_URL', '/') }}";
+        window.app_url = "{{ env('APP_URL') }}"+base_url;
         window.app_name = "{{ env('APP_NAME', '/') }}";
     </script>
 </head>
