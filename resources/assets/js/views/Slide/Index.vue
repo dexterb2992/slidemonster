@@ -26,9 +26,9 @@
                                 <router-link :to="`/slides/${slide.id}/edit`" class="btn btn-info">
                                     <i class="fa fa-edit"></i> Edit
                                 </router-link>
-                                <modal-trigger class="btn btn-warning" dataTarget="#viewCode">
+                                <a href="#" class="btn btn-warning" @click="showModal(slide.id)" data-toggle="modal" data-target="#viewCode">
                                     <i class="fa fa-code"></i> Code
-                                </modal-trigger>
+                                </a>
                                 <a href="javascript:void(0)" class="btn btn-danger" :disabled="deleting" @click="deleteSlide(key)">
                                     <i class="fa fa-spin fa-refresh" v-if="deleting"></i>
                                     <i class="fa fa-trash" v-if="!deleting"></i> Delete
@@ -48,18 +48,19 @@
             </div>
             <modal id="viewCode" title="Client-side Code" isLarge="true">
                 <p class="text-info">Add this code anywhere inside your html <code>&lt;body&gt;</code> tag.</p>
-                <code>
-                    &lt;script type="text/javascript" id="slidemonster" data-id="{{ selectedSlide.id }}" data-key="{{ apiToken }}" src="{{ app_url }}"&gt;&lt;/script&gt;
+                <code id="embed_code">
+                    &lt;slidemonster id="slidemonster" slide-id="{{ selectedSlide.id }}" token="{{ apiToken }}"&gt;&lt;/slidemonster&gt;&lt;script type="text/javascript" src="{{ app_url }}js/embed.js"&gt;&lt;/script&gt;
                 </code>
             </modal>
         </div>
+        <input type="text" id="client_side_code" style="visibility:hidden;">
     </div>
 </template>
 
 <script>
     import {get, post, del} from '../../helpers/api';
     import Auth from '../../store/auth';
-    import {handleErrorResponse, showErrorMsg, showSuccessMsg, showWarningMsg} from '../../helpers/helper';
+    import {handleErrorResponse, showErrorMsg, showSuccessMsg, showWarningMsg, copyToClipboard} from '../../helpers/helper';
     import ModalTrigger from '../../components/ModalTrigger.vue';
     import Modal from '../../components/Modal.vue';
 
@@ -74,7 +75,8 @@
                 selectedSlide: {
                     id: 0
                 },
-                apiToken: Auth.state.api_token
+                apiToken: Auth.state.api_token,
+                hasBeenCopied: false
             };
         },
         components: {
@@ -117,6 +119,23 @@
                     });
                 } 
                 
+            },
+
+            showModal(id) {
+                this.selectedSlide.id = id;
+                $("#client_side_code").val($.trim($("#embed_code").text()));
+            },
+
+            copyCode() {
+                
+                let res = copyToClipboard(document.getElementById("client_side_code"));
+                console.log(res);
+                if (res) {
+                    this.hasBeenCopied = true;
+                    setTimeout(() => {
+                        this.hasBeenCopied = false;
+                    }, 1000);
+                }
             }
         }
     }

@@ -12,8 +12,10 @@
                     <slot></slot>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Close</button>
-                    {{ submitButton }}
+                    <slot name="close-button">
+                        <button type="button" class="btn btn-default btn-simple pull-right" data-dismiss="modal">Close</button>
+                    </slot>
+                    <slot name="submit-button"></slot>
                 </div>
             </div>
         </div>
@@ -25,8 +27,7 @@
         props: ['title', 'id', 'isLarge'],
         data() {
             return {
-                submitButton: '',
-                isLarge: typeof(this.isLarge) != 'undefined' ? this.isLarge : false
+                submitButton: ''
             }
         }
     }
