@@ -10,7 +10,7 @@ try {
 
     require('bootstrap-sass');
 
-    require('bootstrap-colorpicker')
+    require('bootstrap-colorpicker');
 } catch (e) {}
 
 /**

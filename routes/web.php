@@ -31,6 +31,7 @@ Route::get('try', function () {
     </script>
 
     <slidemonster id="slidemonster" slide-id="7" token="vyzWZfhtXGpwX8PWJJh3fAmKAtlRCtNlumh84z5LGRWIWkVMuxJbi14MUwut"></slidemonster><script type="text/javascript" src="http://slide-monster.local/js/embed.js"></script>
+    <!-- <slidemonster id="slidemonster" slide-id="4" token="sUG96iRf7IijJgafcHkWXW8nrWMxFNUqzdED9eLjozbR4v3S4igdCoxWEUXQ"></slidemonster><script type="text/javascript" src="https://topdogimsolutions.com/slidemonster/js/embed.js"></script> -->
 </body>
 
 </html>

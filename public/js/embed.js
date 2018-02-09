@@ -27164,11 +27164,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             isInAction: true,
-            base_url: '//slide-monster.local/',
+            base_url: '',
             form: {}
         };
     },
     mounted: function mounted() {
+        if (window.location.host != 'slide-monster.local') {
+            this.base_url = 'https://topdogimsolutions.com/slidemonster/';
+        } else {
+            this.base_url = '//slide-monster.local/';
+        }
+
         this.init();
     },
 
