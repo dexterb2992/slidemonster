@@ -16,3 +16,4 @@ Homestead.yaml
 /public/images/*
 !public/images/backgrounds/*
 !public/fonts/*
+/public/js/embed.js
