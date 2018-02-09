@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use Response;
 
 use App\Slide;
 use App\Http\Requests\SlideRequest;
@@ -65,7 +66,11 @@ class SlideController extends Controller
     public function show(Slide $slide)
     {
         // return $slide;
-        return response()->json($slide, 200, [
+        /*return response()->json($slide, 200, [
+            'Access-Control-Allow-Origin' => '*'
+        ]);*/
+
+        return Response::json($slide, 200, [
             'Access-Control-Allow-Origin' => '*'
         ]);
     }
