@@ -21,12 +21,18 @@
         data() {
             return {
                 isInAction: true,
-                base_url: '//slide-monster.local/',
+                base_url: '',
                 form: {}
             };
         },
 
         mounted() {
+            if (window.location.host != 'slide-monster.local') {
+                this.base_url = 'https://topdogimsolutions.com/slidemonster/';
+            } else {
+                this.base_url = '//slide-monster.local/';
+            }
+
             this.init();
         },
 
