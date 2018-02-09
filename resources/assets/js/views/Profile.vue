@@ -96,7 +96,7 @@
                 },
                 error: {},
                 isProcessing: false,
-                initializeURL: this.$router.options.base+`api/profile?api_token=${Auth.state.api_token}`,
+                initializeURL: this.$router.options.base+`api/profile`,
                 pageClass: 'profile-page'
             }
         },

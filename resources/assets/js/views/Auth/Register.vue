@@ -80,6 +80,7 @@
     import Flash from '../../helpers/flash';
     import { post } from '../../helpers/api';
     import {handleErrorResponse} from '../../helpers/helper';
+    import Auth from '../../store/auth';
 
     export default {
         data() {
@@ -96,7 +97,7 @@
             }
         },
         mounted() {
-            if (this.auth) {
+            if (Auth.state.api_token) {
                 this.$router.push('/');
             }
             Event.fire('page-loaded', this.pageClass)

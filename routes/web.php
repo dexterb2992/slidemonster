@@ -11,7 +11,7 @@ Route::get('try', function () {
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- <meta name="csrf-token" content="{{ csrf_token() }}"> -->
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -22,7 +22,15 @@ Route::get('try', function () {
 </head>
 
 <body class="sidebar-collapse">
-    <slidemonster id="slidemonster" slide-id="9" token="vyzWZfhtXGpwX8PWJJh3fAmKAtlRCtNlumh84z5LGRWIWkVMuxJbi14MUwut"></slidemonster><script type="text/javascript" src="http://slide-monster.local/js/embed.js"></script>
+    <timermonster data-id="20"></timermonster>
+    <script src="http://topdogimsolutions.com/timer-monster/public/assets/js/timer-monster.min.js"></script>
+    <script type="text/javascript">
+        TimerMonster.init({
+            token: '',
+        });
+    </script>
+
+    <slidemonster id="slidemonster" slide-id="7" token="vyzWZfhtXGpwX8PWJJh3fAmKAtlRCtNlumh84z5LGRWIWkVMuxJbi14MUwut"></slidemonster><script type="text/javascript" src="http://slide-monster.local/js/embed.js"></script>
 </body>
 
 </html>
@@ -36,6 +44,8 @@ Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 Route::redirect('/home', '/');
+
+// Route::get('get/slides/{slide}', 'SlideController@show')->middleware('api');
 
 Route::get('/{any}', function () {
     return view('welcome');

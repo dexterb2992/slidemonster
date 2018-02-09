@@ -27139,6 +27139,8 @@ window.app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_SeeSlideInAction_vue__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_SeeSlideInAction_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_SeeSlideInAction_vue__);
 //
 //
 //
@@ -27150,83 +27152,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        'see-slide-in-action': __WEBPACK_IMPORTED_MODULE_1__components_SeeSlideInAction_vue___default.a
+    },
     props: ['token', 'slideId'],
     data: function data() {
         return {
             isInAction: true,
             base_url: '//slide-monster.local/',
-            form: {},
-            types: {
-                'adcontent': 'Ad/Content',
-                'optin': 'Opt-in',
-                'social': 'Social'
-            },
-            borderStyles: {
-                'none': "None",
-                'solid': "Solid",
-                'dashed': "Dashed",
-                'dotted': "Dotted"
-            },
-            backgroundImages: {
-                "none": "None",
-                "gold_scale": "Gold Scale",
-                "light_wool": "Light Wool",
-                "paper_2": "Paper 2",
-                "paper_3": "Paper 3",
-                "ps_neutral": "PS Neutral",
-                "tweed": "Tweed"
-            },
-            buttonColors: {
-                red: 'btn-danger',
-                blue: 'btn-info',
-                green: 'btn-success',
-                orange: 'btn-warning',
-                primary: 'btn-primary',
-                white: 'btn-neutral',
-                gray: 'btn-default'
-            },
-            buttonSizes: {
-                small: 'btn-sm',
-                medium: 'btn-md',
-                large: 'btn-lg'
-            },
-            buttonStyles: {
-                normal: 'btn',
-                round: 'btn-round',
-                simple: 'btn-simple',
-                hybrid: 'btn-round btn-simple'
-            }
+            form: {}
         };
     },
     mounted: function mounted() {
@@ -27315,7 +27254,7 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('link', {
     attrs: {
-      "href": "base_url+'css/bootstrap.min.css'",
+      "href": _vm.base_url + 'css/bootstrap.min.css',
       "rel": "stylesheet"
     }
   }), _vm._v(" "), _c('link', {
@@ -27328,7 +27267,143 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "href": _vm.base_url + 'css/app.css',
       "rel": "stylesheet"
     }
-  }), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('see-slide-in-action', {
+    attrs: {
+      "form": _vm.form
+    }
+  })], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-625cd768", module.exports)
+  }
+}
+
+/***/ }),
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */,
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(42);
+
+
+/***/ }),
+/* 89 */,
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['form'],
+    data: function data() {
+        return {
+            isInAction: true
+        };
+    },
+
+
+    methods: {
+        close: function close() {
+            try {
+                this.isInAction = false;
+                Event.fire('closeSlide');
+            } catch (e) {
+                console.warn(e);
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 96 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(95),
+  /* template */
+  __webpack_require__(97),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "E:\\projects\\slidemonster\\resources\\assets\\js\\components\\SeeSlideInAction.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] SeeSlideInAction.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-9dfa9354", Component.options)
+  } else {
+    hotAPI.reload("data-v-9dfa9354", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 97 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -27346,13 +27421,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "spp-slup-close"
     },
     on: {
-      "click": function($event) {
-        _vm.isInAction = !_vm.isInAction
-      }
+      "click": _vm.close
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "block_content"
-  }, [_vm._v("\n            " + _vm._s(_vm.form.content) + "\n\n            "), (_vm.form.type == 'optin') ? _c('div', {
+  }, [_vm._v("\n        " + _vm._s(_vm.form.content) + "\n\n        "), (_vm.form.type == 'optin') ? _c('div', {
     staticClass: "spp-slup-ar"
   }, [_c('form', {
     attrs: {
@@ -27380,7 +27453,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "submit"
     }
-  }, [_vm._v("\n                        " + _vm._s(_vm.form.button_label) + "\n                    ")])])]) : _vm._e(), _vm._v(" "), (_vm.form.type != 'optin') ? _c('div', {
+  }, [_vm._v("\n                    " + _vm._s(_vm.form.button_label) + "\n                ")])])]) : _vm._e(), _vm._v(" "), (_vm.form.type != 'optin') ? _c('div', {
     staticClass: "spp-slup-social"
   }, [(_vm.form.twitter != '') ? _c('a', {
     staticClass: "icon-twitter-sign icon-larger",
@@ -27412,7 +27485,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "href": _vm.form.rss
     }
-  }) : _vm._e()]) : _vm._e()])])])
+  }) : _vm._e()]) : _vm._e()])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('label', {
     staticClass: "add-on"
@@ -27430,27 +27503,9 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-625cd768", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-9dfa9354", module.exports)
   }
 }
-
-/***/ }),
-/* 77 */,
-/* 78 */,
-/* 79 */,
-/* 80 */,
-/* 81 */,
-/* 82 */,
-/* 83 */,
-/* 84 */,
-/* 85 */,
-/* 86 */,
-/* 87 */,
-/* 88 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(42);
-
 
 /***/ })
 /******/ ]);

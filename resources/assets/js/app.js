@@ -7,7 +7,10 @@ import router from './router';
 
 require('./helpers/toast.min.js');
 
-window.Event = new class {
+
+const base_url = window.base_url;
+
+window.Event =  new class {
     constructor() {
         this.vue = new Vue();
     }
@@ -21,7 +24,6 @@ window.Event = new class {
     }
 };
 
-const base_url = window.base_url;
 
 window.app = new Vue({
     el: '#root',

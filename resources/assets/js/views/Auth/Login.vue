@@ -83,7 +83,9 @@
             }
         },
         mounted() {
-            if (this.auth) {
+            console.log(this.auth);
+            console.log(typeof this.auth);
+            if (Auth.state.api_token) {
                 this.$router.push('/');
             }
             Event.fire('page-loaded', this.pageClass);
@@ -95,21 +97,21 @@
                 post(this.$router.options.base+'api/login', this.form).then((res) => {
                     if(res.data.authenticated) {
                         // set token
-                        Auth.set(res.data.api_token, res.data.user_id, res.data.user_name)
-                        Flash.setSuccess('You have successfully logged in.')
+                        Auth.set(res.data.api_token, res.data.user_id, res.data.user_name);
+                        Flash.setSuccess('You have successfully logged in.');
                         this.$router.push('/');
                     }
-                    this.isProcessing = false
+                    this.isProcessing = false;
                 }).catch((err) => {
                     handleErrorResponse(err.response.status);
                     if(err.response.status === 422) {
                         if(err.response.data.hasOwnProperty('errors')){
-                            this.error = err.response.data.errors
+                            this.error = err.response.data.errors;
                         }else{
-                            this.error = err.response.data
+                            this.error = err.response.data;
                         }
                     }
-                    this.isProcessing = false
+                    this.isProcessing = false;
                 });
             }
         }
