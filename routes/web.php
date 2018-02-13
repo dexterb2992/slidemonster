@@ -47,6 +47,7 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::redirect('/home', '/');
 
 // Route::get('get/slides/{slide}', 'SlideController@show')->middleware('api');
+Route::get('api/get/slides/{slide}', 'SlideController@show')->middleware('auth:api');
 
 Route::get('/{any}', function () {
     return view('welcome');

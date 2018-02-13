@@ -27,7 +27,7 @@
         },
 
         mounted() {
-            if (window.location.host != 'slide-monster.local') {
+            if (window.location.host != 'slide-monster.local' && window.location.host != 'rebate-launchpad.local') {
                 this.base_url = 'https://topdogimsolutions.com/slidemonster/';
             } else {
                 this.base_url = '//slide-monster.local/';
@@ -38,17 +38,35 @@
 
         methods: {
             init() {
-                axios({
-                    method: 'GET',
-                    url: `${this.base_url}api/slides/${this.slideId}`,
-                    headers: {
-                        'Authorization': `Bearer ${this.token}`
+                console.log('initializing...')
+                // axios({
+                //     method: 'GET',
+                //     url: `${this.base_url}api/get/slides/${this.slideId}`,
+                //     headers: {
+                //         'Authorization': `Bearer ${this.token}`
+                //     },
+                //     data: {
+                //         api_token: this.token
+                //     }
+                // }).then((res) => {
+                //     this.form = res.data;
+                // }, (err) => {
+                //     console.warn(err);
+                // });
+                $.ajax({
+                    url: `${this.base_url}api/get/slides/${this.slideId}`,
+                    type: 'get',
+                    dataType: 'json',
+                    beforeSend: (request) => {
+                        request.setRequestHeader("Authorization", `Bearer ${this.token}`);
+                    },
+                    success: (res) => {
+                        this.form = res
+                    },
+                    error: (e) => {
+                        console.warn(e)
                     }
-                }).then((res) => {
-                    this.form = res.data;
-                }, (err) => {
-                    console.warn(err);
-                });
+                })
             }
         }
     }

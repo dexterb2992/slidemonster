@@ -3,7 +3,7 @@
 		<nprogress-container></nprogress-container>
 
 		<!-- Navbar -->
-        <nav class="navbar navbar-expand-lg bg-primary fixed-top">
+        <nav class="navbar navbar-expand-lg bg-primary fixed-top" color-on-scroll="200">
             <div class="container">
                 <div class="dropdown button-dropdown">
                     <a href="#slide-monster" class="dropdown-toggle" id="navbarDropdown" :data-toggle="auth ? 'dropdown' : ''">

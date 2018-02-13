@@ -10,5 +10,3 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::resource('slides', 'SlideController', ['except' => ['show']]);
 });
-
-Route::get('slides/{slide}', 'SlideController@show')->middleware('api');

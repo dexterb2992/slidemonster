@@ -65,14 +65,7 @@ class SlideController extends Controller
      */
     public function show(Slide $slide)
     {
-        // return $slide;
-        /*return response()->json($slide, 200, [
-            'Access-Control-Allow-Origin' => '*'
-        ]);*/
-
-        return Response::json($slide, 200, [
-            'Access-Control-Allow-Origin' => '*'
-        ]);
+        return $slide;
     }
 
     /**
