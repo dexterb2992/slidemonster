@@ -11,12 +11,12 @@
             </div>
 
             <div class="section">
-                <div class="col-md-4 form-group pull-right">
+                <div class="form-inline form-group pull-right">
                     <input type="text" class="form-control" placeholder="Search..." v-model="search">
                 </div>
                 <table class="table table-bordered">
                     <thead>
-                        <th>#</th>
+                        <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Subscription Status</th>
@@ -24,7 +24,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="(user, key) in filteredUsers" :key="key">
-                            <td>{{ key+1 }}</td>
+                            <td>{{ user.id }}</td>
                             <td>{{ user.name }}</td>
                             <td>{{ user.email }}</td>
                             <td></td>

@@ -75,7 +75,7 @@
                                     </form>
                                 </tab>
                                 <tab name="Upgrade">
-                                    Something for upgrade
+                                    <pricing></pricing>
                                 </tab>
                             </tabs>
                         </div>
@@ -94,11 +94,13 @@
     import { scrollToTop, handleErrorResponse } from '../helpers/helper';
     import Tab from '../components/Tab.vue';
     import Tabs from '../components/Tabs.vue';
+    import Pricing from './Pricing.vue';
 
     export default {
         components: {
             'tabs': Tabs,
-            'tab': Tab
+            'tab': Tab,
+            'pricing': Pricing
         },
         data() {
             return {

@@ -47,6 +47,10 @@
                             <router-link to="/users" class="nav-link">Users</router-link>
                         </li>
 
+                        <li class="nav-item" v-if="user && user.role == 1">
+                            <router-link to="/subscription-plans" class="nav-link">Subscriptions</router-link>
+                        </li>
+
                         <li class="nav-item" v-if="auth">
                             <a class="nav-link" @click="logout"><i class="fa fa-sign-out"></i> Logout</a>
                         </li>

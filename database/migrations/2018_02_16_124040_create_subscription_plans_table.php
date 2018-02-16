@@ -16,7 +16,9 @@ class CreateSubscriptionPlansTable extends Migration
         Schema::create('subscription_plans', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            // $table->name()
+            $table->string('name');
+            $table->string('duration'); //monthly
+            $table->string('stripe_plan'); // main, basic, premium
         });
     }
 
