@@ -1,8 +1,8 @@
 <template>
     <div>
         <ul class="nav nav-tabs" role="tablist">
-            <li v-for="tab in tabs" :class="{'active' : tab.isActive}">
-                <a :href="tab.href" @click="selectTab(tab)">{{ tab.name }}</a>
+            <li v-for="tab in tabs" :class="{'nav-item active' : tab.isActive}">
+                <a :href="tab.href" @click="selectTab(tab)" class="nav-item nav-link btn-round btn-simple">{{ tab.name }}</a>
             </li>
         </ul>
 

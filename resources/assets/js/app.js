@@ -8,6 +8,7 @@ import router from './router';
 require('./helpers/toast.min.js');
 
 
+
 const base_url = window.base_url;
 
 window.Event =  new class {

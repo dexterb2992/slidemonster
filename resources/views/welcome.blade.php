@@ -21,13 +21,16 @@
     <link href="{{ asset('plugins/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
     <link href="{{ asset('css/front.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/now-ui-kit-pro.css') }}" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
 
+    <script src="https://js.stripe.com/v3/"></script>
     <script>
         window.base_url = "{{ env('VUE_BASE_URL', '/') }}";
         window.app_url = "{{ env('APP_URL') }}";
         window.app_name = "{{ env('APP_NAME', '/') }}";
+        window.stripe_key = "{{ env('STRIPE_KEY') }}";
     </script>
 </head>
 

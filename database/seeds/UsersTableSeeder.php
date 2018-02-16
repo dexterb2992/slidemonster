@@ -13,25 +13,23 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Factory::create();
+        // $faker = Factory::create();
 
-        User::truncate();
+        // User::truncate();
 
         User::create([
-            'id' => 1,
-            'name' => "Dexter Bengil",
-            'email' => "dexterb2992@gmail.com",
-            'password' => bcrypt('dexter'),
-            'api_token' => str_random(60)
+            'name' => "Admin Superadmin",
+            'email' => "slidemonster@topdogimsolutions.com",
+            'password' => bcrypt('01admin01'),
+            'api_token' => str_random(60),
+            'role' => 1
         ]);
 
-        foreach (range(1, 10) as $i) {
-            User::create([
-                'name' => $faker->name,
-                'email' => $faker->email,
-                'password' => bcrypt('password'),
-                'api_token' => str_random(60)
-            ]);
-        }
+        // User::create([
+        //     'name' => "Dexter Bengil",
+        //     'email' => "dexterb2992@gmail.com",
+        //     'password' => bcrypt('dexter'),
+        //     'api_token' => str_random(60)
+        // ]);
     }
 }

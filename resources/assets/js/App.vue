@@ -43,6 +43,14 @@
                             <router-link to="/profile" class="nav-link">Profile</router-link>
                         </li>
 
+                        <li class="nav-item" v-if="user && user.role == 1">
+                            <router-link to="/users" class="nav-link">Users</router-link>
+                        </li>
+
+                        <li class="nav-item" v-if="user && user.role == 1">
+                            <router-link to="/subscription-plans" class="nav-link">Subscriptions</router-link>
+                        </li>
+
                         <li class="nav-item" v-if="auth">
                             <a class="nav-link" @click="logout"><i class="fa fa-sign-out"></i> Logout</a>
                         </li>
@@ -91,10 +99,16 @@
 <script type="text/javascript">
 	import Auth from './store/auth';
 	import Flash from './helpers/flash';
-    import { post, interceptors } from './helpers/api';
+    import { get, post, interceptors } from './helpers/api';
 	import { handleErrorResponse, showErrorMsg } from './helpers/helper';
 	import NProgress from 'vue-nprogress';
 	import NprogressContainer from 'vue-nprogress/src/NprogressContainer';
+
+    import Vue from 'vue';
+    import VueResource from 'vue-resource';
+
+    Vue.use(VueResource);
+    
 
     const nprogress = new NProgress();
 
@@ -134,15 +148,10 @@
 	        });
 
 			Auth.initialize();
-			// this.$router.app.$on('profile-update', () => {
-			// 	console.log('listening profile-update this.$router...');
-			// 	this.loggedUserName = localStorage.getItem('user_name');
-			// });
 
-			// Event.listen('profile-update', () => {
-			// 	console.log('listening profile-update this...');
-			// 	this.loggedUserName = localStorage.getItem('user_name');
-			// });
+            Vue.http.headers.common['Authorization'] = `Bearer ${Auth.state.api_token}`;
+			
+            this.getUser();
 		},
 		data() {
 			return {
@@ -150,7 +159,8 @@
 				flash: Flash.state,
 				loggedUserName: '',
 				appName: window.app_name,
-				base_url: window.base_url
+				base_url: window.base_url,
+                user: null
 			}
 		},
 		computed: {
@@ -166,6 +176,13 @@
 			}
 		},
 		methods: {
+            getUser() {
+                get(`${this.base_url}api/users/${this.authState.user_id}`).then((res) => {
+                    this.user = res.data;
+                }, (err) => {
+                    this.user = null;
+                });
+            },
 			logout() {
 				post(this.base_url+'api/logout').then((res) => {
 			        if(res.data.done) {
