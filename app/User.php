@@ -20,6 +20,10 @@ class User extends Authenticatable
         'name', 'email', 'password',
     ];
 
+    protected $dates = [
+        'created_at', 'updated_at', 'trial_ends_at'
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -32,5 +36,10 @@ class User extends Authenticatable
     public function slides()
     {
         return $this->hasMany(Slide::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->role == 1 ? true : false;
     }
 }

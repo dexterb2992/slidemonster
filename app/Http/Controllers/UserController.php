@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use App\User;
 
 class UserController extends Controller
 {
@@ -19,6 +20,25 @@ class UserController extends Controller
         $user = auth()->guard('api')->user()->only('name', 'email', 'license_key');
         return ['form' => $user];
     }
+
+    public function show(User $user)
+    {
+        if (auth('api')->user()->id == $user->id) {
+            return $user;
+        }
+
+        return response(404);
+    }
+
+    public function get()
+    {
+        if (auth('api')->user()->role == 1) {
+            return User::paginate(10)->toArray();
+        }
+
+        return response(404);
+    }
+
 
     public function update(Request $request)
     {

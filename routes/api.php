@@ -9,4 +9,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('profile', 'UserController@update');
 
     Route::resource('slides', 'SlideController', ['except' => ['show']]);
+    Route::get('get/slides/{slide}', 'SlideController@show');
+
+    Route::get('users', 'UserController@get');
+    Route::get('users/{user}', 'UserController@show');
 });
