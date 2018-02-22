@@ -33,7 +33,14 @@ class UserController extends Controller
     public function get()
     {
         if (auth('api')->user()->role == 1) {
-            return User::paginate(10)->toArray();
+            $users = User::paginate(10);
+
+            foreach ($users as $key => $user) {
+                $user->subscription_status = $user->subscribed('main');
+            }
+
+            // return User::paginate(10)->toArray();
+            return $users->toArray();
         }
 
         return response(404);
@@ -78,5 +85,14 @@ class UserController extends Controller
             'success' => 0,
             'message' => "Something went wrong while trying to update profile information. Please try again later."
         ];
+    }
+
+    public function updatePaymentMethod(Request $request)
+    {
+        $user = auth('api')->user();
+        $user->stripe_id = "";
+        $user->card_brand = "";
+        $user->last_four = "";
+        $user->trial_ends_at = "";
     }
 }

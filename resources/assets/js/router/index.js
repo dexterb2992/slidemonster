@@ -11,6 +11,7 @@ import Profile from '../views/Profile.vue';
 import SlideForm from '../views/Slide/Form.vue';
 import SlideIndex from '../views/Slide/Index.vue';
 import Users from '../views/Admin/Users.vue';
+import Subscriptions from '../views/Admin/Subscriptions.vue';
 
 Vue.use(VueRouter);
 
@@ -22,6 +23,7 @@ const router = new VueRouter({
 		{ path: '/slides/:id/edit', component: SlideForm, meta: { mode: 'edit' } },
 		{ path: '/slides/:id' },
 		{ path: '/users', component: Users },
+		{ path: '/subscription-plans', component: Subscriptions },
 		{ path: '/', component: SlideIndex },
 		{ path: '/register', component: Register },
 		{ path: '/login', component: Login },

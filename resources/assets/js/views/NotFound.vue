@@ -6,3 +6,10 @@
         </div>   
     </div>
 </template>
+<script>
+    export default {
+        mounted() {
+            Event.fire('page-loaded', 'page-index');
+        }
+    }
+</script>

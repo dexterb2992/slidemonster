@@ -14,12 +14,12 @@
                 <div class="form-inline form-group pull-right">
                     <input type="text" class="form-control" placeholder="Search..." v-model="search">
                 </div>
-                <table class="table table-bordered">
+                <table class="table table-bordered table-responsive">
                     <thead>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Subscription Status</th>
+                        <th>Subscription</th>
                         <th>Action</th>
                     </thead>
                     <tbody>
@@ -27,8 +27,13 @@
                             <td>{{ user.id }}</td>
                             <td>{{ user.name }}</td>
                             <td>{{ user.email }}</td>
-                            <td></td>
-                            <td></td>
+                            <td>
+                                <span class="badge badge-success" v-if="user.subscriptions.length > 0">Subscribed</span>
+                                <span class="badge badge-default" v-if="user.subscriptions.length < 1">Free</span>
+                            </td>
+                            <td>
+                                
+                            </td>
                         </tr>
                     </tbody>
                     <tfoot>

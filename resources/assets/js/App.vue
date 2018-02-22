@@ -43,11 +43,11 @@
                             <router-link to="/profile" class="nav-link">Profile</router-link>
                         </li>
 
-                        <li class="nav-item" v-if="user && user.role == 1">
+                        <li class="nav-item" v-if="auth && user && user.role == 1">
                             <router-link to="/users" class="nav-link">Users</router-link>
                         </li>
 
-                        <li class="nav-item" v-if="user && user.role == 1">
+                        <li class="nav-item" v-if="auth && user && user.role == 1">
                             <router-link to="/subscription-plans" class="nav-link">Subscriptions</router-link>
                         </li>
 
@@ -151,7 +151,9 @@
 
             Vue.http.headers.common['Authorization'] = `Bearer ${Auth.state.api_token}`;
 			
-            this.getUser();
+            Event.listen('page-loaded', (pageClass) => {
+                this.getUser();
+            });
 		},
 		data() {
 			return {
@@ -177,11 +179,13 @@
 		},
 		methods: {
             getUser() {
-                get(`${this.base_url}api/users/${this.authState.user_id}`).then((res) => {
-                    this.user = res.data;
-                }, (err) => {
-                    this.user = null;
-                });
+                if (this.auth) {
+                    get(`${this.base_url}api/users/${this.authState.user_id}`).then((res) => {
+                        this.user = res.data;
+                    }, (err) => {
+                        this.user = null;
+                    });
+                }
             },
 			logout() {
 				post(this.base_url+'api/logout').then((res) => {

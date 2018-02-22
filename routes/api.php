@@ -1,5 +1,4 @@
 <?php
-
 Route::post('login', 'AuthController@login')->name('login');
 Route::post('logout', 'AuthController@logout');
 Route::post('register', 'AuthController@register');
@@ -13,4 +12,11 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('users', 'UserController@get');
     Route::get('users/{user}', 'UserController@show');
+
+    Route::get('plans', 'SubscriptionPlanController@index');
+    Route::get('plans/{id}', 'SubscriptionPlanController@retrieve');
+    Route::get('plans/{plan_id}/features', 'SubscriptionPlanController@features');
+
+    // Route::delete('features/{feature}/delete', 'FeatureController@destroy');
+    Route::resource('features', 'FeatureController');
 });

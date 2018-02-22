@@ -1,7 +1,6 @@
 <?php
-Route::get('try', function () {
-    //
-});
+Route::get('try', 'SubscriptionPlanController@retrievePlan');
+Route::get('test', 'SubscriptionPlanController@index');
 
 // Password reset routes
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');

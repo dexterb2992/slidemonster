@@ -35,7 +35,7 @@ export function isValidURL(str) {
 
 export function showSuccessMsg(msg, headingTxt, timeout, position) {
     if (typeof(timeout) == 'undefined') {
-        timeout = 5000;
+        timeout = 6000;
     }
 
     $.toast({
@@ -50,7 +50,7 @@ export function showSuccessMsg(msg, headingTxt, timeout, position) {
 
 export function showErrorMsg(msg, headingTxt, timeout, position) {
     if (typeof(timeout) == 'undefined') {
-        timeout = 5000;
+        timeout = 6000;
     }
 
     $.toast({
@@ -65,7 +65,7 @@ export function showErrorMsg(msg, headingTxt, timeout, position) {
 
 export function showInfoMsg(msg, headingTxt, timeout, position) {
     if (typeof(timeout) == 'undefined') {
-        timeout = 5000;
+        timeout = 6000;
     }
 
     $.toast({
@@ -80,7 +80,7 @@ export function showInfoMsg(msg, headingTxt, timeout, position) {
 
 export function showWarningMsg(msg, headingTxt, timeout, position) {
     if (typeof(timeout) == 'undefined') {
-        timeout = 5000;
+        timeout = 6000;
     }
 
     $.toast({
@@ -103,7 +103,7 @@ export function handleErrorResponse(status) {
             showErrorMsg("Sorry, your session seems to have expired. Please login again.");
             break;
         default:
-            showErrorMsg("Something went wrong while processing your request.");
+            showErrorMsg("Something went wrong while processing your request. Please reload and try again.");
             break;
     }
 }
