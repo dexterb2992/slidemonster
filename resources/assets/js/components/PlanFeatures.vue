@@ -19,7 +19,7 @@
         data() {
             return {
                 base_url: window.base_url,
-                features: {}
+                features: []
             }
         },
         mounted() {
