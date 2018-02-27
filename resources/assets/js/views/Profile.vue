@@ -115,13 +115,22 @@
                 error: {},
                 isProcessing: false,
                 initializeURL: this.$router.options.base+`api/profile`,
-                pageClass: 'profile-page'
+                pageClass: 'profile-page',
+                selectedPlan: null
             }
         },
         mounted() {
             Event.fire('page-loaded', this.pageClass);
 
             this.init();
+
+            Event.listen('planSelected', (plan) => {
+                this.selectedPlan = plan;
+            });
+
+            Event.listen('cardCreated', card => {
+                // show payment for selected subscription
+            });
         },
         methods: {
             init() {

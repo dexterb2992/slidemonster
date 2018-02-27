@@ -1,7 +1,7 @@
-// @import 'now-ui-kit.scss';
+@import 'now-ui-kit.scss';
 @import './node_modules/bootstrap-colorpicker/src/sass/_colorpicker.scss';
 
-/* .error-control, .error__control {
+.error-control, .error__control {
     color: $danger-color;
     font-size: 80%;
 }
@@ -14,7 +14,7 @@
     &__bg {
         background: #ffcdd2!important;
     }
-} */
+}
 
 .btn-see-in-action {
     margin-left: 14px;
@@ -74,4 +74,8 @@
             border-width: .2rem;
         }
     }
+}
+
+.has-success:after, .has-danger:after {
+    right: 25px;
 }

@@ -20,9 +20,6 @@
             </div>
         </div>
         
-        <!-- <div v-for="plan in plans" class="col">
-            <plan :plan="plan" :icon-type="getRandomItem(iconTypes)"></plan>
-        </div> -->
         <div class="col" v-for="(plan, key) in plans">
             <div class="card card-pricing" data-background-color="black">
                 <div class="card-body">
@@ -32,32 +29,19 @@
                     </div>
                     <h3 class="card-title"><small>$</small>{{ getPrice(plan.amount) }}/mo.</h3>
                     <plan-features :plan="plan" :name="plan.name"></plan-features>
-                    <!-- <ul> -->
-                        
-                        <!-- <li>Ad/Content</li>
-                        <li>Countdown Timer</li>
-                        <li>Social</li>
-                        <li>Opt-In</li>
-                        <li>Full Support</li> -->
-                    <!-- </ul> -->
-                   <!--  <a href="#upgrade" class="btn btn-success btn-round">
-                        Upgrade
-                    </a> -->
-                    
-                    <modal-trigger dataTarget="#paymentMethod" :class="`btn btn-success btn-round`" @click="selectedPlan = plan">
-                        Upgrade
-                    </modal-trigger>
+
+                    <a class="btn btn-success btn-round" @click="selectPlan(plan)">Upgrade</a>
                 </div>
             </div>
         </div>
 
-        <payment-method trigger-class="btn btn-success btn-round"></payment-method>
+        <payment-method trigger-class="btn btn-success btn-round" :selectedPlan="selectedPlan"></payment-method>
     </div>
 </template>
 
 <script>
     import {get, post} from '../helpers/api';
-    import {showErrorMsg, handleErrorResponse} from '../helpers/helper';
+    import {showErrorMsg, handleErrorResponse, getPrice} from '../helpers/helper';
     import PaymentMethod from '../components/PaymentMethod.vue';
     import SubscriptionPlan from '../components/SubscriptionPlan.vue';
     import PlanFeatures from '../components/PlanFeatures.vue';
@@ -94,12 +78,9 @@
                 });
             },
 
-            randomize(max) {
-                return Math.floor(Math.random() * (max - 0 + 1)) + 0;
-            },
-
-            getRandomItem(items) {
-                return items[this.randomize(items.length)];
+            selectPlan(plan) {
+                Event.fire('planSelected', plan);
+                $("#paymentMethod").modal('show');
             },
 
             getPrice(amount) {

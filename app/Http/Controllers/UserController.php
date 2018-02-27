@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\User;
+use App\Libraries\StripePlan;
 
 class UserController extends Controller
 {
@@ -18,6 +19,8 @@ class UserController extends Controller
     public function index()
     {
         $user = auth()->guard('api')->user()->only('name', 'email', 'license_key');
+        // check for current subscription:
+
         return ['form' => $user];
     }
 
@@ -94,5 +97,100 @@ class UserController extends Controller
         $user->card_brand = "";
         $user->last_four = "";
         $user->trial_ends_at = "";
+    }
+
+    public function hasPreviousSubscription($user, $plans)
+    {
+        foreach ($plans as $value) {
+            if ($user->subscribed($value['id'])) {
+                return $value;
+            }
+        }
+
+        return false;
+    }
+
+    public function checkCoupon(Request $request)
+    {
+        try {
+            $coupon = $request->coupon;
+            $stripe = new StripePlan;
+            $response = $stripe->getCoupon($coupon);
+
+            return response()->json([
+                'success' => 1,
+                'coupon' => $response
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => 0, 'message' => 'No such coupon.'], 200);
+        }
+    }
+
+    public function subscribe(Request $request)
+    {
+        $user = $request->user();
+        $input = $request->all();
+
+        $stripeToken = $input['token']['id'];
+        $card = $input['token']['card'];
+        $plan_id = $input['plan_id'];
+
+        $stripe = new StripePlan;
+        $plans = $stripe->all();
+
+        $plan = null;
+        // dd($plans->data);
+        \Log::info($plans);
+
+        // let's get the price now
+        foreach ($plans->data as $key => $value) {
+            if ($value['id'] == $plan_id) {
+                $plan = $value;
+            }
+        }
+
+        // let's check if user has a previous subscription
+        $previous = $this->hasPreviousSubscription($user, $plans->data);
+        if ($previous == false) {
+            // create a new subscription
+           
+
+            if ($request->coupon != "") {
+                $user->newSubscription($plan['id'], $plan['id'])
+                    ->withCoupon($request->coupon)
+                    ->create($stripeToken, [
+                        'email' => $user->email
+                    ]);
+            } else {
+                $user->newSubscription($plan['id'], $plan['id'])
+                    ->create($stripeToken, [
+                        'email' => $user->email
+                    ]);
+            }
+
+            return [
+                'success' => 1,
+                'message' => "You have successfully subscribed to ".$plan['name']." membership. Your trial ends in "
+                                .$plan['trial_period_days']." days"
+            ];
+        } else {
+            // this user has already subscribed
+            \Log::info("this user has already subscribed");
+            \Log::info("susbscribed to: ".json_encode($previous));
+            return [
+                'success' => 0,
+                'message' => "You have already subscribed to this plan."
+            ];
+        }
+
+        return [
+            'success' => 0,
+            'message' => "Something went wrong, please try again later."
+        ];
+    }
+
+    public function cancelSubscription()
+    {
+        //
     }
 }

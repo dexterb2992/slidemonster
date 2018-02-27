@@ -27,10 +27,10 @@
 
     <script src="https://js.stripe.com/v3/"></script>
     <script>
-        window.base_url = "{{ env('VUE_BASE_URL', '/') }}";
-        window.app_url = "{{ env('APP_URL') }}";
-        window.app_name = "{{ env('APP_NAME', '/') }}";
-        window.stripe_key = "{{ env('STRIPE_KEY') }}";
+        window.base_url = "{{ getenv('VUE_BASE_URL', '/') }}";
+        window.app_url = "{{ getenv('APP_URL') }}";
+        window.app_name = "{{ getenv('APP_NAME', '/') }}";
+        window.stripe_key = "{{ getenv('STRIPE_KEY') }}";
     </script>
 </head>
 

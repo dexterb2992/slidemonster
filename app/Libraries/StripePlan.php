@@ -6,6 +6,7 @@ use App\User;
 use Cache;
 use Stripe\Stripe;
 use Stripe\Plan;
+use Stripe\Coupon;
 
 class StripePlan
 {
@@ -32,5 +33,10 @@ class StripePlan
     {
         $plan = Plan::retrieve($id);
         return $plan;
+    }
+
+    public function getCoupon($coupon)
+    {
+        return Coupon::retrieve($coupon);
     }
 }

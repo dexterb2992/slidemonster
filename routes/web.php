@@ -1,4 +1,22 @@
 <?php
+
+Route::get('s3', function (Illuminate\Http\Request $request) {
+    if ($request->has('email_login')) {
+
+        // $request->flashOnly(['email_login']); // I want to use this, but doesn't work either
+        dump($request->email_login);
+        session(['test' => $request->email_login]); // This DOES NOT get stored in the session
+
+        session(['test3' => 'C']); // This DOES NOT get stored in the session
+
+        echo  'yes we come here'; // This DOES output
+    }
+
+    session(['test2' => 'B']); // This DOES get flashed to the session
+    dump(session()->all());
+    session()->flush();
+});
+
 Route::get('try', 'SubscriptionPlanController@retrievePlan');
 Route::get('test', 'SubscriptionPlanController@index');
 

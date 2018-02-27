@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" :id="`${id}`" tabindex="-1" role="dialog" :aria-labelledby="`${id}Label`" aria-hidden="true">
+    <div class="modal" :id="`${id}`" tabindex="-1" role="dialog" :aria-labelledby="`${id}Label`" aria-hidden="true">
         <div :class="`modal-dialog ${isLarge ? 'modal-lg' : ''}`">
             <div class="modal-content">
                 <!-- <a :href="link" :is="link ? 'a' : 'span'">Some text</a> -->

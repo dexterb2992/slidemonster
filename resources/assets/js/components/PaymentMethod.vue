@@ -7,7 +7,7 @@
             
             <div class="form-group">
                 <label for="card-element">
-                    Credit or debit card
+                    Enter your Credit or Debit card
                 </label>
                 <div id="card-element">
                   <!-- a Stripe Element will be inserted here. -->
@@ -17,20 +17,39 @@
                 <div id="card-errors" role="alert" class="text-danger"></div>
             </div>
 
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="coupon">Do you have a coupon code?</label>
+                </div>
+                <div class="col-md-6 form-group">
+                    <input class="form-control" id="coupon" v-model="couponText" placeholder="Enter Coupon" @change="verifyCoupon" />
+                    <div>
+                        <span class="error-control text-info" v-if="checkingCoupon"><i class="fa fa-refresh fa-spin"></i> checking...</span>
+                        <em class="text-danger error-control pull-right" v-if="couponErrors != ''">{{ couponErrors }}</em>
+                        <strong class="text-primary pull-right" v-if="hasCoupon">
+                            <span v-if="couponAmountOff">$ {{ couponAmountOff }} off</span>
+                            <span v-if="couponPercentOff">{{ couponPercentOff }}% off</span>
+                        </strong>
+                    </div>
+                </div>
+            </div>
+
             <template slot="submit-button">
                 <button type="submit" class='pay-with-stripe btn btn-success' :disabled="disabled">
                     <i class="fa fa-lock" v-if="!disabled"></i>
                     <i class="fa fa-refresh fa-spin" v-if="disabled"></i>
-                 Upgrade Now</button>
+                 Upgrade Now for ($<strong>{{ (selectedPlan.amount/100).toFixed(2) }}</strong>)</button>
             </template>
         </modal>
     </div>
 </template>
 
 <script>
-    import {showSuccessMsg, showErrorMsg} from '../helpers/helper'
+    import {showSuccessMsg, showErrorMsg, getPrice, handleErrorResponse} from '../helpers/helper';
+    import {get, post} from '../helpers/api';
     import Modal from './Modal.vue';
-    import ModalTrigger from './ModalTrigger.vue';;
+    import ModalTrigger from './ModalTrigger.vue';
+    import Auth from '../store/auth';
 
     export default {
         props: ['triggerClass', 'plan'],
@@ -42,6 +61,7 @@
             return {
                 app_name: window.app_name,
                 stripeKey: window.stripe_key,
+                base_url: window.base_url,
                 disabled: false,
                 cardError: null,
                 stripeOptions: {
@@ -60,30 +80,127 @@
                         iconColor: '#fa755a'
                     }
                 },
-                stripe: ''
+                stripe: '',
+                selectedPlan: {
+                    amount: 0
+                },
+                couponText: '',
+                coupon: null,
+                hasCoupon: false,
+                couponErrors: null,
+                couponPercentOff: false,
+                couponAmountOff: false,
+                checkingCoupon: false
             }
         },
         mounted(){
             this.createCard();
-            console.log("selectedPlan: ");
-            console.log(this.plan);
+            Event.listen('planSelected', (plan) => {
+                this.selectedPlan = plan;
+                this.selectedPlan.formatted_amount = getPrice(plan.amount);
+            });
         },
         methods: {
-            stripeTokenHandler: function (token) {
-                this.$http.post('/api/payment-method/add', token)
-                    .then((res) => {
-                        // console.log(res.data);
+            verifyCoupon() {
+                console.log('listening to change event...');
+
+                if (this.couponText == "") {
+                    this.toggleCouponStatus(null);
+                } else {
+                    var self = this;
+
+                    $.ajax({
+                        headers: {
+                            'Authorization': `Bearer `+Auth.state.api_token
+                        },
+                        type: 'get',
+                        url: base_url+'api/coupons',
+                        data: {
+                            coupon: this.couponText
+                        },
+                        beforeSend: () => {
+                            this.checkingCoupon = true;
+                        },
+                        complete: () => {
+                            this.checkingCoupon = false;
+                        },
+                        success: (data) => {
+                            if (data.success) {
+                                if (data.coupon.valid) {
+                                    this.coupon = data.coupon;
+                                    this.hasCoupon = true;
+
+                                    // recalculate selectedPlan amount
+                                    if (this.coupon.amount_off) {
+                                        this.selectedPlan.amount -= this.coupon.amount_off;
+                                    }
+
+                                    if (this.coupon.percent_off) {
+                                        this.selectedPlan.amount -= ((this.selectedPlan.amount) * (this.coupon.percent_off/100));
+                                    }
+
+                                    this.toggleCouponStatus(true);
+                                } else {
+                                    this.couponErrors = "This coupon is no longer valid.";
+                                    this.toggleCouponStatus(false);
+                                }
+                            } else {
+                                this.coupon = null;
+                                this.couponErrors = data.message;
+                                this.toggleCouponStatus(false);
+                            }
+                        },
+                        error: (err) => {
+                            console.warn(err);
+                            this.toggleCouponStatus(null);
+                        }
+                    })
+                }
+            },
+
+            toggleCouponStatus(status) {
+                if (status == null) {
+                    this.hasCoupon = false;
+                    this.coupon = null;
+                    this.couponErrors = null;
+                    this.couponPercentOff = false;
+                    this.couponAmountOff = false;
+                    $("#coupon").parents(".form-group").removeClass("has-danger").removeClass("has-success");
+                    this.selectedPlan.amount = this.selectedPlan.formatted_amount * 100; // revert to cents
+                } else {
+                    if (status) {
+                        this.couponErrors = '';
+                        this.couponPercentOff = this.coupon.percent_off;
+                        this.couponAmountOff = this.coupon.amount_off;
+                        $("#coupon").parents(".form-group").removeClass("has-danger").addClass("has-success");
+                    } else {
+                        $("#coupon").parents(".form-group").removeClass("has-success").addClass("has-danger");
+                        this.couponPercentOff = false;
+                        this.couponAmountOff = false;
+                        this.selectedPlan.amount = this.selectedPlan.formatted_amount * 100; // revert to cents
+                    }
+                }
+            },
+
+            stripeTokenHandler (token) {
+                var data = {
+                    token: token,
+                    plan_id: this.selectedPlan.id,
+                    coupon: this.coupon
+                }
+                post(base_url+'api/subscribe', data).then((res) => {
+                    console.log(res.data);
+                    if (res.data.hasOwnProperty('message')) {
                         if (res.data.success) {
-                            Event.fire('card-created', res.data.card);
                             showSuccessMsg(res.data.message);
                         } else {
                             showErrorMsg(res.data.message);
                         }
-                    })
-                    .catch((err) => {
-                        console.log(err.data);
-                        showErrorMsg(err.data.message);
-                    });
+                    }
+                }, (err) => {
+                    console.warn(err.data);
+                    handleErrorResponse(err.response.status);
+                });
             },
 
             createCard(){
