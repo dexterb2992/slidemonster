@@ -1364,7 +1364,7 @@ select.bs-select-hidden, select.selectpicker {
   position: relative;
   padding: 3px 8px;
   border-radius: 12px;
-  color: #FFFFFF;
+  /*color: #FFFFFF;*/
   font-weight: 500;
   font-size: 0.75em;
   text-transform: uppercase;

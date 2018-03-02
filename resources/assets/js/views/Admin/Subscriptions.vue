@@ -63,14 +63,14 @@
 </template>
 
 <script>
-    import SubscriptionPlan from '../../components/SubscriptionPlan.vue';
+    // import SubscriptionPlan from '../../components/SubscriptionPlan.vue';
     import PlanFeatures from '../../components/PlanFeatures.vue';
     import {get, post, del} from '../../helpers/api';
     import {showSuccessMsg, showErrorMsg, handleErrorResponse} from '../../helpers/helper';
 
     export default {
         components: {
-            'plan': SubscriptionPlan,
+            // 'plan': SubscriptionPlan,
             'plan-features': PlanFeatures
         },
         data() {
@@ -123,22 +123,26 @@
             },
 
             addFeature() {
-                post(this.base_url+'api/features', this.newFeature).then((res) => {
-                    if (res.data.success) {
-                        Event.fire('featureCreated', this.newFeature);
-                        showSuccessMsg(res.data.message);
-                        this.newFeature = {
-                            content: '',
-                            plan_id: ''
+                if (this.newFeature.plan_id != '') {
+                    post(this.base_url+'api/features', this.newFeature).then((res) => {
+                        if (res.data.success) {
+                            var feature = this.newFeature;
+                            feature.id = res.data.id;
+                            Event.fire('featureCreated', this.newFeature);
+                            showSuccessMsg(res.data.message);
+                            /*this.newFeature = {
+                                content: '',
+                                plan_id: ''
+                            }*/
+                        } else {
+                            if (res.data.hasOwnProperty('message')) {
+                                showErrorMsg(res.data.message);
+                            }
                         }
-                    } else {
-                        if (res.data.hasOwnProperty('message')) {
-                            showErrorMsg(res.data.message);
-                        }
-                    }
-                }, (err) => {
-                    handleErrorResponse(err.response.status);
-                });
+                    }, (err) => {
+                        handleErrorResponse(err.response.status);
+                    });
+                }
             },
 
             getPrice(amount) {

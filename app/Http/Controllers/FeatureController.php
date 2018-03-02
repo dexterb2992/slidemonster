@@ -35,7 +35,8 @@ class FeatureController extends Controller
         if ($feature->save()) {
             return [
                 'success' => 1,
-                'message' => 'A new feature has been added.'
+                'message' => 'A new feature has been added.',
+                'id' => $feature->id
             ];
         }
 

@@ -30,7 +30,7 @@
             });
 
             Event.listen('featureCreated', (feature) => {
-                if (plan.id == feature.plan_id) {
+                if (this.plan.id == feature.plan_id) {
                     this.features.push(feature);
                 }
             });
