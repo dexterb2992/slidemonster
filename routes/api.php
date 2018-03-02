@@ -7,6 +7,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('profile', 'UserController@index');
     Route::post('profile', 'UserController@update');
     Route::post('subscribe', 'UserController@subscribe');
+    Route::post('cancel-subscription', 'UserController@cancelSubscription');
+    Route::post('resume-subscription', 'UserController@resumeSubscription');
 
     Route::resource('slides', 'SlideController', ['except' => ['show']]);
     Route::get('get/slides/{slide}', 'SlideController@show');

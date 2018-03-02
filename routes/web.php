@@ -20,6 +20,12 @@ Route::get('s3', function (Illuminate\Http\Request $request) {
 Route::get('try', 'SubscriptionPlanController@retrievePlan');
 Route::get('test', 'SubscriptionPlanController@index');
 
+// Cashier webhook for failed subscriptions
+Route::post(
+    'stripe/webhook',
+    '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook'
+);
+
 // Password reset routes
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');

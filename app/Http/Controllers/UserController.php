@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Input;
 use App\User;
 use App\Libraries\StripePlan;
 
+use Carbon\Carbon;
+
 class UserController extends Controller
 {
     public function __construct()
@@ -18,10 +20,20 @@ class UserController extends Controller
 
     public function index()
     {
-        $user = auth()->guard('api')->user()->only('name', 'email', 'license_key');
-        // check for current subscription:
+        // $data = auth()->guard('api')->user()->only('name', 'email', 'license_key', 'subscriptions');
+        // $user = auth('api')->user();
+        $user = auth()->user();
 
-        return ['form' => $user];
+        // for now, we only support single subscription, so let's get the latest one
+        $subscription = $user->subscriptions->first();
+
+        $data = $user->toArray();
+        $data['subscriptions'] = $subscription->valid() ? array_wrap($subscription) : [];
+        $data['subscription_on_grace_period'] = $subscription->cancelled() && $subscription->onGracePeriod();
+        $data['subscription_ends_at'] = Carbon::parse($subscription->ends_at)->toDayDateTimeString();
+
+        // check for current subscription:
+        return ['form' => $data];
     }
 
     public function show(User $user)
@@ -189,8 +201,51 @@ class UserController extends Controller
         ];
     }
 
-    public function cancelSubscription()
+    public function cancelSubscription(Request $request)
     {
-        //
+        $user = $request->user();
+        $plan = $request->plan_id;
+        
+        try {
+            if ($user->subscription($plan)->onTrial()) {
+                $user->subscription($plan)->cancelNow();
+            } else {
+                $user->subscription($plan)->cancel();
+            }
+        } catch (\Exception $e) {
+            return [
+                'success' => 0,
+                'message' => "Something went wrong while trying cancel your subscription. Please try again later."
+            ];
+        }
+
+        $ends_at = Carbon::parse($user->subscription($plan)->ends_at)->toDayDateTimeString();
+
+        return [
+            'success' => 1,
+            'message' => "You successfully cancelled your subscription. Your subscription will end in $ends_at"
+        ];
+    }
+
+    public function resumeSubscription(Request $request)
+    {
+        $user = $request->user();
+        $plan = $request->plan_id;
+        
+        try {
+            $user->subscription($plan)->resume();
+        } catch (\Exception $e) {
+            return [
+                'success' => 0,
+                'message' => "Something went wrong while trying resume your subscription. Please try again later."
+            ];
+        }
+
+        $ends_at = Carbon::parse($user->subscription($plan)->ends_at)->toDayDateTimeString();
+
+        return [
+            'success' => 1,
+            'message' => "You successfully resumed your subscription to $plan"
+        ];
     }
 }

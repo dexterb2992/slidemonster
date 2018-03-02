@@ -128,14 +128,16 @@
                 this.selectedPlan = plan;
             });
 
-            Event.listen('cardCreated', card => {
-                // show payment for selected subscription
+            Event.listen('subscriptionsUpdated', () => {
+                this.init();
             });
+
         },
         methods: {
             init() {
                 get(this.initializeURL).then((res) => {
                     Vue.set(this.$data, 'form', res.data.form);
+                    Event.fire('userDataLoaded', res.data.form);
                 }, (err) => {
                     handleErrorResponse(err.response.status);
                 });

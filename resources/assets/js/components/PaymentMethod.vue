@@ -16,7 +16,7 @@
                 <!-- Used to display form errors -->
                 <div id="card-errors" role="alert" class="text-danger"></div>
             </div>
-
+            <br>
             <div class="row">
                 <div class="col-md-6">
                     <label for="coupon">Do you have a coupon code?</label>
@@ -186,13 +186,19 @@
                 var data = {
                     token: token,
                     plan_id: this.selectedPlan.id,
-                    coupon: this.coupon
+                    coupon: this.hasCoupon ? this.couponText : ''
                 }
+                this.disabled = true;
                 post(base_url+'api/subscribe', data).then((res) => {
                     console.log(res.data);
                     if (res.data.hasOwnProperty('message')) {
                         if (res.data.success) {
                             showSuccessMsg(res.data.message);
+                            $("#payment_form").modal('hide');
+                            // setTimeout(function() {
+                            //     window.location.reload();
+                            // }, 5000);
+                            Event.fire('subscriptionsUpdated');
                         } else {
                             showErrorMsg(res.data.message);
                         }
@@ -200,6 +206,8 @@
                 }, (err) => {
                     console.warn(err.data);
                     handleErrorResponse(err.response.status);
+                }).then(() => {
+                    this.disabled = false;
                 });
             },
 
