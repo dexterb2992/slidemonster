@@ -47,14 +47,20 @@ class UserController extends Controller
 
         $data = $user->toArray();
 
-        $subscription_status = !empty($subscription) && $subscription->valid();
+        $subscription_status = false;
+
+        if (!empty($subscription)) {
+            $subscription_status = $subscription->valid();
+
+            $data['subscription_on_grace_period'] = $subscription->cancelled() && $subscription->onGracePeriod();
+            $data['subscription_ends_at'] = Carbon::parse($subscription->ends_at)->toDayDateTimeString();
+        }
 
         $data['subscriptions'] = $subscription_status ? array_wrap($subscription) : [];
 
         $data['perms'] = $this->getPerms($user);
 
-        $data['subscription_on_grace_period'] = $subscription->cancelled() && $subscription->onGracePeriod();
-        $data['subscription_ends_at'] = Carbon::parse($subscription->ends_at)->toDayDateTimeString();
+        
 
         // check for current subscription:
         return ['form' => $data];
