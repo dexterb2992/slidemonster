@@ -47,7 +47,7 @@ class UserController extends Controller
 
         $data = $user->toArray();
 
-        $subscription_status = $subscription->valid();
+        $subscription_status = !empty($subscription) && $subscription->valid();
 
         $data['subscriptions'] = $subscription_status ? array_wrap($subscription) : [];
 

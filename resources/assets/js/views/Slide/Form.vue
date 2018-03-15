@@ -11,7 +11,7 @@
                     </h5>
                 </div>
                 <div class="section">
-                    <div class="row">
+                    <div class="row" style="padding-bottom: 5%;">
                         <div class="col-md-4 bordered-right">
                             <div :class="errorClass('title')">
                                 <label>Name</label>
