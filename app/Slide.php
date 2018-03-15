@@ -14,6 +14,7 @@ class Slide extends Model
             'title' => '',
             'content' => '',
             'type' => 'adcontent',
+            'types' => [],
             'border_width' => 0,
             'border_style' => 'solid',
             'border_color' => '',
@@ -30,12 +31,12 @@ class Slide extends Model
             'button_color' => 'btn-primary',
             'button_style' => 'btn-simple',
             'button_size' => 'btn-md',
-            'twitter' => 'http://twitter.com/',
-            'facebook' => 'http://facebook.com/',
-            'pinterest' => 'http://pinterest.com/',
-            'linkedin' => 'http://linkedin.com/',
-            'youtube' => 'http://youtube.com/',
-            'rss' => 'http://',
+            'twitter' => '',
+            'facebook' => '',
+            'pinterest' => '',
+            'linkedin' => '',
+            'youtube' => '',
+            'rss' => '',
         ];
     }
 }

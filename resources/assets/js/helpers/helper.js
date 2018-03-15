@@ -122,3 +122,11 @@ export function handleResponse(response) {
 export function getPrice(amount) {
     return (amount/100).toFixed(2);
 }
+
+export function inArray (needle, haystack) {
+    var length = haystack.length;
+    for(var i = 0; i < length; i++) {
+        if(haystack[i] == needle) return true;
+    }
+    return false;
+}

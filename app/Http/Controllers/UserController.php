@@ -18,6 +18,24 @@ class UserController extends Controller
         ];
     }
 
+    protected function getPerms($user)
+    {
+        $subscription = $user->subscriptions->first();
+        if (!empty($subscription) && $subscription->valid()) {
+            return [
+                ['id' => 'adcontent', 'value' => 'Ad/Content'],
+                ['id' => 'optin', 'value' => 'Opt-in'],
+                ['id' => 'social', 'value' => 'Social'],
+                ['id' => 'timer', 'value' => 'Timer'],
+            ];
+        }
+
+        return [
+            ['id' => 'adcontent', 'value' => 'Ad/Content'],
+            ['id' => 'timer', 'value' => 'Timer']
+        ];
+    }
+
     public function index()
     {
         // $data = auth()->guard('api')->user()->only('name', 'email', 'license_key', 'subscriptions');
@@ -28,7 +46,13 @@ class UserController extends Controller
         $subscription = $user->subscriptions->first();
 
         $data = $user->toArray();
-        $data['subscriptions'] = $subscription->valid() ? array_wrap($subscription) : [];
+
+        $subscription_status = $subscription->valid();
+
+        $data['subscriptions'] = $subscription_status ? array_wrap($subscription) : [];
+
+        $data['perms'] = $this->getPerms($user);
+
         $data['subscription_on_grace_period'] = $subscription->cancelled() && $subscription->onGracePeriod();
         $data['subscription_ends_at'] = Carbon::parse($subscription->ends_at)->toDayDateTimeString();
 
@@ -39,6 +63,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         if (auth('api')->user()->id == $user->id) {
+            $user->perms = $this->getPerms($user);
             return $user;
         }
 

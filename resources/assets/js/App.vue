@@ -182,6 +182,7 @@
                 if (this.auth) {
                     get(`${this.base_url}api/users/${this.authState.user_id}`).then((res) => {
                         this.user = res.data;
+                        Event.fire('userLoaded', this.user);
                     }, (err) => {
                         this.user = null;
                     });

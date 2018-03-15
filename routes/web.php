@@ -1,24 +1,42 @@
 <?php
 
-Route::get('s3', function (Illuminate\Http\Request $request) {
-    if ($request->has('email_login')) {
-
-        // $request->flashOnly(['email_login']); // I want to use this, but doesn't work either
-        dump($request->email_login);
-        session(['test' => $request->email_login]); // This DOES NOT get stored in the session
-
-        session(['test3' => 'C']); // This DOES NOT get stored in the session
-
-        echo  'yes we come here'; // This DOES output
-    }
-
-    session(['test2' => 'B']); // This DOES get flashed to the session
-    dump(session()->all());
-    session()->flush();
+Route::get('try', function () {
+    ?>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <slidemonster id="slidemonster" slide-id="7" token="ot5aWhe5vNO900sfa8qIScieKuCn7OhCk8KvQrv4m0nrxT5Zujl3btDfcBM2"></slidemonster><script type="text/javascript" src="http://slide-monster.local/js/embed.js"></script>
+    </body>
+    </html>
+    <?php
 });
 
-Route::get('try', 'SubscriptionPlanController@retrievePlan');
-Route::get('test', 'SubscriptionPlanController@index');
+Route::get('try2', function () {
+    ?>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <timermonster data-id="20"></timermonster>
+        
+        <script src="http://topdogimsolutions.com/timer-monster/public/assets/js/timer-monster.min.js"></script>
+        <script type="text/javascript">
+            TimerMonster.init({
+                token: '',
+            });
+        </script>
+    </body>
+    </html>
+    <?php
+});
+
+// Route::get('try', 'SubscriptionPlanController@retrievePlan');
+// Route::get('test', 'SubscriptionPlanController@index');
 
 // Cashier webhook for failed subscriptions
 Route::post(

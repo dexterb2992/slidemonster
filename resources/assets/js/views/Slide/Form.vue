@@ -17,15 +17,15 @@
                                 <label>Name</label>
                                 <input type="text" v-model="form.title" class="form-control" placeholder="Title">
                             </div>
-                            <div :class="errorClass('type')">
+                            <div>
                                 <label>Type</label>
-                                <select v-model="form.type" class="form-control">
+                                <!-- <select v-model="form.type" class="form-control">
                                     <option v-for="(type, key) in types" :key="key" :value="key">{{ type }}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Content</label>
-                                <textarea v-model="form.content" class="form-control" placeholder="Add your content..."></textarea>
+                                </select> -->
+                                <div :class="errorClass('type')" v-for="(type, key) in types" :key="key">
+                                    <input type="checkbox"  :id="'_'+type.id" :value="type.id" v-model="form.types">
+                                    <label :for="'_'+type.id">{{ type.value }}</label>
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -93,7 +93,90 @@
                                 </span> -->
                             </div>
 
-                            <div class="" v-if="form.type == 'optin'">
+                            <div v-show="inArray('adcontent', form.types) || inArray('optin', form.types)">
+                                <legend>Button styling</legend>
+                                <div class="form-group">
+                                    <label>Submit Button Color</label><br/>
+                                    <button-colors :form="form"></button-colors>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Button Style</label><br/>
+                                    <button-styles :form="form"></button-styles>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Button Size</label><br/>
+                                    <button-sizes :form="form"></button-sizes>
+                                </div>
+                            </div>
+
+                            <!-- AD/CONTENT & CTA BUTTON -->
+                            <div v-show="inArray('adcontent', form.types)">
+                                <hr>
+                                <legend>Ad/Content</legend>
+                                <div class="form-group">
+                                    <label>Content</label>
+                                    <textarea v-model="form.content" class="form-control" id="slide_content" placeholder="Add your content..."></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="has_cta_button">Set Call-to-action button</label>
+                                    <input type="checkbox" id="has_cta_button" v-model="form.has_cta_button">
+                                </div>
+                                <div class="form-group" v-show="form.has_cta_button">
+                                    <label>CTA button text</label>
+                                    <input type="text" class="form-control" v-model="form.cta_button_text">
+                                </div>
+
+                                <div class="form-group" v-show="form.has_cta_button">
+                                    <label>CTA button URL</label>
+                                    <input type="text" class="form-control" v-model="form.cta_button_url">
+                                </div>
+                            </div>
+                            <!-- END AD/CONTENT -->
+
+                            <!-- SOCIAL MEDIA LINKS -->
+                            <div class="" v-show="inArray('social', form.types)">
+                                <hr>
+                                <legend>Social</legend>
+                                <small class="help">Enter your social profile URL. Leave empty to disable.</small>
+
+                                <div class="form-group">
+                                    <label>Twitter</label>
+                                    <input type="url" class="form-control" v-model="form.twitter">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Facebook</label>
+                                    <input type="url" class="form-control" v-model="form.facebook">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Pinterest</label>
+                                    <input type="url" class="form-control" v-model="form.pinterest">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>LinkedIn</label>
+                                    <input type="url" class="form-control" v-model="form.linkedin">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Youtube</label>
+                                    <input type="url" class="form-control" v-model="form.youtube">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>RSS</label>
+                                    <input type="url" class="form-control" v-model="form.rss">
+                                </div>
+                            </div>
+                            <!-- END SOCIAL MEDIA -->
+
+                            <!-- OPT-IN FORM -->
+                            <div class="" v-show="inArray('optin', form.types)">
+                                <hr>
                                 <legend>Optin</legend>
 
                                 <div class="form-group">
@@ -139,68 +222,25 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label>Submit Button Color</label><br/>
-                                    <span v-for="(buttonColor, key) in buttonColors" :key="key" class="col-md-8">
-                                        <a :class="'btn '+buttonColor" @click="form.button_color = buttonColor" href="javascript:void(0)">
-                                           <i class="fa fa-check" v-if="form.button_color == buttonColor"></i> {{ key }}
-                                        </a>
-                                    </span>
+                                    <button-colors :form="form"></button-colors>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Button Style</label><br/>
-                                    <span v-for="(buttonStyle, key) in buttonStyles" :key="key" class="col">
-                                        <a :class="'btn '+form.button_color+' '+buttonStyle" @click="form.button_style = buttonStyle"  href="javascript:void(0)">
-                                            <i class="fa fa-check" v-if="form.button_style == buttonStyle"></i> {{ key }}
-                                        </a>
-                                    </span>
+                                    <button-styles :form="form"></button-styles>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Button Size</label><br/>
-                                    <span v-for="(buttonSize, key) in buttonSizes" :key="key" class="col">
-                                        <a :class="'btn '+form.button_style+' '+form.button_color+' '+buttonSize" @click="form.button_size = buttonSize"  href="javascript:void(0)">
-                                            <i class="fa fa-check" v-if="form.button_size == buttonSize"></i> {{ key }}
-                                        </a>
-                                    </span>
-                                </div>
+                                    <button-sizes :form="form"></button-sizes>
+                                </div> -->
                             </div>
+                            <!-- END OPT-IN -->
 
-                            <div class="" v-if="form.type == 'social'">
-                                <legend>Social</legend>
-                                <small class="help">Enter your social profile URL. Leave empty to disable.</small>
+                            <!-- TIMER -->
 
-                                <div class="form-group">
-                                    <label>Twitter</label>
-                                    <input type="url" class="form-control" v-model="form.twitter">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Facebook</label>
-                                    <input type="url" class="form-control" v-model="form.facebook">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Pinterest</label>
-                                    <input type="url" class="form-control" v-model="form.pinterest">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>LinkedIn</label>
-                                    <input type="url" class="form-control" v-model="form.linkedin">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Youtube</label>
-                                    <input type="url" class="form-control" v-model="form.youtube">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>RSS</label>
-                                    <input type="url" class="form-control" v-model="form.rss">
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -218,12 +258,19 @@
     import {get, post} from '../../helpers/api';
     import {showErrorMsg, handleErrorResponse, handleResponse} from '../../helpers/helper';
     import SeeSlideInAction from '../../components/SeeSlideInAction.vue';
+    // import SeeSlideInAction from '../../components/SeeSlideInActionNew.vue';
+    import ButtonSizes from '../../components/ButtonSizes.vue';
+    import ButtonStyles from '../../components/ButtonStyles.vue';
+    import ButtonColors from '../../components/ButtonColors.vue';
 
     require('bootstrap-switch');
 
     export default {
         components: {
-            'see-slide-in-action': SeeSlideInAction
+            'see-slide-in-action': SeeSlideInAction,
+            'button-sizes': ButtonSizes,
+            'button-styles': ButtonStyles,
+            'button-colors': ButtonColors
         },
         data() {
             return {
@@ -233,15 +280,16 @@
                 action: 'Create',
                 pageClass: 'page-index',
                 form: {},
+                currentTypes: [],
                 errors: {},
                 isProcessing: false,
                 isInAction: true,
                 // isInDemo: true,
-                types: {
-                    'adcontent': 'Ad/Content',
-                    'optin': 'Opt-in',
-                    'social': 'Social'
-                },
+                types: [
+                    {id: 'adcontent', value: 'Ad/Content'},
+                    {id: 'timer', value: 'Timer'}
+                ],
+                types: [],
                 borderStyles: {
                     'none': "None",
                     'solid': "Solid",
@@ -257,26 +305,6 @@
                     "ps_neutral": "PS Neutral",
                     "tweed": "Tweed"
                 },
-                buttonColors: {
-                    red: 'btn-danger',
-                    blue: 'btn-info',
-                    green: 'btn-success',
-                    orange: 'btn-warning',
-                    primary: 'btn-primary',
-                    white: 'btn-neutral',
-                    gray: 'btn-default'
-                },
-                buttonSizes: {
-                    small: 'btn-sm',
-                    medium: 'btn-md',
-                    large: 'btn-lg'
-                },
-                buttonStyles: {
-                    normal: 'btn',
-                    round: 'btn-round',
-                    simple: 'btn-simple',
-                    hybrid: 'btn-round btn-simple'
-                }
 
             };
         },
@@ -302,6 +330,12 @@
             Event.listen('closeSlide', () => {
                 this.isInAction = !this.isInAction;
             });
+
+            Event.listen('userLoaded', (user) => {
+                if (!!user && user.perms) {
+                    this.types = user.perms;
+                }
+            });
         },
 
         methods: {
@@ -310,12 +344,46 @@
 
                 get(this.initializeURL).then((res) => {
                     this.form = res.data;
+                    this.currentTypes = res.data.types;
+                    this.initNiceEdit();
+
                 }, (err) => {
                     handleErrorResponse(err.response.status);
                 });
 
-                // this.checkDemoState();
+                
             },
+
+            initNiceEdit() {
+                // this.checkDemoState();
+                let _this = this;
+
+                $.getScript( "//js.nicedit.com/nicEdit-latest.js", ( data, textStatus, jqxhr ) => {
+                    var slideContent = new nicEditor().panelInstance('slide_content');
+                    nicEditors.findEditor( "slide_content" ).setContent(_this.form.content);
+                    
+
+                    $("div.nicEdit-main").bind('keyup', function () {
+                        _this.form.content = $(this).html();
+                    });
+
+                    slideContent.addEvent('blur', () => {
+                        _this.form.content = $("div.nicEdit-main").html();
+                    });
+
+                    slideContent.addEvent("focus", () => {
+                        _this.form.content = $("div.nicEdit-main").html();
+                    });
+
+
+                    // fix width
+                    $('.nicEdit-panelContain').parents('div:first').css('width', '100%');
+                    $('.nicEdit-main').css('width', '100%').css('minHeight', '54px')
+                        .parents('div:first').css('width', '100%').css('minHeight', '54px');
+
+                });
+            },
+
             hasError(field) {
                 return this.errors.hasOwnProperty(field);
             },
@@ -338,6 +406,20 @@
                 }).then(() => {
                     this.isProcessing = false;
                 });
+            },
+
+            addOrRemove(key) {
+                console.log(key);
+            },
+
+            inArray: (needle, haystack) => {
+                if (!haystack) return false;
+
+                var length = haystack.length;
+                for(var i = 0; i < length; i++) {
+                    if(haystack[i] == needle) return true;
+                }
+                return false;
             }
         }
     }

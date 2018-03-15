@@ -20,8 +20,9 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('plugins/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
     <link href="{{ asset('css/now-ui-kit-pro.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/front.css') }}" rel="stylesheet" />
+    
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/front.css') }}" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
 
@@ -54,4 +55,5 @@
 <!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
 <script src="{{ asset('js/now-ui-kit.js?v=1.1.0') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
+
 </html>

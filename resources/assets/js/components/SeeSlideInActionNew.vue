@@ -1,26 +1,38 @@
 <template>
-    <div v-show="isInAction" id="demo_content" :class="'spp_slideup_container '+form.background_image" :style="'border-top-width: '+form.border_width+'px; border-top-style: '+form.border_style+'; border-top-color: '+form.border_color+'; background-color: '+form.background_color+'; display: block;'">
+    <div v-show="isInAction" id="demo_content" :class="'row '+form.background_image" :style="'border-top-width: '+form.border_width+'px; border-top-style: '+form.border_style+'; border-top-color: '+form.border_color+'; background-color: '+form.background_color+'; display: block;'">
         <i id="spp-slup-close" class="icon-remove icon-larger" @click="close"></i>
-        <div class="block_content">
+        
+        <div class="col">
+            
+        </div>
+        <div class="col">
+            <!-- adcontent -->
+            <span v-if="inArray('adcontent', form.types)" v-html="form.content"></span>
 
-            <div v-if="inArray('adcontent', form.types)">
-                <span v-html="form.content"></span>
-                <cta-button :form="form" :class="`btn ${form.button_style} ${form.button_color}  ${form.button_size}`"></cta-button>
-            </div>
-
+            <!-- optin -->
             <div class="spp-slup-ar" v-if="inArray('optin', form.types)">
-                <form :action="form.post_url" method="POST" class="">
-                    <label class="add-on"><i class="icon-user"></i></label>
-                    <input type="text" :name="form.name_field" class="span2" id="slup-name" :placeholder="form.name_label">
-                    <label class="add-on"><i class="icon-envelope"></i></label>
-                    <input type="email" :name="form.email_field" class="span2" id="slup-email" :placeholder="form.email_label">
+                <form method="POST" class="form" role="form">
+                    <div class="form-group">
+                        <div class="input-group input-lg">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" name="name" placeholder="Name" class="form-control">
+                        </div>
+                    </div>
 
-                    <button type="submit" :class="`btn ${form.button_style} ${form.button_color}  ${form.button_size}`">
-                        {{ form.button_label }}
+                    <div class="form-group">
+                        <div class="input-group input-lg">
+                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                            <input type="email" name="email" placeholder="Email" class="form-control">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-simple btn-success  btn-lg">
+                        Subscribe
                     </button>
                 </form>
             </div>
 
+            <!-- social -->
             <div class="spp-slup-social" v-if="inArray('social', form.types)">
                 <a class="icon-twitter-sign icon-larger" :href="form.twitter" v-if="!!form.twitter"></a>
                 <a class="icon-facebook-sign icon-larger" :href="form.facebook" v-if="!!form.facebook"></a>
@@ -30,6 +42,11 @@
                 <a class="icon-rss-sign icon-larger" :href="form.rss" v-if="!!form.rss"></a>
             </div>
         </div>
+        <div class="col">
+            <!-- cta button -->
+            <cta-button :form="form" :class="`btn ${form.button_style} ${form.button_color}  ${form.button_size}`"></cta-button>
+        </div>
+
     </div>
 </template>
 

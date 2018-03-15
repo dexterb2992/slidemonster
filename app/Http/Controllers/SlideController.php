@@ -41,7 +41,12 @@ class SlideController extends Controller
      */
     public function store(SlideRequest $request)
     {
-        $slide = new Slide($request->all());
+        $inputs = $request->all();
+
+        if (!empty($request->types)) {
+            $inputs['types'] = json_encode($request->types);
+        }
+        $slide = new Slide($inputs);
         $slide->user_id = Auth::user()->id;
 
         if ($slide->save()) {
@@ -65,6 +70,13 @@ class SlideController extends Controller
      */
     public function show(Slide $slide)
     {
+        if (empty($slide->types)) {
+            $slide->types = [];
+            // $slide->types = '["adcontent", "social"]';
+        } else {
+            $slide->types = json_decode($slide->types);
+        }
+
         return $slide;
     }
 
@@ -76,6 +88,13 @@ class SlideController extends Controller
      */
     public function edit(Slide $slide)
     {
+        if (empty($slide->types)) {
+            $slide->types = [];
+            // $slide->types = '["adcontent", "social"]';
+        } else {
+            $slide->types = json_decode($slide->types);
+        }
+
         return $slide;
     }
 
@@ -88,7 +107,13 @@ class SlideController extends Controller
      */
     public function update(Request $request, Slide $slide)
     {
-        if ($slide->update($request->all())) {
+        $inputs = $request->all();
+
+        if (!empty($request->types)) {
+            $inputs['types'] = json_encode($request->types);
+        }
+
+        if ($slide->update($inputs)) {
             return [
                 'success' => 1,
                 'message' => 'Slide successfully updated.'

@@ -1,8 +1,9 @@
 <template>
     <div>
         <link :href="base_url+'css/bootstrap.min.css'" rel="stylesheet" />
-        <link :href="base_url+'css/front.css'" rel="stylesheet" />
+        
         <link :href="base_url+'css/app.css'" rel="stylesheet" />
+        <link :href="base_url+'css/front.css'" rel="stylesheet" />
 
         <see-slide-in-action :form="form"></see-slide-in-action>
     </div>
