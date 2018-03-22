@@ -373,7 +373,8 @@
                 startView: 2,
                 forceParse: 0,
                 showMeridian: 1,
-                pickerPosition: 'top-right'
+                pickerPosition: 'top-right',
+                fontAwesome: true
             }).on('changeDate', function(ev){
                 console.log(ev.date);
                 // _this.form.timer_end = ev.date.valueOf();

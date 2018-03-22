@@ -21,7 +21,7 @@
     <link href="{{ asset('plugins/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
     <link href="{{ asset('css/now-ui-kit-pro.css') }}" rel="stylesheet" />
 
-    <!-- <link href="{{ asset('plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css') }}"> -->
+    <link href="{{ asset('plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" >
 
     
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
