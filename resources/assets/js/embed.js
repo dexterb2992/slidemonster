@@ -37,6 +37,8 @@ window.Event =  new class {
     }
 };
 
+import '../../../public/css/countdown.css';
+
 window.app = new Vue({
     el: '#slidemonster',
     components: {

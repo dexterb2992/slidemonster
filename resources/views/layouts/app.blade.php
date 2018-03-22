@@ -20,6 +20,7 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('plugins/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
     <link href="{{ asset('plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" >
+    <link href="{{ asset('css/countdown.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/front.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
