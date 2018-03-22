@@ -1,5 +1,4 @@
 <?php
-
 Route::get('try', function () {
     ?>
     <!DOCTYPE html>
@@ -8,7 +7,7 @@ Route::get('try', function () {
         <title></title>
     </head>
     <body>
-        <slidemonster id="slidemonster" slide-id="7" token="ot5aWhe5vNO900sfa8qIScieKuCn7OhCk8KvQrv4m0nrxT5Zujl3btDfcBM2"></slidemonster><script type="text/javascript" src="http://slide-monster.local/js/embed.js"></script>
+        <slidemonster id="slidemonster" slide-id="7" token="TbbGDel1beWdaq6fn1XssqPaG0vLiHJvPcNzMApPPYKRUdAd1gXSrrZBFb26"></slidemonster><script type="text/javascript" src="https://topdogimsolutions.com/slidemonster/js/embed.js"></script>
     </body>
     </html>
     <?php

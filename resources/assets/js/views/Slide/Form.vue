@@ -221,25 +221,37 @@
                                         <small class="help-text">Text that appears in the button</small>
                                     </div>
                                 </div>
-
-                                <!-- <div class="form-group">
-                                    <label>Submit Button Color</label><br/>
-                                    <button-colors :form="form"></button-colors>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Button Style</label><br/>
-                                    <button-styles :form="form"></button-styles>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Button Size</label><br/>
-                                    <button-sizes :form="form"></button-sizes>
-                                </div> -->
                             </div>
                             <!-- END OPT-IN -->
 
                             <!-- TIMER -->
+                            <div class="" v-show="inArray('timer', form.types)">
+                                <hr>
+                                <legend>Countdown Timer</legend>
+                                <div class="form-group">
+                                    <label>Type</label>
+                                    <select v-model="form.timer_type" class="form-control">
+                                        <option v-for="(type, key) in timerTypes" :value="type" :key="key" v-text="type"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <!-- <label>End Date</label> -->
+                                    <!-- <date-picker :value="date" :v-model="form.timer_end" :config="dtpConfig"></date-picker> -->
+                                    <!-- <input type="text" id="datepicker" class="form-control" v-model="form.timer_end"> -->
+
+                                    <label for="dtp_input1" class="col-md-2 control-label">End Date</label>
+                                    <div class="input-group date form_datetime" :data-date="form.timer_end | formattedDate" data-link-field="dtp_input1">
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-calendar"></span>&nbsp;&nbsp;
+                                        </span>
+                                        <input class="form-control" size="16" type="text" :value="form.timer_end | formattedDate" readonly>
+                                        <span class="input-group-addon" @click="form.timer_end = null">
+                                            &nbsp;&nbsp;<span class="fa fa-remove"></span>
+                                        </span>
+                                    </div>
+                                    <input type="hidden" id="dtp_input1" v-model="form.timer_end" /><br/>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -254,11 +266,20 @@
     </div>
 </template>
 
+<style lang='scss'>
+    .form-inner-wrapper .form-group:last {
+        margin-bottom: 20px;
+    }
+</style>
+
 <script>
+    require('../../plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js');
+
+    import '../../plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css';
+
     import {get, post} from '../../helpers/api';
     import {showErrorMsg, handleErrorResponse, handleResponse} from '../../helpers/helper';
     import SeeSlideInAction from '../../components/SeeSlideInAction.vue';
-    // import SeeSlideInAction from '../../components/SeeSlideInActionNew.vue';
     import ButtonSizes from '../../components/ButtonSizes.vue';
     import ButtonStyles from '../../components/ButtonStyles.vue';
     import ButtonColors from '../../components/ButtonColors.vue';
@@ -305,7 +326,19 @@
                     "ps_neutral": "PS Neutral",
                     "tweed": "Tweed"
                 },
-
+                timerTypes: [
+                    'evergreen',
+                    'default',
+                    'red',
+                    'blue',
+                    'yellow',
+                    'green'
+                ],
+                date: new Date(),
+                dtpConfig: {
+                    format: 'DD/MM/YYYY',
+                    useCurrent: false,
+                }
             };
         },
 
@@ -336,6 +369,31 @@
                     this.types = user.perms;
                 }
             });
+
+            this.form.has_timer = this.inArray('timer', this.form.types);
+            $(".form_datetime").datetimepicker({
+                format: "MMMM dd yyyy, H:i:s",
+                startDate: new Date(),
+                weekStart: 1,
+                todayBtn:  1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 0,
+                showMeridian: 1,
+                pickerPosition: 'top-right'
+            }).on('changeDate', function(ev){
+                console.log(ev.date);
+                // _this.form.timer_end = ev.date.valueOf();
+                _this.form.timer_end = ev.date;
+                Event.fire('timerEndHasChanged', _this.form.timer_end);
+            });;
+        },
+
+        filters: {
+            formattedDate(dateString) {
+                return moment(new Date(dateString)).format('LLL');  
+            }
         },
 
         methods: {
@@ -394,6 +452,7 @@
 
             submitForm() {
                 this.isProcessing = true;
+
                 post(this.storeURL, this.form).then((res) => {
                     handleResponse(res.data);
                     this.$router.push('/');
@@ -420,7 +479,7 @@
                     if(haystack[i] == needle) return true;
                 }
                 return false;
-            }
+            },
         }
     }
 </script>

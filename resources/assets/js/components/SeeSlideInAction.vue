@@ -2,12 +2,13 @@
     <div v-show="isInAction" id="demo_content" :class="'spp_slideup_container '+form.background_image" :style="'border-top-width: '+form.border_width+'px; border-top-style: '+form.border_style+'; border-top-color: '+form.border_color+'; background-color: '+form.background_color+'; display: block;'">
         <i id="spp-slup-close" class="icon-remove icon-larger" @click="close"></i>
         <div class="block_content">
-
+            <!-- Ad/Content & CTA Button -->
             <div v-if="inArray('adcontent', form.types)">
                 <span v-html="form.content"></span>
                 <cta-button :form="form" :class="`btn ${form.button_style} ${form.button_color}  ${form.button_size}`"></cta-button>
             </div>
 
+            <!-- Opt-in -->
             <div class="spp-slup-ar" v-if="inArray('optin', form.types)">
                 <form :action="form.post_url" method="POST" class="">
                     <label class="add-on"><i class="icon-user"></i></label>
@@ -21,6 +22,10 @@
                 </form>
             </div>
 
+            <!-- Countdown Timer -->
+            <countdown v-if="inArray('timer', form.types)" :form="form" :end-date="form.timer_end"></countdown>
+
+            <!-- Social Networks -->
             <div class="spp-slup-social" v-if="inArray('social', form.types)">
                 <a class="icon-twitter-sign icon-larger" :href="form.twitter" v-if="!!form.twitter"></a>
                 <a class="icon-facebook-sign icon-larger" :href="form.facebook" v-if="!!form.facebook"></a>
@@ -29,17 +34,21 @@
                 <a class="icon-youtube-sign icon-larger" :href="form.youtube" v-if="!!form.youtube"></a>
                 <a class="icon-rss-sign icon-larger" :href="form.rss" v-if="!!form.rss"></a>
             </div>
+
+
         </div>
     </div>
 </template>
 
 <script>
     import CTAButton from './CTAButton.vue';
+    import CountdownTimer from './CountdownTimer.vue';
 
     export default {
         props: ['form'],
         components: {
-            'cta-button': CTAButton
+            'cta-button': CTAButton,
+            'countdown': CountdownTimer
         },
         data() {
             return {
