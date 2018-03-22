@@ -229,11 +229,8 @@
 
         mounted() {
             Event.listen('timerEndHasChanged', (dateString) => {
-                console.log("new date: "+dateString);
                 this.end = new Date(dateString);
-                console.log("time before: "+this.time);
                 this.time = this.end - new Date();
-                console.log("time after: "+this.time);
             });
 
             if (!!this.endDate) {

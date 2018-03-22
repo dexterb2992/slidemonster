@@ -11,8 +11,23 @@
 
 
 <script>
+    import Vue from 'vue';
     import axios from 'axios';
     import SeeSlideInAction from '../../components/SeeSlideInAction.vue';
+
+    window.Event =  new class {
+        constructor() {
+            this.vue = new Vue();
+        }
+
+        fire(event, data = null) {
+            this.vue.$emit(event, data);
+        }
+
+        listen(event, callback) {
+            this.vue.$on(event, callback);
+        }
+    };
 
     export default {
         components: {
@@ -47,6 +62,11 @@
                     }
                 }).then((res) => {
                     this.form = res.data;
+
+                    if (!!this.form.timer_end) {
+                        Event.fire('timerEndHasChanged', this.form.timer_end);
+                    }
+
                 }, (err) => {
                     console.warn(err);
                 });
