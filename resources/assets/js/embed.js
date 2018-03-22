@@ -19,6 +19,19 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 import Vue from 'vue';
 import ShowSlide from './views/Slide/Show.vue';
 
+window.Event =  new class {
+    constructor() {
+        this.vue = new Vue();
+    }
+
+    fire(event, data = null) {
+        this.vue.$emit(event, data);
+    }
+
+    listen(event, callback) {
+        this.vue.$on(event, callback);
+    }
+};
 
 window.app = new Vue({
     el: '#slidemonster',
