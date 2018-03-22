@@ -21,7 +21,8 @@
     <link href="{{ asset('plugins/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
     <link href="{{ asset('css/now-ui-kit-pro.css') }}" rel="stylesheet" />
 
-    <link href="{{ asset('plugins/boostrap-datetimepicker/bootstrap-datetimepicker.min.css') }}">
+    <!-- <link href="{{ asset('plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css') }}"> -->
+
     
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/front.css') }}" rel="stylesheet" />
@@ -55,7 +56,7 @@
 <script src="{{ asset('js/plugins/bootstrap-datepicker.js') }}"></script>
 
 <!-- Plugin for DateTime Picker -->
-<!-- <script src="{{ asset('plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js') }}"></script> -->
+<!-- <script src="{{ asset('plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js') }}"></script> -->
 
 <!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
 <script src="{{ asset('js/now-ui-kit.js?v=1.1.0') }}"></script>

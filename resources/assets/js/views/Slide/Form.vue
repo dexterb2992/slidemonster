@@ -273,10 +273,6 @@
 </style>
 
 <script>
-    require('../../plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js');
-
-    import '../../plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css';
-
     import {get, post} from '../../helpers/api';
     import {showErrorMsg, handleErrorResponse, handleResponse} from '../../helpers/helper';
     import SeeSlideInAction from '../../components/SeeSlideInAction.vue';
@@ -328,11 +324,7 @@
                 },
                 timerTypes: [
                     'evergreen',
-                    'default',
-                    'red',
-                    'blue',
-                    'yellow',
-                    'green'
+                    'default'
                 ],
                 date: new Date(),
                 dtpConfig: {
@@ -392,7 +384,7 @@
 
         filters: {
             formattedDate(dateString) {
-                return moment(new Date(dateString)).format('LLL');  
+                return !dateString ? '' : moment(new Date(dateString)).format('LLL');  
             }
         },
 

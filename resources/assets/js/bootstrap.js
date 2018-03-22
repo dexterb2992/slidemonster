@@ -38,3 +38,7 @@ if (token) {
 }
 
 window.moment = require('moment');
+
+/* bootstrap datetime picker */
+import './plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css';
+require('./plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js');
