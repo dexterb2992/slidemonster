@@ -15,7 +15,7 @@
                             <select class="custom-select" v-model="newFeature.plan_id">
                                 <option value="" selected>Select Plan...</option>
                                 <option v-for="(plan, key) in plans" :value="plan.id">
-                                    {{ plan.name }}
+                                    {{ plan.nickname }}
                                 </option>
                             </select>
                         </div>
@@ -44,14 +44,14 @@
                     </thead>
                     <tbody>
                         <tr v-for="(plan, key) in filteredPlans">
-                            <td><strong>{{ plan.name }}</strong></td>
+                            <td><strong>{{ plan.nickname }}</strong></td>
                             <td>
                                 <strong class="text-primary pull-right">
                                     ${{ getPrice(plan.amount) }}
                                 </strong>
                             </td>
                             <td>
-                                <plan-features :plan="plan" :name="plan.name" edit-mode="true"></plan-features>
+                                <plan-features :plan="plan" :name="plan.nickname" edit-mode="true"></plan-features>
                             </td>
                         </tr>
                     </tbody>
@@ -92,7 +92,7 @@
         computed: {
             filteredPlans() {
                 return this.plans.filter(plan => {
-                    return plan.name.toLowerCase().includes(this.search.toLowerCase()) ||
+                    return plan.nickname.toLowerCase().includes(this.search.toLowerCase()) ||
                         plan.id.toLowerCase().includes(this.search.toLowerCase());
                 })
             }

@@ -39,12 +39,12 @@
             <div class="col-lg-4 col-md-4 col-sm-6" v-for="(plan, key) in plans">
                 <div class="card card-pricing" data-background-color="black">
                     <div class="card-body">
-                        <h6 class="category">{{ plan.name }}</h6>
+                        <h6 class="category">{{ plan.nickname }}</h6>
                         <div :class="`icon icon-success`">
                             <i class="fa fa-fire"></i>
                         </div>
                         <h3 class="card-title"><small>$</small>{{ getPrice(plan.amount) }}/mo.</h3>
-                        <plan-features :plan="plan" :name="plan.name"></plan-features>
+                        <plan-features :plan="plan" :name="plan.nickname"></plan-features>
 
                         <div v-if="userHasSubscribedTo(plan)">
                             <a class="btn btn-simple btn-primary disabled btn-round">Current Plan</a>
@@ -113,6 +113,7 @@
                 get(this.base_url+'api/plans').then((res) => {
                     console.log(res.data);
                     this.plans = res.data.data;
+                    console.log(this.plans);
                 }, (err) => {
                     handleErrorResponse(err.response.status);
                 });

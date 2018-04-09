@@ -1,25 +1,28 @@
 /* COUNTDOWN */
 #countdown {
-  width: 100%;
+    width: 90%;
+    margin: auto;
+    display: block;
 }
 
 #countdown label {
-  clear: both;
-  display: block;
-  font-weight: 100;
-  font-size: 0.5em;
+    clear: both;
+    display: block;
+    font-weight: 100;
+    font-size: 0.5em;
 }
 
 #countdown span {
     background: #313233;
     color: #FFF;
-    font-size: 26px;
+    font-size: 20px;
     font-weight: normal;
     text-align: center;
     width: 16.66%;
     display: block;
     float: left;
     border-right: 1px solid #FFF;
+    padding-top: 6px;
 },
 
 #countdown span.value {

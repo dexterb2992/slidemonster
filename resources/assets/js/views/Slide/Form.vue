@@ -1,7 +1,7 @@
 <template>
     <div class="slide-form-wrapper">
         <div class="container">
-            <form class="form-inner-wrapper" @submit.prevent="submitForm">
+            <form class="form-inner-wrapper" @submit.prevent="submitForm" novalidate>
                 <div class="section">
                     <h5 class="title">
                         {{ action }}
@@ -49,7 +49,7 @@
                             <div class="form-group">
                                 <label>Border Color </label>
                                 <div id="border_color" class="input-group colorpicker-component">
-                                    <input type="text" class="form-control" placeholder="Border color" v-model="form.border_color" />
+                                    <input type="text" class="form-control" placeholder="Border color" />
                                     <span class="input-group-addon"><i></i></span>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                                     Choose a background color, Or choose a background image...
                                 </label>
                                 <div id="background_color" class="input-group colorpicker-component">
-                                    <input type="text" class="form-control" placeholder="Background color" v-model="form.background_color" />
+                                    <input type="text" class="form-control" placeholder="Background color" />
                                     <span class="input-group-addon"><i></i></span>
                                 </div>
                                 <div>
@@ -347,9 +347,18 @@
 
             var _this = this;
 
-            $("#background_color, #border_color").colorpicker({
+            $("#background_color").colorpicker({
                 format: 'hex',
                 enableHex8: true
+            }).on('changeColor', function (event) {
+                _this.form.background_color = event.color.toHex();
+            });
+
+            $("#border_color").colorpicker({
+                format: 'hex',
+                enableHex8: true,
+            }).on('changeColor', function (event) {
+                _this.form.border_color = event.color.toHex();
             });
 
             Event.listen('closeSlide', () => {
