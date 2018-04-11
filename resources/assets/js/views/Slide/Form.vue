@@ -29,13 +29,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Border Width </label>
-                                <div class="input-group">
-                                    <input type="number" v-model="form.border_width" class="form-control" placeholder="Border width">
-                                    <div class="input-group-addon">
-                                        <div class="input-group-text">px</div>
-                                    </div>
-                                </div>
+                                <label>Border Width (px) </label>
+                                <input type="number" v-model="form.border_width" class="form-control" placeholder="Border width">
                             </div>
                             <div class="form-group">
                                 <label>Border Style</label>
@@ -48,8 +43,8 @@
                             </div>
                             <div class="form-group">
                                 <label>Border Color </label>
-                                <div id="border_color" class="input-group colorpicker-component">
-                                    <input type="text" class="form-control" placeholder="Border color" />
+                                <div class="input-group colorpicker-component">
+                                    <input type="text" class="form-control" placeholder="Border color" id="border_color" />
                                     <span class="input-group-addon"><i></i></span>
                                 </div>
                             </div>
@@ -57,8 +52,8 @@
                                 <label>
                                     Choose a background color, Or choose a background image...
                                 </label>
-                                <div id="background_color" class="input-group colorpicker-component">
-                                    <input type="text" class="form-control" placeholder="Background color" />
+                                <div class="input-group colorpicker-component">
+                                    <input type="text" class="form-control" placeholder="Background color" id="background_color" />
                                     <span class="input-group-addon"><i></i></span>
                                 </div>
                                 <div>
@@ -231,14 +226,11 @@
                                 <div class="form-group">
                                     <label>Type</label>
                                     <select v-model="form.timer_type" class="form-control">
-                                        <option v-for="(type, key) in timerTypes" :value="type" :key="key" v-text="type"></option>
+                                        <!-- <option v-for="(type, key) in timerTypes" :value="type" :key="key" v-text="type"></option> -->
+                                        <option value="evergreen" selected>Evergreen</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <!-- <label>End Date</label> -->
-                                    <!-- <date-picker :value="date" :v-model="form.timer_end" :config="dtpConfig"></date-picker> -->
-                                    <!-- <input type="text" id="datepicker" class="form-control" v-model="form.timer_end"> -->
-
                                     <label for="dtp_input1" class="col-md-2 control-label">End Date</label>
                                     <div class="input-group date form_datetime" :data-date="form.timer_end | formattedDate" data-link-field="dtp_input1">
                                         <span class="input-group-addon">
@@ -250,6 +242,77 @@
                                         </span>
                                     </div>
                                     <input type="hidden" id="dtp_input1" v-model="form.timer_end" /><br/>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <strong>Digit Font Settings</strong>
+                                        <div class="form-group">
+                                            <label>Font Size (px)</label>
+                                            <input type="number" v-model="form.timer_digit_size" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Font Color</label>
+                                            <input type="text" id="timer_digit_color" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <strong>Text Shadow</strong>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Color</label>
+                                                    <input type="text" id="timer_digit_text_shadow_color" class="form-control">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Blur (px)</label>
+                                                    <input type="number" v-model="form.timer_digit_text_shadow_blur" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>X offset (px)</label>
+                                                    <input type="number" v-model="form.timer_digit_text_shadow_x" class="form-control">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Y offset (px)</label>
+                                                    <input type="number" v-model="form.timer_digit_text_shadow_y" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Label Font Settings</strong>
+                                        <div class="form-group">
+                                            <label>Font Size (px)</label>
+                                            <input type="number" v-model="form.timer_label_size" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Font Color</label>
+                                            <input type="text" id="timer_label_color" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <strong>Text Shadow</strong>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Color</label>
+                                                    <input type="text" id="timer_label_text_shadow_color" class="form-control">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Blur (px)</label>
+                                                    <input type="number" v-model="form.timer_label_text_shadow_blur" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>X offset (px)</label>
+                                                    <input type="number" v-model="form.timer_label_text_shadow_x" class="form-control">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Y offset (px)</label>
+                                                    <input type="number" v-model="form.timer_label_text_shadow_y" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -280,7 +343,7 @@
     import ButtonStyles from '../../components/ButtonStyles.vue';
     import ButtonColors from '../../components/ButtonColors.vue';
 
-    require('bootstrap-switch');
+    // require('bootstrap-switch');
 
     export default {
         components: {
@@ -324,7 +387,7 @@
                 },
                 timerTypes: [
                     'evergreen',
-                    'default'
+                    // 'default'
                 ],
                 date: new Date(),
                 dtpConfig: {
@@ -347,19 +410,7 @@
 
             var _this = this;
 
-            $("#background_color").colorpicker({
-                format: 'hex',
-                enableHex8: true
-            }).on('changeColor', function (event) {
-                _this.form.background_color = event.color.toHex();
-            });
-
-            $("#border_color").colorpicker({
-                format: 'hex',
-                enableHex8: true,
-            }).on('changeColor', function (event) {
-                _this.form.border_color = event.color.toHex();
-            });
+            this.initColorPickers();
 
             Event.listen('closeSlide', () => {
                 this.isInAction = !this.isInAction;
@@ -389,7 +440,7 @@
                 // _this.form.timer_end = ev.date.valueOf();
                 _this.form.timer_end = ev.date;
                 Event.fire('timerEndHasChanged', _this.form.timer_end);
-            });;
+            });
         },
 
         filters: {
@@ -412,6 +463,64 @@
                 });
 
                 
+            },
+
+            initColorPickers() {
+                let _this = this;
+
+                $("#background_color").colorpicker({
+                    format: 'hex',
+                    enableHex8: true
+                }).on('changeColor', function (event) {
+                    _this.form.background_color = event.color.toHex();
+                });
+
+                $("#border_color").colorpicker({
+                    format: 'hex',
+                    enableHex8: true,
+                }).on('changeColor', function (event) {
+                    _this.form.border_color = event.color.toHex();
+                });
+
+                $("#timer_label_color").colorpicker({
+                    format: 'hex',
+                    enableHex8: true
+                }).on('changeColor', function (event) {
+                    _this.form.timer_label_color = event.color.toHex();
+                    
+                    var data = {id: 'timer_label_color', value: _this.form.timer_label_color};
+                    Event.fire('colorPickerChanged', data);
+                });
+
+                $("#timer_label_text_shadow_color").colorpicker({
+                    format: 'hex',
+                    enableHex8: true
+                }).on('changeColor', function (event) {
+                    _this.form.timer_label_text_shadow_color = event.color.toHex();
+
+                    var data = {id: 'timer_label_text_shadow_color', value: _this.form.timer_label_text_shadow_color};
+                    Event.fire('colorPickerChanged', data);
+                });
+
+                $("#timer_digit_color").colorpicker({
+                    format: 'hex',
+                    enableHex8: true
+                }).on('changeColor', function (event) {
+                    _this.form.timer_digit_color = event.color.toHex();
+
+                    var data = {id: 'timer_digit_color', value: _this.form.timer_digit_color};
+                    Event.fire('colorPickerChanged', data);
+                });
+
+                $("#timer_digit_text_shadow_color").colorpicker({
+                    format: 'hex',
+                    enableHex8: true
+                }).on('changeColor', function (event) {
+                    _this.form.timer_digit_text_shadow_color = event.color.toHex();
+
+                    var data = {id: 'timer_digit_text_shadow_color', value: _this.form.timer_digit_text_shadow_color};
+                    Event.fire('colorPickerChanged', data);
+                });
             },
 
             initNiceEdit() {

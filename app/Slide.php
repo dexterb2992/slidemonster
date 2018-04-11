@@ -37,6 +37,16 @@ class Slide extends Model
             'linkedin' => '',
             'youtube' => '',
             'rss' => '',
+
+            'timer_type' => 'evergreen',
+            'timer_label_size' => '20',
+            'timer_digit_size' => '80',
+            'timer_digit_text_shadow_x' => '1',
+            'timer_digit_text_shadow_y' => '1',
+            'timer_digit_text_shadow_blur' => '1',
+            'timer_label_text_shadow_x' => '1',
+            'timer_label_text_shadow_y' => '1',
+            'timer_label_text_shadow_blur' => '1'
         ];
     }
 }
