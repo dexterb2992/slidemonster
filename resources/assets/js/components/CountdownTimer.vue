@@ -72,6 +72,7 @@
                 return this.form.timer_digit_text_shadow_blur == null ? '0px' : this.form.timer_digit_text_shadow_blur+'px';
             },
             digitFontSize() {
+                this.init();
                 return this.form.timer_digit_size+'px';
             },
             digitColor() {
@@ -108,10 +109,16 @@
                 this.toggleLabelColor(newVal);
             },
             labelTextShadow: function (newVal, oldVal) {
-                this.toggleDigitTextShadow(newVal);
+                this.toggleLabelTextShadow(newVal);
             }
         },
         methods: {
+            init() {
+                this.toggleDigitColor(this.form.timer_digit_color); console.log('timer_digit_color...');
+                this.toggleDigitTextShadow(this.form.timer_digit_text_shadow_color);console.log('timer_digit_text_shadow_color...');
+                this.toggleLabelColor(this.form.timer_label_color);console.log('timer_label_color...');
+                this.toggleLabelTextShadow(this.form.timer_label_text_shadow_color);console.log('timer_label_text_shadow_color...');
+            },
             toggleDigitColor(newVal) {
                 $(".timer-monster-top").css('color', newVal);
             },
@@ -128,6 +135,8 @@
             }
         },
         mounted() {
+            this.init();
+
             Event.listen('timerEndHasChanged', (dateString) => {
                 this.end = new Date(dateString);
                 this.time = this.end - new Date();
@@ -135,7 +144,6 @@
 
             if (!!this.endDate) {
                 this.end = new Date(this.endDate);
-
                 this.time = this.end - new Date();
             }
 

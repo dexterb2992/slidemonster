@@ -410,8 +410,6 @@
 
             var _this = this;
 
-            this.initColorPickers();
-
             Event.listen('closeSlide', () => {
                 this.isInAction = !this.isInAction;
             });
@@ -457,7 +455,7 @@
                     this.form = res.data;
                     this.currentTypes = res.data.types;
                     this.initNiceEdit();
-
+                    this.initColorPickers();
                 }, (err) => {
                     handleErrorResponse(err.response.status);
                 });
@@ -470,7 +468,8 @@
 
                 $("#background_color").colorpicker({
                     format: 'hex',
-                    enableHex8: true
+                    enableHex8: true,
+                    color: _this.form.background_color
                 }).on('changeColor', function (event) {
                     _this.form.background_color = event.color.toHex();
                 });
@@ -478,13 +477,15 @@
                 $("#border_color").colorpicker({
                     format: 'hex',
                     enableHex8: true,
+                    color: _this.form.border_color
                 }).on('changeColor', function (event) {
                     _this.form.border_color = event.color.toHex();
                 });
 
                 $("#timer_label_color").colorpicker({
                     format: 'hex',
-                    enableHex8: true
+                    enableHex8: true,
+                    color: _this.form.timer_label_color
                 }).on('changeColor', function (event) {
                     _this.form.timer_label_color = event.color.toHex();
                     
@@ -494,7 +495,8 @@
 
                 $("#timer_label_text_shadow_color").colorpicker({
                     format: 'hex',
-                    enableHex8: true
+                    enableHex8: true,
+                    color: _this.form.timer_label_text_shadow_color
                 }).on('changeColor', function (event) {
                     _this.form.timer_label_text_shadow_color = event.color.toHex();
 
@@ -504,7 +506,8 @@
 
                 $("#timer_digit_color").colorpicker({
                     format: 'hex',
-                    enableHex8: true
+                    enableHex8: true,
+                    color: _this.form.timer_digit_color
                 }).on('changeColor', function (event) {
                     _this.form.timer_digit_color = event.color.toHex();
 
@@ -514,7 +517,8 @@
 
                 $("#timer_digit_text_shadow_color").colorpicker({
                     format: 'hex',
-                    enableHex8: true
+                    enableHex8: true,
+                    color: _this.form.timer_digit_text_shadow_color
                 }).on('changeColor', function (event) {
                     _this.form.timer_digit_text_shadow_color = event.color.toHex();
 
@@ -583,12 +587,17 @@
             },
 
             inArray: (needle, haystack) => {
-                if (!haystack) return false;
+                try {
+                    if (!haystack) return false;
 
-                var length = haystack.length;
-                for(var i = 0; i < length; i++) {
-                    if(haystack[i] == needle) return true;
+                    var length = haystack.length;
+                    for(var i = 0; i < length; i++) {
+                        if(haystack[i] == needle) return true;
+                    }
+                } catch (e) {
+                    // console.warn(e);
                 }
+
                 return false;
             },
         }
