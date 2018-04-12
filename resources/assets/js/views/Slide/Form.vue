@@ -88,8 +88,12 @@
                                 </span> -->
                             </div>
 
+                            <!-- BUTTON STYLING -->
                             <div v-show="inArray('adcontent', form.types) || inArray('optin', form.types)">
-                                <legend>Button styling</legend>
+                                <legend>
+                                    <i class="fa fa-caret-down i-collapse" title="Collapse"></i>
+                                    Button styling
+                                </legend>
                                 <div class="form-group">
                                     <label>Submit Button Color</label><br/>
                                     <button-colors :form="form"></button-colors>
@@ -109,7 +113,10 @@
                             <!-- AD/CONTENT & CTA BUTTON -->
                             <div v-show="inArray('adcontent', form.types)">
                                 <hr>
-                                <legend>Ad/Content</legend>
+                                <legend>
+                                    <i class="fa fa-caret-down i-collapse" title="Collapse"></i>
+                                    Ad/Content
+                                </legend>
                                 <div class="form-group">
                                     <label>Content</label>
                                     <textarea v-model="form.content" class="form-control" id="slide_content" placeholder="Add your content..."></textarea>
@@ -134,7 +141,10 @@
                             <!-- SOCIAL MEDIA LINKS -->
                             <div class="" v-show="inArray('social', form.types)">
                                 <hr>
-                                <legend>Social</legend>
+                                <legend>
+                                    <i class="fa fa-caret-down i-collapse" title="Collapse"></i>
+                                    Social
+                                </legend>
                                 <small class="help">Enter your social profile URL. Leave empty to disable.</small>
 
                                 <div class="form-group">
@@ -172,7 +182,10 @@
                             <!-- OPT-IN FORM -->
                             <div class="" v-show="inArray('optin', form.types)">
                                 <hr>
-                                <legend>Optin</legend>
+                                <legend>
+                                    <i class="fa fa-caret-down i-collapse" title="Collapse"></i>
+                                    Optin
+                                </legend>
 
                                 <div class="form-group">
                                     <label>Paste Your Autoresponder Code</label>
@@ -222,7 +235,10 @@
                             <!-- TIMER -->
                             <div class="" v-show="inArray('timer', form.types)">
                                 <hr>
-                                <legend>Countdown Timer</legend>
+                                <legend>
+                                    <i class="fa fa-caret-down i-collapse" title="Collapse"></i>
+                                    Countdown Timer
+                                </legend>
                                 <div class="form-group">
                                     <label>Type</label>
                                     <select v-model="form.timer_type" class="form-control">
@@ -438,6 +454,20 @@
                 // _this.form.timer_end = ev.date.valueOf();
                 _this.form.timer_end = ev.date;
                 Event.fire('timerEndHasChanged', _this.form.timer_end);
+            });
+
+            /* collapsable */
+            $(document).on("click", ".i-collapse", function () {
+                var $this = $(this);
+                if ($this.hasClass('fa-caret-down')) {
+                    $this.parent('legend').siblings('.form-group').slideUp('slow', function () {
+                        $this.attr("class", "fa fa-caret-right i-collapse").attr("title", "Expand");
+                    });
+                } else {
+                    $this.parent('legend').siblings('.form-group').slideDown('slow', function () {
+                        $this.attr("class", "fa fa-caret-down i-collapse").attr("title", "Collapse");
+                    });
+                }
             });
         },
 
