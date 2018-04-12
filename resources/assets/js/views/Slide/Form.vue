@@ -460,11 +460,11 @@
             $(document).on("click", ".i-collapse", function () {
                 var $this = $(this);
                 if ($this.hasClass('fa-caret-down')) {
-                    $this.parent('legend').siblings('.form-group').slideUp('slow', function () {
+                    $this.parent('legend').siblings('div').slideUp('slow', function () {
                         $this.attr("class", "fa fa-caret-right i-collapse").attr("title", "Expand");
                     });
                 } else {
-                    $this.parent('legend').siblings('.form-group').slideDown('slow', function () {
+                    $this.parent('legend').siblings('div').slideDown('slow', function () {
                         $this.attr("class", "fa fa-caret-down i-collapse").attr("title", "Collapse");
                     });
                 }
