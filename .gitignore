@@ -1,8 +1,6 @@
 /node_modules
 /public/storage
 /public/hot
-!/public/css/app.css
-!/public/js/app.js
 /public/mix-manifest.json
 /storage/*.key
 /vendor
@@ -15,5 +13,3 @@ Homestead.yaml
 /public/videos/*
 /public/images/*
 !public/images/backgrounds/*
-!public/fonts/*
-!/public/js/embed.js
