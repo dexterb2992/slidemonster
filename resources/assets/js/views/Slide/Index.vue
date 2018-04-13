@@ -51,7 +51,7 @@
                 <template slot="modal-body">
                     <p class="text-info">Add this code anywhere inside your html <code>&lt;body&gt;</code> tag.</p>
                     <code id="embed_code">
-                        &lt;slidemonster id="slidemonster" slide-id="{{ selectedSlide.id }}" token="{{ apiToken }}"&gt;&lt;/slidemonster&gt;&lt;script type="text/javascript" src="{{ app_url }}js/embed.js"&gt;&lt;/script&gt;
+                        &lt;slidemonster id="slidemonster" slide-id="{{ selectedSlide.id }}" token="{{ apiToken }}"&gt;&lt;/slidemonster&gt;&lt;script type="text/javascript" src="{{ app_url+embedjs }}"&gt;&lt;/script&gt;
                     </code>
                 </template>
             </modal>
@@ -79,7 +79,8 @@
                     id: 0
                 },
                 apiToken: Auth.state.api_token,
-                hasBeenCopied: false
+                hasBeenCopied: false,
+                embedjs: window.assets.embedjs
             };
         },
         components: {
