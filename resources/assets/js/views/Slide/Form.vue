@@ -11,7 +11,7 @@
                     </h5>
                 </div>
                 <div class="section">
-                    <div class="row" style="padding-bottom: 5%;">
+                    <div class="row" style="padding-bottom: 5%; margin-bottom: 5%;">
                         <div class="col-md-4 bordered-right">
                             <div :class="errorClass('title')">
                                 <label>Name</label>
@@ -347,7 +347,7 @@
 
 <style lang='scss'>
     .form-inner-wrapper .form-group:last {
-        margin-bottom: 20px;
+        margin-bottom: 40px;
     }
 </style>
 

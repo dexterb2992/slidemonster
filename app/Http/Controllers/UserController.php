@@ -194,27 +194,40 @@ class UserController extends Controller
 
         // let's check if user has a previous subscription
         $previous = $this->hasPreviousSubscription($user, $plans->data);
+
         if ($previous == false) {
             // create a new subscription
            
 
-            if ($request->coupon != "") {
-                $user->newSubscription($plan['id'], $plan['id'])
-                    ->withCoupon($request->coupon)
-                    ->create($stripeToken, [
-                        'email' => $user->email
-                    ]);
-            } else {
-                $user->newSubscription($plan['id'], $plan['id'])
-                    ->create($stripeToken, [
-                        'email' => $user->email
-                    ]);
+            try {
+                if ($request->coupon != "") {
+                    $user->newSubscription($plan['id'], $plan['id'])
+                        ->withCoupon($request->coupon)
+                        ->create($stripeToken, [
+                            'email' => $user->email
+                        ]);
+                } else {
+                    $user->newSubscription($plan['id'], $plan['id'])
+                        ->create($stripeToken, [
+                            'email' => $user->email
+                        ]);
+                }
+            } catch (\Exception $e) {
+                if (strpos($e->getMessage(), "No such customer") !== false) {
+                    dump("No such a fucking customer retard!");
+                    $user->stripe_id = "";
+                    $user->save();
+                    $this->subscribe($request);
+                } else {
+                    dump("There's an error but we can't find a 'no such customer' phrase");
+                }
             }
+
+            $hasTrial = !empty($plan['trial_period_days']) ? "Your trial ends in ".$plan['trial_period_days']." days" : "";
 
             return [
                 'success' => 1,
-                'message' => "You have successfully subscribed to ".$plan['name']." membership. Your trial ends in "
-                                .$plan['trial_period_days']." days"
+                'message' => "You have successfully subscribed to ".$plan['name']." membership. ".$hasTrial
             ];
         } else {
             // this user has already subscribed

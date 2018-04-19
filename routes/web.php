@@ -1,39 +1,4 @@
 <?php
-Route::get('try', function () {
-    ?>
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title></title>
-    </head>
-    <body>
-        <slidemonster id="slidemonster" slide-id="5" token="TbbGDel1beWdaq6fn1XssqPaG0vLiHJvPcNzMApPPYKRUdAd1gXSrrZBFb26"></slidemonster><script type="text/javascript" src="https://topdogimsolutions.com/slidemonster/js/embed.js"></script>
-    </body>
-    </html>
-    <?php
-});
-
-Route::get('try2', function () {
-    ?>
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title></title>
-    </head>
-    <body>
-        <timermonster data-id="20"></timermonster>
-        
-        <script src="http://topdogimsolutions.com/timer-monster/public/assets/js/timer-monster.min.js"></script>
-        <script type="text/javascript">
-            TimerMonster.init({
-                token: '',
-            });
-        </script>
-    </body>
-    </html>
-    <?php
-});
-
 // Route::get('try', 'SubscriptionPlanController@retrievePlan');
 // Route::get('test', 'SubscriptionPlanController@index');
 
