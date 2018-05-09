@@ -42,13 +42,17 @@ color:#fff;
     /*right: 5px;
     display:none;
     display:pointer;*/
+    padding-left: 12px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 .spp_slideup_container .block_content{
     /*position:absolute;*/
     margin:1em auto 0.5em auto;
     top:0px;
     left:0px;
-    width: 50.44666316342617%;
+    /*width: 50.44666316342617%;*/
+    width: 54.46663163%;
     line-height: 150%;
     text-align: center;
 }
@@ -85,6 +89,7 @@ color:#fff;
     padding: 10px;
     margin-top: 5px;
     margin-bottom: 5px;
+    width: 100%;
 }
 .spp-slup-ar, .spp-slup-social {
     text-align: center;
@@ -163,4 +168,27 @@ color:#fff;
  */
 #spp-slup-close.icon-larger:before {
     font-size: 16px;
+}
+
+.rect .input-group .input-group-addon {
+    border-radius: unset;
+    border-bottom-left-radius: 6px;
+    border-top-left-radius: 6px;
+}
+
+.rect .input-group input {
+    border-radius: unset;
+    border-bottom-right-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.rect .form-group.input-lg .input-group-addon, .input-group.input-lg .input-group-addon {
+    padding: 14px 10px 14px 8px;
+    background: white;
+}
+
+.optin-col-1 {
+    max-width: 450px;
+    text-align: center;
+    margin: auto;
 }

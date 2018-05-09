@@ -15,6 +15,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('users', 'UserController@get');
     Route::get('users/{user}', 'UserController@show');
+    Route::post('users/{user}/edit', 'UserController@updateUser');
+    Route::delete('users/{user}', 'UserController@destroy');
 
     Route::get('plans', 'SubscriptionPlanController@index');
     Route::get('plans/{id}', 'SubscriptionPlanController@retrieve');

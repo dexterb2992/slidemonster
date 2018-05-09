@@ -133,6 +133,36 @@ class UserController extends Controller
         ];
     }
 
+    /**
+     * Updates an existing user
+     *
+     * @return array
+     */
+    public function updateUser(Request $request, User $user)
+    {
+        if (!auth()->user()->isAdmin()) {
+            return [
+                'message' => "Access denied.",
+                'success' => 0
+            ];
+        }
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($user->save()) {
+            return [
+                'message' => "User updated successfully.",
+                'success' => 1
+            ];
+        }
+
+        return [
+            'message' => "Sorry, we are unable to update a user this time. Please try again later.",
+            'success' => 0
+        ];
+    }
+
     public function updatePaymentMethod(Request $request)
     {
         $user = auth('api')->user();
@@ -290,6 +320,42 @@ class UserController extends Controller
         return [
             'success' => 1,
             'message' => "You successfully resumed your subscription to $plan"
+        ];
+    }
+
+    /**
+     * Deletes the user
+     *
+     * @return array
+     */
+    public function destroy(User $user)
+    {
+        if ($user->subscribed('main')) {
+            return [
+                'message' => "You can't delete a user with an active subscription.",
+                "success" => 0
+            ];
+        }
+
+        if ($user->id == auth()->user()->id) {
+            return [
+                'message' => "You can't delete yourself.",
+                "success" => 0
+            ];
+        }
+        
+        $name = $user->name;
+
+        if ($user->delete()) {
+            return [
+                "message" => "$name has been successfully deleted.",
+                "success" => 1
+            ];
+        }
+
+        return [
+            "message" => "Something went wrong, we are unable to delete a user this time. Please try again later.",
+            "success" => 0
         ];
     }
 }

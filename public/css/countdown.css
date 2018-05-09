@@ -46,7 +46,7 @@
 /*<!-- EVERGREEN -->*/
 
 #timermonster {
-    width: 90%; 
+    width: 96%; 
     margin: auto;
     display: block;
 }
@@ -87,25 +87,33 @@
     font-size: 12px;
 }
 
-@media  only screen and (min-width : 360px) {
-.timer-monster-top {
-    font-size: 28px;
+.rect .timer-monster-top {
+    font-size: 50px;
 }
+
+.rect .timer-monster-bottom {
+    font-size: 16px;
+}
+
+@media  only screen and (min-width : 360px) {
+    .timer-monster-top {
+        font-size: 28px;
+    }
 }
 
 @media  only screen and (min-width : 480px) {
-.timer-monster-column {
-    width: 19%;
-}
-.timer-monster-separator {
-    width: 8%; 
-}
-.timer-monster-top {
-    font-size: 50px;
-}
-.timer-monster-bottom {
-    font-size: 16px;
-}
+    .timer-monster-column {
+        width: 19%;
+    }
+    .timer-monster-separator {
+        width: 8%; 
+    }
+    .timer-monster-top {
+        font-size: 50px;
+    }
+    .timer-monster-bottom {
+        font-size: 16px;
+    }
 }
 
 .timer-monster-column, .timer-monster-separator {
@@ -114,12 +122,12 @@
 }
 
 @media  only screen and (min-width : 768px) {
-.timer-monster-top {
-    font-size: 80px;
-}
-.timer-monster-bottom {
-    font-size: 20px;
-}
+    .timer-monster-top {
+        font-size: 80px;
+    }
+    .timer-monster-bottom {
+        font-size: 20px;
+    }
 }
 
 #timermonsterbar {

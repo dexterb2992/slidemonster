@@ -64,6 +64,14 @@
                                     </a>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label>Slide Layout</label>
+                                <select class="form-control" v-model="form.layout">
+                                    <option value="1">1 Column</option>
+                                    <option value="3">3 Columns</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="col-md-8">
@@ -354,7 +362,8 @@
 <script>
     import {get, post} from '../../helpers/api';
     import {showErrorMsg, handleErrorResponse, handleResponse} from '../../helpers/helper';
-    import SeeSlideInAction from '../../components/SeeSlideInAction.vue';
+    // import SeeSlideInAction from '../../components/SeeSlideInAction.vue';
+    import SeeSlideInAction from '../../components/SeeSlideInActionNew.vue';
     import ButtonSizes from '../../components/ButtonSizes.vue';
     import ButtonStyles from '../../components/ButtonStyles.vue';
     import ButtonColors from '../../components/ButtonColors.vue';
@@ -427,7 +436,8 @@
             var _this = this;
 
             Event.listen('closeSlide', () => {
-                this.isInAction = !this.isInAction;
+                // this.isInAction = !this.isInAction;
+                this.isInAction = false;
             });
 
             Event.listen('userLoaded', (user) => {

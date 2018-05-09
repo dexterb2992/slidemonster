@@ -1,4 +1,7 @@
 <?php
+Route::get('test', function () {
+    //
+});
 // Route::get('try', 'SubscriptionPlanController@retrievePlan');
 // Route::get('test', 'SubscriptionPlanController@index');
 
