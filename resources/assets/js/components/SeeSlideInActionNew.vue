@@ -111,11 +111,9 @@
         },
 
         mounted() {
-            let _this = this;
-            
             $.getScript('https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', () => {
                 // Do jQueryUI things here
-                _this.initSortability();
+                this.initSortability();
             });
         },
 
