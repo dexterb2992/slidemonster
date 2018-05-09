@@ -111,9 +111,16 @@
         },
 
         mounted() {
+
             $.getScript('https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', () => {
                 // Do jQueryUI things here
-                this.initSortability();
+                $("#slide_row, #slide_row .col, #slide_row .sortable").sortable({
+                    connectWith: '#slide_row'
+                });
+
+                $("#single_col_slide, #single_col_slide .sortable").sortable({
+                    connectWith: '#single_col_slide'
+                });
             });
         },
 
@@ -125,16 +132,6 @@
                 } catch (e) {
                     console.warn(e);
                 }
-            },
-
-            initSortability() {
-                $("#slide_row, #slide_row .col, #slide_row .sortable").sortable({
-                    connectWith: '#slide_row'
-                });
-
-                $("#single_col_slide, #single_col_slide .sortable").sortable({
-                    connectWith: '#single_col_slide'
-                });
             },
 
             inArray: (needle, haystack) => {
