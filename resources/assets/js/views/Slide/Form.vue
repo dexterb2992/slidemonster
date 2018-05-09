@@ -571,7 +571,7 @@
                 // this.checkDemoState();
                 let _this = this;
 
-                $.getScript( "//js.nicedit.com/nicEdit-latest.js", ( data, textStatus, jqxhr ) => {
+                $.getScript( window.app_url+"/plugins/nicedit/nicEdit-latest.js", ( data, textStatus, jqxhr ) => {
                     var slideContent = new nicEditor().panelInstance('slide_content');
                     nicEditors.findEditor( "slide_content" ).setContent(_this.form.content);
                     
