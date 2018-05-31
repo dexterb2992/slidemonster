@@ -63,9 +63,13 @@ export function showErrorMsg(msg, headingTxt, timeout, position) {
     });
 }
 
-export function showInfoMsg(msg, headingTxt, timeout, position) {
+export function showInfoMsg(msg, headingTxt, timeout, position, stack) {
     if (typeof(timeout) == 'undefined') {
         timeout = 6000;
+    }
+
+    if (typeof(stack) == 'undefined') {
+        stack = false;
     }
 
     $.toast({
@@ -74,7 +78,8 @@ export function showInfoMsg(msg, headingTxt, timeout, position) {
         position: typeof (positioln) != 'undefined'? position : toastPosition,
         bgColor: '#56b9ff',
         icon: 'info',
-        hideAfter: timeout
+        hideAfter: timeout,
+        stack: stack
     });
 }
 

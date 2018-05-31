@@ -114,10 +114,10 @@
         },
         methods: {
             init() {
-                this.toggleDigitColor(this.form.timer_digit_color); console.log('timer_digit_color...');
-                this.toggleDigitTextShadow(this.form.timer_digit_text_shadow_color);console.log('timer_digit_text_shadow_color...');
-                this.toggleLabelColor(this.form.timer_label_color);console.log('timer_label_color...');
-                this.toggleLabelTextShadow(this.form.timer_label_text_shadow_color);console.log('timer_label_text_shadow_color...');
+                this.toggleDigitColor(this.form.timer_digit_color);
+                this.toggleDigitTextShadow(this.form.timer_digit_text_shadow_color);
+                this.toggleLabelColor(this.form.timer_label_color);
+                this.toggleLabelTextShadow(this.form.timer_label_text_shadow_color);
             },
             toggleDigitColor(newVal) {
                 $(".timer-monster-top").css('color', newVal);

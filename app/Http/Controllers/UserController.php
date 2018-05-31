@@ -24,6 +24,7 @@ class UserController extends Controller
         if (!empty($subscription) && $subscription->valid()) {
             return [
                 ['id' => 'adcontent', 'value' => 'Ad/Content'],
+                ['id' => 'cta_btn', 'value' => 'Call to action button'],
                 ['id' => 'optin', 'value' => 'Opt-in'],
                 ['id' => 'social', 'value' => 'Social'],
                 ['id' => 'timer', 'value' => 'Timer'],
@@ -32,6 +33,7 @@ class UserController extends Controller
 
         return [
             ['id' => 'adcontent', 'value' => 'Ad/Content'],
+            ['id' => 'cta_btn', 'value' => 'Call to action button'],
             ['id' => 'timer', 'value' => 'Timer']
         ];
     }

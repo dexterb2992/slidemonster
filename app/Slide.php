@@ -8,6 +8,47 @@ class Slide extends Model
 {
     protected $guarded = ['id'];
 
+    public function getLeftColAttribute($value)
+    {
+        return json_decode($value);
+    }
+
+    public function getCenterColAttribute($value)
+    {
+        return json_decode($value);
+    }
+
+    public function getRightColAttribute($value)
+    {
+        return json_decode($value);
+    }
+
+    public function getOneColAttribute($value)
+    {
+        return json_decode($value);
+    }
+
+
+    public function setLeftColAttribute($value)
+    {
+        $this->attributes['left_col'] = json_encode($value);
+    }
+
+    public function setCenterColAttribute($value)
+    {
+        $this->attributes['center_col'] = json_encode($value);
+    }
+
+    public function setRightColAttribute($value)
+    {
+        $this->attributes['right_col'] = json_encode($value);
+    }
+
+    public function setOneColAttribute($value)
+    {
+        $this->attributes['one_col'] = json_encode($value);
+    }
+
     public static function form()
     {
         return [
@@ -48,7 +89,11 @@ class Slide extends Model
             'timer_label_text_shadow_y' => '1',
             'timer_label_text_shadow_blur' => '1',
 
-            'layout' => 1
+            'layout' => 1,
+            'left_col' => [],
+            'center_col' => ['adcontent', 'cta_btn'],
+            'right_col' => [],
+            'one_col' => ['adcontent', 'cta_btn'],
         ];
     }
 }
