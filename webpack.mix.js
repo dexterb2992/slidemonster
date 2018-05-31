@@ -10,10 +10,11 @@ const { mix } = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-
+ 
+if (mix.inProduction()) {
+	mix.version();
+}
 
 mix.js('resources/assets/js/app.js', 'public/js/app.js')
    .js('resources/assets/js/embed.js', 'public/js/embed.js')
-   .sass('resources/assets/sass/app.scss', 'public/css/app.css')
-   .version();
-
+   .sass('resources/assets/sass/app.scss', 'public/css/app.css');
