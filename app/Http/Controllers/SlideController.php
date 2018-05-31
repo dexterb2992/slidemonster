@@ -109,6 +109,8 @@ class SlideController extends Controller
     {
         $inputs = $request->all();
 
+        // dd($inputs);
+
         if (!empty($request->types)) {
             $inputs['types'] = json_encode($request->types);
         }

@@ -130,10 +130,10 @@
                             feature.id = res.data.id;
                             Event.fire('featureCreated', this.newFeature);
                             showSuccessMsg(res.data.message);
-                            /*this.newFeature = {
+                            this.newFeature = {
                                 content: '',
                                 plan_id: ''
-                            }*/
+                            }
                         } else {
                             if (res.data.hasOwnProperty('message')) {
                                 showErrorMsg(res.data.message);

@@ -17,13 +17,23 @@
                                 <label>Name</label>
                                 <input type="text" v-model="form.title" class="form-control" placeholder="Title">
                             </div>
-                            <div>
+
+                            <div class="form-group">
+                                <label>Slide Layout</label>
+                                <select class="form-control" v-model="form.layout" @change="$emit('slideLayoutChanged')">
+                                    <option value="1">1 Column</option>
+                                    <option value="3">3 Columns</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
                                 <label>Type</label>
                                 <!-- <select v-model="form.type" class="form-control">
                                     <option v-for="(type, key) in types" :key="key" :value="key">{{ type }}</option>
                                 </select> -->
                                 <div :class="errorClass('type')" v-for="(type, key) in types" :key="key">
-                                    <input type="checkbox"  :id="'_'+type.id" :value="type.id" v-model="form.types">
+                                    <input type="checkbox"  :id="'_'+type.id" :value="type.id" v-model="form.types"
+                                        :checked="type == 'cta_btn' ? form.has_cta_button = true : ''">
                                     <label :for="'_'+type.id">{{ type.value }}</label>
                                 </div>
                             </div>
@@ -64,14 +74,6 @@
                                     </a>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label>Slide Layout</label>
-                                <select class="form-control" v-model="form.layout">
-                                    <option value="1">1 Column</option>
-                                    <option value="3">3 Columns</option>
-                                </select>
-                            </div>
                         </div>
 
                         <div class="col-md-8">
@@ -97,7 +99,7 @@
                             </div>
 
                             <!-- BUTTON STYLING -->
-                            <div v-show="inArray('adcontent', form.types) || inArray('optin', form.types)">
+                            <div v-if="typeof(form.types) != 'undefined' && (form.types.includes('adcontent') || form.types.includes('optin'))">
                                 <legend>
                                     <i class="fa fa-caret-down i-collapse" title="Collapse"></i>
                                     Button styling
@@ -119,27 +121,28 @@
                             </div>
 
                             <!-- AD/CONTENT & CTA BUTTON -->
-                            <div v-show="inArray('adcontent', form.types)">
+                            <div v-show="typeof(form.types) != 'undefined' && form.types.includes('adcontent')">
                                 <hr>
                                 <legend>
                                     <i class="fa fa-caret-down i-collapse" title="Collapse"></i>
-                                    Ad/Content
+                                    Ad/Content &amp; CTA Button
                                 </legend>
                                 <div class="form-group">
                                     <label>Content</label>
                                     <textarea v-model="form.content" class="form-control" id="slide_content" placeholder="Add your content..."></textarea>
                                 </div>
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="has_cta_button">Set Call-to-action button</label>
                                     <input type="checkbox" id="has_cta_button" v-model="form.has_cta_button">
-                                </div>
-                                <div class="form-group" v-show="form.has_cta_button">
+                                </div> -->
+                                <!-- <div class="form-group" v-show="form.has_cta_button"> -->
+                                <div class="form-group" v-show="form.types.includes('cta_btn')">
                                     <label>CTA button text</label>
                                     <input type="text" class="form-control" v-model="form.cta_button_text">
                                 </div>
 
-                                <div class="form-group" v-show="form.has_cta_button">
+                                <div class="form-group" v-show="form.types.includes('cta_btn')">
                                     <label>CTA button URL</label>
                                     <input type="text" class="form-control" v-model="form.cta_button_url">
                                 </div>
@@ -147,7 +150,7 @@
                             <!-- END AD/CONTENT -->
 
                             <!-- SOCIAL MEDIA LINKS -->
-                            <div class="" v-show="inArray('social', form.types)">
+                            <div class="" v-show="typeof(form.types) != 'undefined' && form.types.includes('social')">
                                 <hr>
                                 <legend>
                                     <i class="fa fa-caret-down i-collapse" title="Collapse"></i>
@@ -188,7 +191,7 @@
                             <!-- END SOCIAL MEDIA -->
 
                             <!-- OPT-IN FORM -->
-                            <div class="" v-show="inArray('optin', form.types)">
+                            <div class="" v-show="typeof(form.types) != 'undefined' && form.types.includes('optin')">
                                 <hr>
                                 <legend>
                                     <i class="fa fa-caret-down i-collapse" title="Collapse"></i>
@@ -241,7 +244,7 @@
                             <!-- END OPT-IN -->
 
                             <!-- TIMER -->
-                            <div class="" v-show="inArray('timer', form.types)">
+                            <div class="" v-show="typeof(form.types) != 'undefined' && form.types.includes('timer')">
                                 <hr>
                                 <legend>
                                     <i class="fa fa-caret-down i-collapse" title="Collapse"></i>
@@ -348,7 +351,7 @@
         </div>
 
         <div v-if="isInAction">
-            <see-slide-in-action :form="form"></see-slide-in-action>
+            <see-slide-in-action :form="form" prod="false" :mode="$route.meta.mode"></see-slide-in-action>
         </div>
     </div>
 </template>
@@ -361,7 +364,7 @@
 
 <script>
     import {get, post} from '../../helpers/api';
-    import {showErrorMsg, handleErrorResponse, handleResponse} from '../../helpers/helper';
+    import {showErrorMsg, handleErrorResponse, handleResponse, showInfoMsg} from '../../helpers/helper';
     // import SeeSlideInAction from '../../components/SeeSlideInAction.vue';
     import SeeSlideInAction from '../../components/SeeSlideInActionNew.vue';
     import ButtonSizes from '../../components/ButtonSizes.vue';
@@ -388,10 +391,11 @@
                 currentTypes: [],
                 errors: {},
                 isProcessing: false,
-                isInAction: true,
+                isInAction: false,
                 // isInDemo: true,
                 types: [
                     {id: 'adcontent', value: 'Ad/Content'},
+                    {id: 'cta_btn', value: 'Call to action button'},
                     {id: 'timer', value: 'Timer'}
                 ],
                 types: [],
@@ -426,7 +430,7 @@
             if(this.$route.meta.mode === 'edit') {
                 this.initializeURL = base_url+`api/slides/${this.$route.params.id}/edit`
                 this.storeURL = base_url+`api/slides/${this.$route.params.id}?_method=PUT`
-                this.action = 'Update'
+                this.action = 'Update';
             }
 
             this.previewUrl = `/slides/${this.$route.params.id}`;
@@ -446,7 +450,22 @@
                 }
             });
 
-            this.form.has_timer = this.inArray('timer', this.form.types);
+            Event.listen('slideLayoutChanged', () => {
+                Event.fire('closeSlide');
+                let self = this;
+                setTimeout(function() {
+                    self.isInAction = true;
+                }, 3000);
+            });
+
+            Event.listen('featurePositionsUpdated', (form) => {
+                this.form.left_col = form.left_col;
+                this.form.center_col = form.center_col;
+                this.form.right_col = form.right_col;
+                this.form.one_col = form.one_col;
+            });
+
+            this.form.has_timer = this.form.hasOwnProperty('types') && this.form.types.includes('timer');
             $(".form_datetime").datetimepicker({
                 format: "MMMM dd yyyy, H:i:s",
                 startDate: new Date(),
@@ -500,7 +519,7 @@
                     handleErrorResponse(err.response.status);
                 });
 
-                
+                Event.fire('appOnProd', false);
             },
 
             initColorPickers() {
@@ -624,22 +643,7 @@
 
             addOrRemove(key) {
                 console.log(key);
-            },
-
-            inArray: (needle, haystack) => {
-                try {
-                    if (!haystack) return false;
-
-                    var length = haystack.length;
-                    for(var i = 0; i < length; i++) {
-                        if(haystack[i] == needle) return true;
-                    }
-                } catch (e) {
-                    // console.warn(e);
-                }
-
-                return false;
-            },
+            }
         }
     }
 </script>

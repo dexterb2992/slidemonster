@@ -5,7 +5,7 @@
         <link :href="base_url+'css/app.css'" rel="stylesheet" />
         <link :href="base_url+'css/front.css'" rel="stylesheet" />
 
-        <see-slide-in-action :form="form"></see-slide-in-action>
+        <see-slide-in-action :form="form" prod="true" :mode="$route.meta.mode"></see-slide-in-action>
     </div>
 </template>
 
@@ -35,6 +35,8 @@
             }
 
             this.init();
+
+            Event.fire('appOnProd', true);
         },
 
         methods: {
