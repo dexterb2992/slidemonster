@@ -13,6 +13,8 @@ const { mix } = require('laravel-mix');
  
 if (mix.inProduction()) {
 	mix.version();
+} else {
+	mix.browserSync('slidemonster.local');
 }
 
 mix.js('resources/assets/js/app.js', 'public/js/app.js')

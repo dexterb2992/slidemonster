@@ -5,6 +5,7 @@
             <div class="row" id="slide_row">
 
                 <div class="col" id="left_col">
+<<<<<<< HEAD
                     <template v-if="form.left_col.length" v-for="(feature, key) in form.left_col">
                         <slide-feature :prod="prod" :form="form" :feature="feature" v-if="form.types.includes(feature)"></slide-feature>
                     </template>
@@ -17,6 +18,20 @@
                 <div class="col" id="right_col">
                     <template v-if="form.right_col.length" v-for="(feature, key) in form.right_col">
                         <slide-feature :prod="prod" :form="form" :feature="feature" v-if="form.types.includes(feature)"></slide-feature>
+=======
+                    <template v-for="(feature, key) in defaults.left_col">
+                        <slide-feature :prod="prod" :form="form" :feature="feature" v-if="getPosition(feature) == 'left'"></slide-feature>
+                    </template>
+                </div>
+                <div class="col" id="center_col">
+                    <template v-for="(feature, key) in defaults.center_col">
+                        <slide-feature :prod="prod" :form="form" :feature="feature" v-if="getPosition(feature) == 'center'"></slide-feature>
+                    </template>
+                </div>
+                <div class="col" id="right_col">
+                    <template v-for="(feature, key) in defaults.right_col">
+                        <slide-feature :prod="prod" :form="form" :feature="feature" v-if="getPosition(feature) == 'right'"></slide-feature>
+>>>>>>> 2ba7c247a6be3740972ed0e7b4e811202f4ff912
                     </template>
                 </div>
             </div>
@@ -68,6 +83,7 @@
     import CTAButton from './CTAButton.vue';
     import CountdownTimer from './CountdownTimer.vue';
     import SlideFeature from './SlideFeature.vue';
+    import {showWarningMsg} from '../helpers/helper';
 
     export default {
         props: ['form', 'prod', 'mode'],
@@ -81,7 +97,7 @@
                 isInAction: true,
                 defaults: {
                     left_col: [],
-                    center_col: ['adcontent', 'cta_btn', 'optin'],
+                    center_col: ['adcontent', 'cta_btn', 'optin', 'social'],
                     right_col: ['timer'],
                     one_col: ['adcontent', 'cta_btn', 'optin', 'timer', 'social']
                 }
@@ -107,7 +123,12 @@
                     // prevent click events on buttons and links
                     $(document).on('click', "#slide_row a, #slide_row button", function (e) {
                         e.preventDefault();
-                        showInfoMsg("Click event has been disabled on this page.");
+                        showWarningMsg("This action has been disabled on this page.");
+                    });
+
+                    $(document).on('submit', "#slide_row form", function (e) {
+                        e.preventDefault();
+                        showWarningMsg("This action has been disabled on this page.");
                     });
                 }
             });
@@ -116,7 +137,8 @@
                 // Do jQueryUI things here
                 let _self = this;
 
-                $("#slide_row .slide-feature, #slide_row .col").sortable({
+                // $("#slide_row .slide-feature, #slide_row .col").sortable({
+                $("#slide_row .col").sortable({
                     connectWith: '#slide_row .col',
                     update: () => {
                         if (_self.form.layout == 3) {
@@ -136,12 +158,7 @@
                     }
                 });
 
-                //$(".slide-feature").sortable('destroy');
-                $.each($('.slide-feature'), function (i, el) {
-                    if ($(el).hasClass('ui-sortable')) {
-                        $(el).sortable('destroy');
-                    }
-                });
+                // $('.slide-feature').sortable('destroy');
             });
         },
 
@@ -194,6 +211,45 @@
                     console.warn(e);
                 }
             },
+
+            getPosition(feature) {
+                /*defaults: {
+                    left_col: [],
+                    center_col: ['adcontent', 'cta_btn', 'optin'],
+                    right_col: ['timer'],
+                    one_col: ['adcontent', 'cta_btn', 'optin', 'timer', 'social']
+                }*/
+
+                let position = '';
+
+                if (!this.form.types.includes(feature)) {
+                    return 'n/a';
+                }
+
+                // check first it's default position
+                if (this.defaults.left_col.includes(feature)) {
+                    position = 'left';
+                } else if (this.defaults.center_col.includes(feature)) {
+                    position = 'center';
+                } else {
+                    position = 'right';
+                }
+
+                // now, let's check if its position has changed
+                if (this.form.left_col.includes(feature)) {
+                    position = 'left';
+                }
+
+                if (this.form.center_col.includes(feature)) {
+                    position = 'center';
+                }
+
+                if (this.form.right_col.includes(feature)) {
+                    position = 'right';
+                }
+
+                return position;
+            }
         }
     }
 </script>
