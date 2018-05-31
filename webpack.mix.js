@@ -11,7 +11,12 @@ const { mix } = require('laravel-mix');
  |
  */
  
+if (mix.inProduction()) {
+	mix.version();
+} else {
+	mix.browserSync('slidemonster.local');
+}
+
 mix.js('resources/assets/js/app.js', 'public/js/app.js')
    .js('resources/assets/js/embed.js', 'public/js/embed.js')
-   .sass('resources/assets/sass/app.scss', 'public/css/app.css')
-   .version();
+   .sass('resources/assets/sass/app.scss', 'public/css/app.css');

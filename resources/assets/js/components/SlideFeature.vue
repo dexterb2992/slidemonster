@@ -1,12 +1,12 @@
 <template>
-    <div class="slide-feature" :data-id="feature" v-else>
+    <div class="slide-feature" :data-id="feature">
         <!-- adcontent -->
         <p v-if="feature == 'adcontent'" v-html="form.content"></p>
         <!-- cta button -->
-        <cta-button v-if="feature == 'cta_btn'" :data-id="feature" :form="form" :class="`btn ${form.button_style} ${form.button_color}  ${form.button_size}`"></cta-button>
+        <cta-button v-if="feature == 'cta_btn'" :form="form" :class="`btn ${form.button_style} ${form.button_color}  ${form.button_size}`"></cta-button>
 
         <!-- optin -->
-        <div v-if="feature == 'optin'" class="slide-feature">
+        <div v-if="feature == 'optin'">
             <form method="POST" class="form" role="form">
                 <div class="form-group">
                     <div class="input-group input-lg">
@@ -29,10 +29,10 @@
         </div>
 
         <!-- Countdown Timer -->
-        <countdown class="slide-feature" v-if="feature == 'timer'" :form="form" :end-date="form.timer_end"></countdown>
+        <countdown v-if="feature == 'timer'" :form="form" :end-date="form.timer_end"></countdown>
 
         <!-- social -->
-        <div class="slide-feature social" v-if="feature == 'social'">
+        <div class="social" v-if="feature == 'social'">
             <a class="icon-twitter-sign icon-larger" :href="form.twitter" v-if="!!form.twitter"></a>
             <a class="icon-facebook-sign icon-larger" :href="form.facebook" v-if="!!form.facebook"></a>
             <a class="icon-pinterest-sign icon-larger" :href="form.pinterest" v-if="!!form.pinterest"></a>

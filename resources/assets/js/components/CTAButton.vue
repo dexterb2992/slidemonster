@@ -1,5 +1,5 @@
 <template>
-    <a v-if="form.has_cta_button" :href="form.cta_button_url" v-text="form.cta_button_text"></a>
+    <a v-if="form.types.includes('cta_btn')" :href="form.cta_button_url" v-text="form.cta_button_text"></a>
 </template>
 
 <script>

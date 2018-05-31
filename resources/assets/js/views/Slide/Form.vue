@@ -32,8 +32,7 @@
                                     <option v-for="(type, key) in types" :key="key" :value="key">{{ type }}</option>
                                 </select> -->
                                 <div :class="errorClass('type')" v-for="(type, key) in types" :key="key">
-                                    <input type="checkbox"  :id="'_'+type.id" :value="type.id" v-model="form.types"
-                                        :checked="type == 'cta_btn' ? form.has_cta_button = true : ''">
+                                    <input type="checkbox"  :id="'_'+type.id" :value="type.id" v-model="form.types" @change="$emit('formTypesHaveChanged')">
                                     <label :for="'_'+type.id">{{ type.value }}</label>
                                 </div>
                             </div>
@@ -342,7 +341,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -387,11 +385,14 @@
                 storeURL: `${base_url}api/slides`,
                 action: 'Create',
                 pageClass: 'page-index',
-                form: {},
+                form: {
+                    types: []
+                },
                 currentTypes: [],
                 errors: {},
                 isProcessing: false,
-                isInAction: false,
+                // isInAction: false,
+                isInAction: true,
                 // isInDemo: true,
                 types: [
                     {id: 'adcontent', value: 'Ad/Content'},
@@ -465,9 +466,24 @@
                 this.form.one_col = form.one_col;
             });
 
+            /* collapsable */
+            $(document).on("click", ".i-collapse", function () {
+                var $this = $(this);
+                if ($this.hasClass('fa-caret-down')) {
+                    $this.parent('legend').siblings('div').slideUp('slow', function () {
+                        $this.attr("class", "fa fa-caret-right i-collapse").attr("title", "Expand");
+                    });
+                } else {
+                    $this.parent('legend').siblings('div').slideDown('slow', function () {
+                        $this.attr("class", "fa fa-caret-down i-collapse").attr("title", "Collapse");
+                    });
+                }
+            });
+
             this.form.has_timer = this.form.hasOwnProperty('types') && this.form.types.includes('timer');
+                    
             $(".form_datetime").datetimepicker({
-                format: "MMMM dd yyyy, H:i:s",
+                format: "MM dd yyyy, H:i:s",
                 startDate: new Date(),
                 weekStart: 1,
                 todayBtn:  1,
@@ -483,20 +499,6 @@
                 // _this.form.timer_end = ev.date.valueOf();
                 _this.form.timer_end = ev.date;
                 Event.fire('timerEndHasChanged', _this.form.timer_end);
-            });
-
-            /* collapsable */
-            $(document).on("click", ".i-collapse", function () {
-                var $this = $(this);
-                if ($this.hasClass('fa-caret-down')) {
-                    $this.parent('legend').siblings('div').slideUp('slow', function () {
-                        $this.attr("class", "fa fa-caret-right i-collapse").attr("title", "Expand");
-                    });
-                } else {
-                    $this.parent('legend').siblings('div').slideDown('slow', function () {
-                        $this.attr("class", "fa fa-caret-down i-collapse").attr("title", "Collapse");
-                    });
-                }
             });
         },
 
