@@ -91,6 +91,11 @@ color:#fff;
     margin-bottom: 5px;
     width: 100%;
 }
+.spp-slup-ar {
+    text-align: center;
+    max-width: 400px;
+    margin: auto;
+}
 .spp-slup-ar, .spp-slup-social {
     text-align: center;
 }

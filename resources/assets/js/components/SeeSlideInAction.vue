@@ -16,7 +16,7 @@
                     <label class="add-on"><i class="icon-envelope"></i></label>
                     <input type="email" :name="form.email_field" class="span2" id="slup-email" :placeholder="form.email_label">
 
-                    <button type="submit" :class="`btn ${form.button_style} ${form.button_color}  ${form.button_size}`">
+                    <button type="submit" :class="`btn ${form.button_style} ${form.button_color}  ${form.button_size} btn-block`">
                         {{ form.button_label }}
                     </button>
                 </form>

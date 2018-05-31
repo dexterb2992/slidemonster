@@ -365,8 +365,8 @@
 <script>
     import {get, post} from '../../helpers/api';
     import {showErrorMsg, handleErrorResponse, handleResponse, showInfoMsg} from '../../helpers/helper';
-    // import SeeSlideInAction from '../../components/SeeSlideInAction.vue';
-    import SeeSlideInAction from '../../components/SeeSlideInActionNew.vue';
+    import SeeSlideInAction from '../../components/SeeSlideInAction.vue';
+    // import SeeSlideInAction from '../../components/SeeSlideInActionNew.vue';
     import ButtonSizes from '../../components/ButtonSizes.vue';
     import ButtonStyles from '../../components/ButtonStyles.vue';
     import ButtonColors from '../../components/ButtonColors.vue';

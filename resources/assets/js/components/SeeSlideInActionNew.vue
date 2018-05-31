@@ -5,17 +5,17 @@
             <div class="row" id="slide_row">
 
                 <div class="col" id="left_col">
-                    <template v-for="(feature, key) in form.left_col" v-if="form.left_col.length">
+                    <template v-if="form.left_col.length" v-for="(feature, key) in form.left_col">
                         <slide-feature :prod="prod" :form="form" :feature="feature" v-if="form.types.includes(feature)"></slide-feature>
                     </template>
                 </div>
                 <div class="col" id="center_col">
-                    <template v-for="(feature, key) in form.center_col" v-if="form.center_col.length">
+                    <template v-if="form.center_col.length" v-for="(feature, key) in form.center_col">
                         <slide-feature :prod="prod" :form="form" :feature="feature" v-if="form.types.includes(feature)"></slide-feature>
                     </template>
                 </div>
                 <div class="col" id="right_col">
-                    <template v-for="(feature, key) in form.right_col" v-if="form.right_col.length">
+                    <template v-if="form.right_col.length" v-for="(feature, key) in form.right_col">
                         <slide-feature :prod="prod" :form="form" :feature="feature" v-if="form.types.includes(feature)"></slide-feature>
                     </template>
                 </div>
