@@ -370,9 +370,7 @@
     import ButtonSizes from '../../components/ButtonSizes.vue';
     import ButtonStyles from '../../components/ButtonStyles.vue';
     import ButtonColors from '../../components/ButtonColors.vue';
-
-    // require('bootstrap-switch');
-
+    
     export default {
         components: {
             'see-slide-in-action': SeeSlideInAction,
