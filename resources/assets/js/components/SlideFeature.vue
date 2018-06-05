@@ -55,7 +55,7 @@
             'countdown': CountdownTimer
         },
         mounted() {
-            if (this.prod !== true) {
+            if (this.prod != 'true') {
                 var count = 0;
 
                 $(document).on('click', ".slide-feature a", function (e) {
