@@ -90,10 +90,12 @@ class Slide extends Model
             'timer_label_text_shadow_blur' => '1',
 
             'layout' => 1,
-            'left_col' => [],
-            'center_col' => ['adcontent', 'cta_btn'],
-            'right_col' => [],
-            'one_col' => ['adcontent', 'cta_btn'],
+
+            'left_col' => ['adcontent', 'cta_btn'],
+            'center_col' => ['optin', 'social'],
+            'right_col' => ['timer'],
+            
+            'one_col' => ['adcontent', 'cta_btn', 'optin', 'timer', 'social']
         ];
     }
 }

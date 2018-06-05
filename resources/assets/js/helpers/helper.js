@@ -33,9 +33,13 @@ export function isValidURL(str) {
     }
 }
 
-export function showSuccessMsg(msg, headingTxt, timeout, position) {
+export function showSuccessMsg(msg, headingTxt, timeout, position, stack) {
     if (typeof(timeout) == 'undefined') {
         timeout = 6000;
+    }
+
+    if (typeof(stack) == 'undefined') {
+        stack = true;
     }
 
     $.toast({
@@ -48,9 +52,13 @@ export function showSuccessMsg(msg, headingTxt, timeout, position) {
     });
 }
 
-export function showErrorMsg(msg, headingTxt, timeout, position) {
+export function showErrorMsg(msg, headingTxt, timeout, position, stack) {
     if (typeof(timeout) == 'undefined') {
         timeout = 6000;
+    }
+
+    if (typeof(stack) == 'undefined') {
+        stack = true;
     }
 
     $.toast({
@@ -69,7 +77,7 @@ export function showInfoMsg(msg, headingTxt, timeout, position, stack) {
     }
 
     if (typeof(stack) == 'undefined') {
-        stack = false;
+        stack = true;
     }
 
     $.toast({
@@ -77,15 +85,20 @@ export function showInfoMsg(msg, headingTxt, timeout, position, stack) {
         text: msg,
         position: typeof (positioln) != 'undefined'? position : toastPosition,
         bgColor: '#56b9ff',
+        textColor: 'white',
         icon: 'info',
         hideAfter: timeout,
         stack: stack
     });
 }
 
-export function showWarningMsg(msg, headingTxt, timeout, position) {
+export function showWarningMsg(msg, headingTxt, timeout, position, stack) {
     if (typeof(timeout) == 'undefined') {
         timeout = 6000;
+    }
+
+    if (typeof(stack) == 'undefined') {
+        stack = true;
     }
 
     $.toast({
