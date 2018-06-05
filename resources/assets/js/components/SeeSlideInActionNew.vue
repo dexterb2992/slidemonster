@@ -4,19 +4,27 @@
             <i id="spp-slup-close" class="icon-remove icon-larger" @click="close"></i>
             <div class="row" id="slide_row">
 
-                <div class="col" id="left_col">
-                    <template v-for="(feature, key) in defaults.left_col">
-                        <slide-feature :prod="prod" :form="form" :feature="feature" v-if="getPosition(feature) == 'left'"></slide-feature>
+                <div class="col slidemonster-col" id="left_col">
+                    <template v-for="(feature, key) in newColumnChildren.left_col">
+                        <slide-feature :prod="prod" :form="form" :feature="feature"
+                            v-if="(getPosition(feature) == 'left')">
+                        </slide-feature>
                     </template>
                 </div>
-                <div class="col" id="center_col">
-                    <template v-for="(feature, key) in defaults.center_col">
-                        <slide-feature :prod="prod" :form="form" :feature="feature" v-if="getPosition(feature) == 'center'"></slide-feature>
+
+                <div class="col slidemonster-col" id="center_col">
+                    <template v-for="(feature, key) in newColumnChildren.center_col">
+                        <slide-feature :prod="prod" :form="form" :feature="feature"
+                            v-if="(getPosition(feature) == 'center')">
+                        </slide-feature>
                     </template>
                 </div>
-                <div class="col" id="right_col">
-                    <template v-for="(feature, key) in defaults.right_col">
-                        <slide-feature :prod="prod" :form="form" :feature="feature" v-if="getPosition(feature) == 'right'"></slide-feature>
+
+                <div class="col slidemonster-col" id="right_col">
+                    <template v-for="(feature, key) in newColumnChildren.right_col">
+                        <slide-feature :prod="prod" :form="form" :feature="feature"
+                            v-if="(getPosition(feature) == 'right')">
+                        </slide-feature>
                     </template>
                 </div>
             </div>
@@ -34,7 +42,7 @@
 
                     <!-- Opt-in -->
                     <div class="spp-slup-ar slide-feature optin-col-1" v-if="form.types.includes('optin') && feature == 'optin'" data-id="optin">
-                        <form :action="form.post_url" method="POST" class="">
+                        <form :action="form.post_url" method="POST" class="optin-col-1">
                             <label class="add-on"><i class="icon-user"></i></label>
                             <input type="text" :name="form.name_field" class="span2" id="slup-name" :placeholder="form.name_label">
                             <label class="add-on"><i class="icon-envelope"></i></label>
@@ -64,6 +72,17 @@
     </div>
 </template>
 
+<style lang="scss">
+    .slidemonster-col {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+    div.slide-feature {
+        padding-bottom: 4px;
+        padding-top: 4px;
+    }
+</style>
+
 <script>
     import CTAButton from './CTAButton.vue';
     import CountdownTimer from './CountdownTimer.vue';
@@ -81,24 +100,36 @@
             return {
                 isInAction: true,
                 defaults: {
-                    left_col: [],
-                    center_col: ['adcontent', 'cta_btn', 'optin', 'social'],
+                    left_col: ['adcontent', 'cta_btn'],
+                    center_col: ['optin', 'social'],
                     right_col: ['timer'],
                     one_col: ['adcontent', 'cta_btn', 'optin', 'timer', 'social']
+                },
+                newColumnChildren: {
+                    left_col: [],
+                    center_col: [],
+                    right_col: [],
+                    one_col: []
                 }
             };
         },
 
         mounted() {
-            // if (form.one_col.length == 0) {
-
-            // }
-            console.log(this.mode == 'create');
-            if (this.$route.meta.mode != 'edit') {
+            if (this.mode == 'create') {
+                console.log("this.mode: "+this.mode);
                 this.form.left_col = this.defaults.left_col;
                 this.form.center_col = this.defaults.center_col;
                 this.form.right_col = this.defaults.right_col;
                 this.form.one_col = this.defaults.one_col;
+            }
+
+            if (typeof(this.form.left_col) != 'undefined') {
+                this.newColumnChildren.one_col = this.form.one_col;
+
+                this.newColumnChildren.left_col = this.form.left_col;
+                this.newColumnChildren.center_col = this.form.center_col;
+                this.newColumnChildren.right_col = this.form.right_col;
+
             }
 
             Event.listen('appOnProd', (status) => {
@@ -118,74 +149,68 @@
                 }
             });
 
-            $.getScript('https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', () => {
+            Event.listen('slideLayoutChanged', () => {
                 // Do jQueryUI things here
                 let _self = this;
 
-                // $("#slide_row .slide-feature, #slide_row .col").sortable({
-                $("#slide_row .col").sortable({
-                    connectWith: '#slide_row .col',
-                    update: () => {
-                        if (_self.form.layout == 3) {
-                            _self.updateLayoutChild(false);
-                            console.log('saving position (3 cols)..');
-                        }
-                    }
-                });
-
-                $("#single_col_slide, #single_col_slide .slide-feature:not([data-id='social'])").sortable({
-                    connectWith: '#single_col_slide',
-                    update: () => {
-                        if (_self.form.layout == 1) {
-                           _self.updateLayoutChild(true);
-                           console.log('saving position (one col)..');
-                        }
-                    }
-                });
-
-                // $('.slide-feature').sortable('destroy');
+                console.log("yeah, I'm listening to slideLayoutChanged event");
             });
+
+            Event.listen('formHasLoaded', (form) => {
+                this.newColumnChildren.left_col = form.left_col;
+                this.newColumnChildren.center_col = form.center_col;
+                this.newColumnChildren.right_col = form.right_col;
+            });
+
+            Event.listen('formTypesChanged', () => {
+                $.each(this.form.types, (i, type) => {
+                    if (this.form.layout == 3) {
+                        if (!this.newColumnChildren.left_col.includes(type) && this.getPosition(type) == 'left') {
+                            this.newColumnChildren.left_col.push(type);
+                        }
+
+                        if (!this.newColumnChildren.center_col.includes(type) && this.getPosition(type) == 'center') {
+                            this.newColumnChildren.center_col.push(type);
+                        }
+
+                        if (!this.newColumnChildren.right_col.includes(type) && this.getPosition(type) == 'right') {
+                            this.newColumnChildren.right_col.push(type);
+                        }
+                    } else {
+                        if (!this.form.one_col.includes(type)) {
+                            this.form.one_col.push(type);
+                        }
+                    }
+                });
+            });
+
+            if (this.prod != 'true') {
+                $.getScript('https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', () => {
+                    // Do jQueryUI things here
+                    let _self = this;
+
+                    $(".slidemonster-col").sortable({
+                        connectWith: ".slidemonster-col"
+                    });
+
+                    $("#single_col_slide").sortable({
+                        connectWith: '#single_col_slide'
+                    });
+
+                    if ($('.slide-feature').hasClass('ui-sortable')) {
+                        $('.slide-feature').sortable('destroy');
+                    }
+
+                    if ($(".slide-feature[data-id='social']").hasClass("ui-sortable")) {
+                        $(".slide-feature[data-id='social]").sortable("destroy");
+                    }
+                });
+            }
         },
 
         methods: {
-            updateLayoutChild(singleColumn) {
-                if (singleColumn) {
-                    this.form.one_col = this.getChildren("#single_col_slide");
-                } else {
-                    this.form.left_col = this.getChildren("#left_col");
-                    this.form.center_col = this.getChildren("#center_col");
-                    this.form.right_col = this.getChildren("#right_col");
-                }
-
-                Event.fire('featurePositionsUpdated', {
-                    left_col: this.form.left_col,
-                    center_col: this.form.center_col,
-                    right_col: this.form.right_col,
-                    one_col: this.form.one_col
-                });
-            },
-
-            getChildren(selector) {
-                var features = [
-                    'adcontent',
-                    'cta_btn',
-                    'optin',
-                    'timer',
-                    'social'
-                ];
-                
-                var children = [];
-
-                var el = $(selector);
-                $.each(features, (i, row) => {
-                    if ($(document).find(`${selector} [data-id='${row}']`).length) { // check existence
-                        // get the index
-                        children[$(`${selector} [data-id='${row}']`).index()] = row;
-                    }
-                });
-
-                return children;
-                
+            setNewColumnChildren(value) {
+                this.newColumnChildren = value;
             },
 
             close() {
@@ -221,15 +246,15 @@
                 }
 
                 // now, let's check if its position has changed
-                if (this.form.left_col.includes(feature)) {
+                if (this.newColumnChildren.left_col.includes(feature)) {
                     position = 'left';
                 }
 
-                if (this.form.center_col.includes(feature)) {
+                if (this.newColumnChildren.center_col.includes(feature)) {
                     position = 'center';
                 }
 
-                if (this.form.right_col.includes(feature)) {
+                if (this.newColumnChildren.right_col.includes(feature)) {
                     position = 'right';
                 }
 

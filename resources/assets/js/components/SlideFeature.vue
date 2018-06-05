@@ -56,14 +56,21 @@
         },
         mounted() {
             if (this.prod !== true) {
+                var count = 0;
+
                 $(document).on('click', ".slide-feature a", function (e) {
                     e.preventDefault();
-                    showInfoMsg("Click event has been disabled on this page.");
+                    showInfoMsg("This event has been disabled on this page.", undefined, undefined, undefined, false);
                 });
 
                 $(document).on('click', ".slide-feature button", function (e) {
                     e.preventDefault();
-                    showInfoMsg("Click event has been disabled on this page.");
+                    showInfoMsg("This event has been disabled on this page.", undefined, undefined, undefined, false);
+                });
+
+                $(document).on('submit', ".slide-feature form", function (e) {
+                    e.preventDefault();
+                    showInfoMsg("This event has been disabled on this page.", undefined, undefined, undefined, false);
                 });
             }
         }

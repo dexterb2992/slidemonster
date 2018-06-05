@@ -20,7 +20,7 @@
 
                             <div class="form-group">
                                 <label>Slide Layout</label>
-                                <select class="form-control" v-model="form.layout" @change="$emit('slideLayoutChanged')">
+                                <select class="form-control" v-model="form.layout" @change="slideLayoutChanged">
                                     <option value="1">1 Column</option>
                                     <option value="3">3 Columns</option>
                                 </select>
@@ -32,7 +32,7 @@
                                     <option v-for="(type, key) in types" :key="key" :value="key">{{ type }}</option>
                                 </select> -->
                                 <div :class="errorClass('type')" v-for="(type, key) in types" :key="key">
-                                    <input type="checkbox"  :id="'_'+type.id" :value="type.id" v-model="form.types" @change="$emit('formTypesHaveChanged')">
+                                    <input type="checkbox"  :id="'_'+type.id" :value="type.id" v-model="form.types" @change="formTypesChanged">
                                     <label :for="'_'+type.id">{{ type.value }}</label>
                                 </div>
                             </div>
@@ -363,13 +363,10 @@
 <script>
     import {get, post} from '../../helpers/api';
     import {showErrorMsg, handleErrorResponse, handleResponse, showInfoMsg} from '../../helpers/helper';
-    // import SeeSlideInAction from '../../components/SeeSlideInAction.vue';
     import SeeSlideInAction from '../../components/SeeSlideInActionNew.vue';
     import ButtonSizes from '../../components/ButtonSizes.vue';
     import ButtonStyles from '../../components/ButtonStyles.vue';
     import ButtonColors from '../../components/ButtonColors.vue';
-
-    // require('bootstrap-switch');
 
     export default {
         components: {
@@ -391,9 +388,7 @@
                 currentTypes: [],
                 errors: {},
                 isProcessing: false,
-                // isInAction: false,
                 isInAction: true,
-                // isInDemo: true,
                 types: [
                     {id: 'adcontent', value: 'Ad/Content'},
                     {id: 'cta_btn', value: 'Call to action button'},
@@ -441,7 +436,6 @@
             var _this = this;
 
             Event.listen('closeSlide', () => {
-                // this.isInAction = !this.isInAction;
                 this.isInAction = false;
             });
 
@@ -456,14 +450,16 @@
                 let self = this;
                 setTimeout(function() {
                     self.isInAction = true;
-                }, 3000);
+                }, 100);
             });
 
             Event.listen('featurePositionsUpdated', (form) => {
-                this.form.left_col = form.left_col;
-                this.form.center_col = form.center_col;
-                this.form.right_col = form.right_col;
-                this.form.one_col = form.one_col;
+                setTimeout(function() {
+                    this.form.left_col = form.left_col;
+                    this.form.center_col = form.center_col;
+                    this.form.right_col = form.right_col;
+                    this.form.one_col = form.one_col;
+                }, 2000);
             });
 
             /* collapsable */
@@ -517,6 +513,8 @@
                     this.currentTypes = res.data.types;
                     this.initNiceEdit();
                     this.initColorPickers();
+
+                    Event.fire('formHasLoaded', this.form);
                 }, (err) => {
                     handleErrorResponse(err.response.status);
                 });
@@ -629,6 +627,8 @@
             submitForm() {
                 this.isProcessing = true;
 
+                this.updateLayoutChild(this.form.layout);
+
                 post(this.storeURL, this.form).then((res) => {
                     handleResponse(res.data);
                     this.$router.push('/');
@@ -645,6 +645,55 @@
 
             addOrRemove(key) {
                 console.log(key);
+            },
+
+            slideLayoutChanged() {
+                Event.fire('slideLayoutChanged');
+            },
+
+            updateLayoutChild(layout) {
+                if (layout == 1) {
+                    this.form.one_col = this.getChildren("#single_col_slide");
+                } else {
+
+                    this.form.left_col = this.getChildren("#left_col");
+                    this.form.center_col = this.getChildren("#center_col");
+                    this.form.right_col = this.getChildren("#right_col");
+                }
+
+                console.log("newChildren:");
+                console.log({
+                    "left": this.form.left_col,
+                    "center": this.form.center_col,
+                    "right": this.form.right_col
+                });
+            },
+
+            getChildren(selector) {
+                var features = [
+                    'adcontent',
+                    'cta_btn',
+                    'optin',
+                    'timer',
+                    'social'
+                ];
+                
+                var children = [];
+
+                var el = $(selector);
+                $.each(features, (i, row) => {
+                    if ($(document).find(`${selector} [data-id='${row}']`).length && $(document).find(`${selector} [data-id='${row}']`).is(":visible")) { // check existence
+                        // get the index
+                        children[$(`${selector} [data-id='${row}']`).index()] = row;
+                    }
+                });
+
+                return children;
+                
+            },
+
+            formTypesChanged() {
+                Event.fire('formTypesChanged');
             }
         }
     }
