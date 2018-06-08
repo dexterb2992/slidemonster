@@ -3,8 +3,8 @@
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <link :href="base_url+'css/bootstrap.min.css'" rel="stylesheet" />
         
-        <link :href="base_url+'css/app.css'" rel="stylesheet" />
-        <link :href="base_url+'css/front.css'" rel="stylesheet" />
+        <link :href="base_url+'css/app.css?id=00802302014'" rel="stylesheet" />
+        <link :href="base_url+'css/front.css?id=00802302014'" rel="stylesheet" />
 
         <see-slide-in-action :form="form" prod="true"></see-slide-in-action>
     </div>
