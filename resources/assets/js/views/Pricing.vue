@@ -135,9 +135,9 @@
             },
 
             cancelSubscription(plan) {
-                this.cancelling = true;
                 var confirmation = confirm("Are you sure to cancel this subscription?");
                 if (confirmation) {
+                    this.cancelling = true;
                     post(base_url+'api/cancel-subscription', {plan_id: plan.id}).then((res) => {
                         if (res.data.success) {
                             showSuccessMsg(res.data.message);
@@ -154,9 +154,9 @@
             },
 
             resumeSubscription(plan) {
-                this.resuming = true;
                 var confirmation = confirm("You are about to resume this subscription.");
                 if (confirmation) {
+                    this.resuming = true;
                     post(base_url+'api/resume-subscription', {plan_id: plan.id}).then((res) => {
                         if (res.data.success) {
                             showSuccessMsg(res.data.message);

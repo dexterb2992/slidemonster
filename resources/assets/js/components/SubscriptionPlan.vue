@@ -7,17 +7,6 @@
             </div>
             <h3 class="card-title"><small>$</small>{{ getPrice(plan.amount) }}/mo.</h3>
             <plan-features :plan="plan" :name="plan.name"></plan-features>
-            <!-- <ul> -->
-                
-                <!-- <li>Ad/Content</li>
-                <li>Countdown Timer</li>
-                <li>Social</li>
-                <li>Opt-In</li>
-                <li>Full Support</li> -->
-            <!-- </ul> -->
-           <!--  <a href="#upgrade" class="btn btn-success btn-round">
-                Upgrade
-            </a> -->
             
             <modal-trigger dataTarget="#paymentMethod" :class="`btn btn-${iconType} btn-round`">
                 Upgrade
