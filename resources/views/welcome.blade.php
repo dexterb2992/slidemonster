@@ -25,8 +25,8 @@
     <link href="{{ asset('plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" >
 
     
-    <link href="{{ getenv('APP_URL').mix('/css/app.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/front.css') }}" rel="stylesheet" />
+    <link href="{{ getenv('APP_URL').substr(mix('css/front.css'), 1) }}" rel="stylesheet" />
+    <link href="{{ getenv('APP_URL').substr(mix('css/app.css'), 1) }}" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
 
