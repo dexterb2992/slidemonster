@@ -246,7 +246,7 @@ class UserController extends Controller
                 }
             } catch (\Exception $e) {
                 if (strpos($e->getMessage(), "No such customer") !== false) {
-                    dump("No such a fucking customer retard!");
+                    \Log::info("No such a fucking customer retard!");
                     $user->stripe_id = "";
                     $user->save();
                     $this->subscribe($request);

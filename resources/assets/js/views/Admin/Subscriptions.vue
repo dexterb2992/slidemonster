@@ -3,9 +3,32 @@
         <div class="form-inner-wrapper">
             <div class="section">
                 <h5 class="title">
-                    Subscription Features
+                    Subscription Plans &amp; Features
                 </h5>
                 
+            </div>
+
+            <div class="section">
+                <form @submit.prevent="addPlan">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" v-model="newPlan.name">
+                    </div>
+                    <div class="form-group">
+                        <label>Stripe Plan ID</label>
+                        <input type="text" class="form-control" v-model="newPlan.stripe_plan">
+                    </div>
+                    <div class="form-group">
+                        <label>interval</label>
+                        <input type="number" class="form-control" v-model="newPlan.interval">
+                    </div>
+                    <div class="form-group">
+                        <label>Unit</label>
+                        <select class="form-control">
+                            <option v-for="(item, key) in planUnits" :value="item.unit" v-text="item.unit_text"></option>
+                        </select>
+                    </div>
+                </form>
             </div>
 
             <div class="section">
@@ -82,6 +105,48 @@
                 newFeature: {
                     content: '',
                     plan_id: ''
+                },
+
+                planUnits: {
+                    'daily': {
+                        'interval': 1,
+                        'unit': 'days',
+                        'unit_text': 'Daily'
+                    },
+                    'weekly': {
+                        'interval': 1,
+                        'unit': 'weeks',
+                        'unit_text': 'Weekly'
+                    },
+                    'monthly': {
+                        'interval': 1,
+                        'unit': 'months',
+                        'unit_text': 'Monthly'
+                    },
+                    '3mo': {
+                        'interval': 3,
+                        'unit': 'months',
+                        'unit_text': 'Every 3 months'
+                    },
+                    '6mo': {
+                        'interval': 6,
+                        'unit': 'months',
+                        'unit_text': 'Every 6 months'
+                    },
+                    'yearly': {
+                        'interval': 1,
+                        'unit': 'years',
+                        'unit_text': 'Yearly'
+                    }
+                },
+
+                newPlan: {
+                    name: '',
+                    stripe_plan: '',
+                    interval: 1,
+                    unit: 'months',
+                    unit_text: 'Monthly',
+                    trial_days: 0
                 }
             }
         },
@@ -147,6 +212,10 @@
 
             getPrice(amount) {
                 return (amount/100).toFixed(2);
+            },
+
+            addPlan() {
+
             }
         }
     }
