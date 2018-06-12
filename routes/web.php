@@ -1,6 +1,16 @@
 <?php
 Route::get('test', function () {
-    //
+    ?>
+    <!DOCTYPE html>
+    <html>
+    <head>
+    	<title></title>
+    </head>
+    <body>
+    	<slidemonster id="slidemonster" slide-id="13" token="qZBZCtxQZS7Fxvxs3fuLuuwU6gH13WJB38DXPlq2t6gvAauaLvOqu7iQ25Gi"></slidemonster><script type="text/javascript" src="https://topdogimsolutions.com/slidemonster/js/embed.js?id=05fd8c41c6dc703e143b"></script>
+    </body>
+    </html>
+    <?php
 });
 // Route::get('try', 'SubscriptionPlanController@retrievePlan');
 // Route::get('test', 'SubscriptionPlanController@index');
