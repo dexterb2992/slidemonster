@@ -210,16 +210,20 @@ class UserController extends Controller
         $card = $input['token']['card'];
         $plan_id = $input['plan_id'];
 
-        $stripe = new StripePlan;
-        $plans = $stripe->all();
+        /*$stripe = new StripePlan;
+        $plans = $stripe->all();*/
+
+        $plans = SubscriptionPlan::all();
 
         $plan = null;
         // dd($plans->data);
         \Log::info($plans);
 
         // let's get the price now
-        foreach ($plans->data as $key => $value) {
-            if ($value['id'] == $plan_id) {
+        // foreach ($plans->data as $key => $value) {
+        foreach ($plans as $key => $value) {
+            // if ($value['id'] == $plan_id) {
+            if ($value->stripe_plan == $plan_id) {
                 $plan = $value;
             }
         }
@@ -230,7 +234,6 @@ class UserController extends Controller
         if ($previous == false) {
             // create a new subscription
            
-
             try {
                 if ($request->coupon != "") {
                     $user->newSubscription($plan['id'], $plan['id'])

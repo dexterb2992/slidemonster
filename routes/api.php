@@ -21,6 +21,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('plans', 'SubscriptionPlanController@index');
     Route::get('plans/{id}', 'SubscriptionPlanController@retrieve');
     Route::get('plans/{plan_id}/features', 'SubscriptionPlanController@features');
+    Route::post('subscription-plans/store', 'SubscriptionPlanController@store');
+    Route::post('subscription-plans/update/{subscriptionPlan}', 'SubscriptionPlanController@update');
+    Route::delete('subscription-plans/delete/{subscriptionPlan}', 'SubscriptionPlanController@destroy');
 
     Route::get('coupons', 'UserController@checkCoupon');
 
