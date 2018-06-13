@@ -39,12 +39,15 @@
             <div class="col-lg-4 col-md-4 col-sm-6" v-for="(plan, key) in plans">
                 <div class="card card-pricing" data-background-color="black">
                     <div class="card-body">
-                        <h6 class="category">{{ plan.nickname }}</h6>
+                        <!-- <h6 class="category">{{ plan.nickname }}</h6> -->
+                        <h6 class="category">{{ plan.name }}</h6>
                         <div :class="`icon icon-success`">
                             <i class="fa fa-fire"></i>
                         </div>
-                        <h3 class="card-title"><small>$</small>{{ getPrice(plan.amount) }}/mo.</h3>
-                        <plan-features :plan="plan" :name="plan.nickname"></plan-features>
+                        <!-- <h3 class="card-title"><small>$</small>{{ getPrice(plan.amount) }}/mo.</h3> -->
+                        <h3 class="card-title"><small>$</small>{{ plan.price_per_unit }}/mo.</h3>
+                        <!-- <plan-features :plan="plan" :name="plan.nickname"></plan-features> -->
+                        <plan-features :plan="plan" :name="plan.name"></plan-features>
 
                         <div v-if="userHasSubscribedTo(plan)">
                             <a class="btn btn-simple btn-primary disabled btn-round">Current Plan</a>
@@ -112,7 +115,8 @@
             init() {
                 get(this.base_url+'api/plans').then((res) => {
                     console.log(res.data);
-                    this.plans = res.data.data;
+                    // this.plans = res.data.data;
+                    this.plans = res.data;
                     console.log(this.plans);
                 }, (err) => {
                     handleErrorResponse(err.response.status);
@@ -122,7 +126,8 @@
             // checks if user has subscribed to specific plan
             userHasSubscribedTo(plan) {
                 for (var i = this.previousSubscriptions.length - 1; i >= 0; i--) {
-                    if (plan.id == this.previousSubscriptions[i].stripe_plan) {
+                    // if (plan.id == this.previousSubscriptions[i].stripe_plan) {
+                    if (plan.stripe_plan == this.previousSubscriptions[i].stripe_plan) {
                         return true;
                     }
                 }
@@ -138,7 +143,8 @@
                 var confirmation = confirm("Are you sure to cancel this subscription?");
                 if (confirmation) {
                     this.cancelling = true;
-                    post(base_url+'api/cancel-subscription', {plan_id: plan.id}).then((res) => {
+                    // post(base_url+'api/cancel-subscription', {plan_id: plan.id}).then((res) => {
+                    post(base_url+'api/cancel-subscription', {plan_id: plan.stripe_plan}).then((res) => {
                         if (res.data.success) {
                             showSuccessMsg(res.data.message);
                             Event.fire('subscriptionsUpdated');
@@ -157,7 +163,8 @@
                 var confirmation = confirm("You are about to resume this subscription.");
                 if (confirmation) {
                     this.resuming = true;
-                    post(base_url+'api/resume-subscription', {plan_id: plan.id}).then((res) => {
+                    // post(base_url+'api/resume-subscription', {plan_id: plan.id}).then((res) => {
+                    post(base_url+'api/resume-subscription', {plan_id: plan.stripe_plan}).then((res) => {
                         if (res.data.success) {
                             showSuccessMsg(res.data.message);
                             Event.fire('subscriptionsUpdated');

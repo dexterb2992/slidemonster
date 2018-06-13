@@ -10,7 +10,7 @@
 
             <div class="section">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <form @submit.prevent="addPlan">
                             <div class="form-group">
                                 <label>Name</label>
@@ -50,7 +50,7 @@
                         </form>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <table class="table table-responsive">
                             <thead>
                                 <tr>
