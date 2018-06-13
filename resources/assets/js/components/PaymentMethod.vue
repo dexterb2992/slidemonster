@@ -38,7 +38,8 @@
                 <button type="submit" class='pay-with-stripe btn btn-success' :disabled="disabled">
                     <i class="fa fa-lock" v-if="!disabled"></i>
                     <i class="fa fa-refresh fa-spin" v-if="disabled"></i>
-                 Upgrade Now for ($<strong>{{ (selectedPlan.amount/100).toFixed(2) }}</strong>)</button>
+                 <!-- Upgrade Now for ($<strong>{{ (selectedPlan.amount/100).toFixed(2) }}</strong>)</button> -->
+                 Upgrade Now for ($<strong>{{ selectedPlan.amount }}</strong>)</button>
             </template>
         </modal>
     </div>
@@ -97,7 +98,9 @@
             this.createCard();
             Event.listen('planSelected', (plan) => {
                 this.selectedPlan = plan;
-                this.selectedPlan.formatted_amount = getPrice(plan.amount);
+                this.selectedPlan.amount = plan.price_per_unit;
+                // this.selectedPlan.formatted_amount = getPrice(plan.amount);
+                this.selectedPlan.formatted_amount = this.selectedPlan.amount;
             });
         },
         methods: {

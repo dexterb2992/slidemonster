@@ -62,6 +62,7 @@ class SubscriptionPlanController extends Controller
         $plan->interval = $request->interval;
         $plan->unit = $request->unit;
         $plan->unit_text = $request->unit_text;
+        $plan->billing_interval = $request->billing_interval;
         $plan->trial_days = $request->trial_days;
         $plan->price_per_unit = $request->price_per_unit;
 
@@ -86,11 +87,14 @@ class SubscriptionPlanController extends Controller
 
     public function update(Request $request, SubscriptionPlan $subscriptionPlan)
     {
+        $this->validate($request, self::$rules);
+        
         $subscriptionPlan->name = $request->name;
         $subscriptionPlan->stripe_plan = $request->stripe_plan;
         $subscriptionPlan->interval = $request->interval;
         $subscriptionPlan->unit = $request->unit;
         $subscriptionPlan->unit_text = $request->unit_text;
+        $subscriptionPlan->billing_interval = $request->billing_interval;
         $subscriptionPlan->trial_days = $request->trial_days;
         $subscriptionPlan->price_per_unit = $request->price_per_unit;
 

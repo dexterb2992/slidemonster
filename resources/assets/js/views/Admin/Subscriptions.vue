@@ -10,14 +10,17 @@
 
             <div class="section">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3 form-add-plan">
                         <form @submit.prevent="addPlan">
                             <div class="form-group">
                                 <label>Name</label>
                                 <input type="text" class="form-control" v-model="newPlan.name">
                             </div>
                             <div class="form-group">
-                                <label>Stripe Plan ID</label>
+                                <label>Stripe Plan ID</label><br/>
+                                <small class="text-success font-bold">
+                                    Make sure the plan id and billing interval are in-sync with your Stripe's plan
+                                </small>
                                 <input type="text" class="form-control" v-model="newPlan.stripe_plan">
                             </div>
                             <!-- <div class="form-group">
@@ -25,9 +28,9 @@
                                 <input type="number" class="form-control" v-model="newPlan.interval">
                             </div> -->
                             <div class="form-group">
-                                <label>Unit</label>
-                                <select class="form-control" v-model="newPlan.unit">
-                                    <option v-for="(item, key) in planUnits" :value="item.unit" v-text="item.unit_text"></option>
+                                <label>Billing Interval</label>
+                                <select class="form-control" v-model="newPlan.billing_interval" @change="setPlanUnit">
+                                    <option v-for="(item, key) in planUnits" :value="key" v-text="item.unit_text"></option>
                                 </select>
                             </div>
 
@@ -46,15 +49,19 @@
                                     <i class="fa fa-check" v-if="!savingPlan"></i>
                                     <i class="fa fa-refresh fa-spin" v-if="savingPlan"></i> Save
                                 </button>
+                                <button class="btn-info btn btn-simple" type="button" @click="resetPlan">
+                                    <i class="fa fa-refresh"></i> Reset
+                                </button>
                             </div>
                         </form>
                     </div>
 
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <table class="table table-responsive">
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Price</th>
                                     <th>Stripe Plan</th>
                                     <th>Action</th>
                                 </tr>
@@ -62,9 +69,15 @@
                             <tbody>
                                 <tr v-for="(plan, key) in plans">
                                     <td>
-                                        {{ plan.name+' ($'+plan.price_per_unit+')' }} <span class="label label-info">{{ plan.unit_text }}</span>
+                                        {{ plan.name }}
+                                        <span class="tag badge badge-info">{{ planUnits[plan.billing_interval].unit_text }}</span>
                                     </td>
-                                    <td v-text="plan.stripe_plan"></td>
+                                    <td>
+                                        <strong class="text-danger">${{ plan.price_per_unit }}</strong>
+                                    </td>
+                                    <td>
+                                        <span class="tag badge badge-warning">{{ plan.stripe_plan }}</span>
+                                    </td>
                                     <td>
                                         <a href="javascript:void(0)" class="btn btn-warning btn-simple" @click="newPlan = plan; newPlan.mode = 'edit';" :disabled="savingPlan">
                                             <i class="fa-edit fa" v-if="!savingPlan"></i>
@@ -140,6 +153,16 @@
     </div>
 </template>
 
+<style lang="scss">
+    .form-add-plan {
+        border-right: 1px solid #18ce0f;
+    }
+
+    .font-bold {
+        font-weight: bold;
+    }
+</style>
+
 <script>
     // import SubscriptionPlan from '../../components/SubscriptionPlan.vue';
     import PlanFeatures from '../../components/PlanFeatures.vue';
@@ -165,6 +188,11 @@
                 },
 
                 planUnits: {
+                    'null': {  // set the default
+                        'interval': 1,
+                        'unit': 'months',
+                        'unit_text': 'Monthly'
+                    },
                     'daily': {
                         'interval': 1,
                         'unit': 'days',
@@ -203,6 +231,7 @@
                     interval: 1,
                     unit: 'months',
                     unit_text: 'Monthly',
+                    billing_interval: 'monthly',
                     trial_days: 0,
                     price_per_unit: 0,
                     mode: 'create'
@@ -275,14 +304,43 @@
                 return (amount/100).toFixed(2);
             },
 
+            resetPlan() {
+                this.newPlan = {
+                    name: '',
+                    stripe_plan: '',
+                    interval: 1,
+                    unit: 'months',
+                    unit_text: 'Monthly',
+                    billing_interval: 'monthly',
+                    trial_days: 0,
+                    price_per_unit: 0,
+                    mode: 'create'
+                };
+            },
+
+            setPlanUnit() {
+                try {
+                    let planUnit = this.planUnits[this.newPlan.billing_interval];
+
+                    this.newPlan.interval = planUnit.interval;
+                    this.newPlan.unit = planUnit.unit;
+                    this.newPlan.unit_text = planUnit.unit_text;
+                } catch (e) {
+                    console.log(e);
+                }
+            },
+
             addPlan() {
                 let __request = null;
 
                 if (this.newPlan.mode == 'create') {
                     __request = post(this.base_url+'api/subscription-plans/store', this.newPlan);
                 } else {
+                    // update the resource
                     __request = post(this.base_url+'api/subscription-plans/update/'+this.newPlan.id, this.newPlan)
                 }
+
+                this.savingPlan = true;
 
                 __request.then((res) => {
                     if (res.data.success) {
@@ -295,22 +353,15 @@
                         }
                         
 
-                        this.newPlan = {
-                            name: '',
-                            stripe_plan: '',
-                            interval: 1,
-                            unit: 'months',
-                            unit_text: 'Monthly',
-                            trial_days: 0,
-                            price_per_unit: 0,
-                            mode: 'create'
-                        };
+                        this.resetPlan();
 
                     } else {
                         showErrorMsg(res.data.message);
                     }
                 }, (err) => {
                     handleErrorResponse(err.response.status);
+                }).then(() => {
+                    this.savingPlan = false;
                 });
             },
 
@@ -321,6 +372,8 @@
                     return;
                 }
 
+                this.deletingPlan = true;
+
                 del(this.base_url+'api/subscription-plans/delete/'+plan.id).then((res) => {
                     if (res.data.success) {
                         this.plans.splice(key, 1);
@@ -330,6 +383,8 @@
                     }
                 }, (err) => {
                     handleErrorResponse(err.response.status);
+                }).then(() => {
+                    this.deletingPlan = false;
                 });
             }
         }
