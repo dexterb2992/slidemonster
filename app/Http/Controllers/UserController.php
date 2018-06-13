@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Input;
 use App\User;
 use App\Libraries\StripePlan;
 
+use App\SubscriptionPlan;
+
 use Carbon\Carbon;
 
 class UserController extends Controller
@@ -222,40 +224,49 @@ class UserController extends Controller
         // let's get the price now
         // foreach ($plans->data as $key => $value) {
         foreach ($plans as $key => $value) {
-            // if ($value['id'] == $plan_id) {
-            if ($value->stripe_plan == $plan_id) {
+            if ($value['id'] == $plan_id) {
                 $plan = $value;
             }
         }
 
         // let's check if user has a previous subscription
-        $previous = $this->hasPreviousSubscription($user, $plans->data);
+        // $previous = $this->hasPreviousSubscription($user, $plans->data);
+        $previous = $this->hasPreviousSubscription($user, $plans);
 
         if ($previous == false) {
             // create a new subscription
            
             try {
                 if ($request->coupon != "") {
-                    $user->newSubscription($plan['id'], $plan['id'])
+                    // $user->newSubscription($plan['id'], $plan['id'])
+                    $user->newSubscription($plan['stripe_plan'], $plan['stripe_plan'])
                         ->withCoupon($request->coupon)
                         ->create($stripeToken, [
                             'email' => $user->email
                         ]);
                 } else {
-                    $user->newSubscription($plan['id'], $plan['id'])
+                    // $user->newSubscription($plan['id'], $plan['id'])
+                    \Log::info($plan);
+
+                    $user->newSubscription($plan['stripe_plan'], $plan['stripe_plan'])
                         ->create($stripeToken, [
                             'email' => $user->email
                         ]);
                 }
             } catch (\Exception $e) {
+                \Log::error($e);
                 if (strpos($e->getMessage(), "No such customer") !== false) {
-                    \Log::info("No such a fucking customer retard!");
                     $user->stripe_id = "";
                     $user->save();
                     $this->subscribe($request);
                 } else {
-                    dump("There's an error but we can't find a 'no such customer' phrase");
+                    \Log::info("There's an error but we can't find a 'no such customer' phrase");
                 }
+
+                return [
+                    'success' => 0,
+                    'message' => "Something went wrong while trying to process your subscription. Please try again later"
+                ];
             }
 
             $hasTrial = !empty($plan['trial_period_days']) ? "Your trial ends in ".$plan['trial_period_days']." days" : "";
