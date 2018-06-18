@@ -16,6 +16,7 @@
   "dependencies": {
     "@xkeshi/vue-countdown": "^0.6.0",
     "axios": "^0.16.2",
+    "babel-polyfill": "^6.26.0",
     "bootstrap-colorpicker": "^2.5.2",
     "bootstrap-datetime-picker": "github:smalot/bootstrap-datetimepicker",
     "bootstrap-sass": "^3.3.7",
