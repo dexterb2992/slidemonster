@@ -140,3 +140,16 @@ export function handleResponse(response) {
 export function getPrice(amount) {
     return (amount/100).toFixed(2);
 }
+
+
+export function userUsesIE() {
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))  // If Internet Explorer, return version number
+    {
+        return true;
+    }
+
+    return false;
+}

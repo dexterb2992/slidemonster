@@ -2,12 +2,14 @@ require('./bootstrap');
 
 import Vue from 'vue';
 
-import App from './App.vue';
+/*import App from './App.vue';
+import IEApp from './IEApp.vue';*/
+
 import router from './router';
 
 require('./helpers/toast.min.js');
 
-
+import { userUsesIE } from './helpers/helper';
 
 const base_url = window.base_url;
 
@@ -25,6 +27,13 @@ window.Event =  new class {
     }
 };
 
+let App = null;
+
+if (userUsesIE()) {
+    App = require('./IEApp.vue');
+} else {
+    App = require('./App.vue');
+}
 
 window.app = new Vue({
     el: '#root',
