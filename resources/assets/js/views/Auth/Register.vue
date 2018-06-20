@@ -5,9 +5,12 @@
             <div class="container">
                 <div class="col-md-4 content-center">
                     <div class="card card-login card-plain">
-                        <form class="form-horizontal" @submit.prevent="register">
+                        <form class="form-horizontal" @submit.prevent="register" style="margin-top: 84px;">
                             <div class="header header-primary text-center">
-                                <h5>Register</h5>
+                                <div class="logo-container">
+                                    <img :src="this.$router.options.base+'images/logo.png'">
+                                    <h5>Register</h5>
+                                </div>
                             </div>
                             <div class="content">
                                 <div class="form-group">
