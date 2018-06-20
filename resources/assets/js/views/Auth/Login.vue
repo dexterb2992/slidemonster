@@ -5,9 +5,12 @@
             <div class="container">
                 <div class="col-md-4 content-center">
                     <div class="card card-login card-plain">
-                        <form class="form" @submit.prevent="login">
+                        <form class="form" @submit.prevent="login"  style="margin-top: 84px;">
                             <div class="header header-primary text-center">
-                                <h5>Login</h5>
+                                <div class="logo-container">
+                                    <img :src="this.$router.options.base+'images/logo.png'">
+                                    <h5>Login</h5>
+                                </div>
                             </div>
                             <div class="content">
                                 <div class="form-group-no-border">
@@ -28,7 +31,7 @@
                                     </div>
                                     <small class="error__control" v-if="error.password">{{error.password[0]}}</small>
                                 </div>
-                                <div class="form-group-no-border">
+                                <!-- <div class="form-group-no-border">
                                     <div class="input-group">
                                         <div class="checkbox">
                                             <input id="rememberme" name="remember" type="checkbox">
@@ -37,7 +40,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="footer text-center">
                                 <button :disabled="isProcessing" class="btn btn-primary btn-round btn-lg btn-block">

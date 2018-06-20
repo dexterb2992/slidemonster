@@ -12,4 +12,5 @@ Homestead.yaml
 /.vscode
 /public/videos/*
 /public/images/*
+!/public/images/logo.png*
 !public/images/backgrounds/*
