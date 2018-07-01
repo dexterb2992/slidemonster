@@ -207,3 +207,8 @@ color:#fff;
     margin-left: 5px;
     margin-right: 5px;
 }
+
+*[data-id="optin"] {
+    max-width: 400px;
+    margin: auto;
+}
