@@ -49253,7 +49253,7 @@ exports = module.exports = __webpack_require__(38)(false);
 
 
 // module
-exports.push([module.i, "\n.slidemonster-col {\n  padding-top: 8px;\n  padding-bottom: 8px;\n}\ndiv.slide-feature {\n  padding-bottom: 4px;\n  padding-top: 4px;\n}\n", ""]);
+exports.push([module.i, "\n.slidemonster-col {\n  padding-bottom: 8px;\n}\ndiv.slide-feature {\n  padding-bottom: 4px;\n  padding-top: 4px;\n  padding-right: 15px;\n}\n", ""]);
 
 // exports
 
@@ -49578,20 +49578,14 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "col-md-12",
-                  staticStyle: { position: "absolute" }
-                },
-                [
-                  _c("i", {
-                    staticClass: "icon-remove icon-larger pull-right",
-                    attrs: { id: "spp-slup-close" },
-                    on: { click: _vm.close }
-                  })
-                ]
-              )
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("i", {
+                  staticClass: "icon-remove icon-larger pull-right",
+                  staticStyle: { padding: "0" },
+                  attrs: { id: "spp-slup-close" },
+                  on: { click: _vm.close }
+                })
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "row", attrs: { id: "slide_row" } }, [
@@ -49704,20 +49698,14 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "col-md-12",
-                  staticStyle: { position: "absolute", height: "2px" }
-                },
-                [
-                  _c("i", {
-                    staticClass: "icon-remove icon-larger pull-right",
-                    attrs: { id: "spp-slup-close" },
-                    on: { click: _vm.close }
-                  })
-                ]
-              )
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("i", {
+                  staticClass: "icon-remove icon-larger pull-right",
+                  staticStyle: { padding: "0" },
+                  attrs: { id: "spp-slup-close" },
+                  on: { click: _vm.close }
+                })
+              ])
             ]),
             _vm._v(" "),
             _c(
@@ -66075,7 +66063,17 @@ var render = function() {
                           _c("strong", [_vm._v("Digit Font Settings")]),
                           _vm._v(" "),
                           _c("div", { staticClass: "form-group" }, [
-                            _c("label", [_vm._v("Font Size (px)")]),
+                            _c(
+                              "label",
+                              {
+                                attrs: {
+                                  "data-toggle": "tooltip",
+                                  "data-original-title":
+                                    "Size will be adjusted on smaller devices"
+                                }
+                              },
+                              [_vm._v("Base Font Size (px)")]
+                            ),
                             _vm._v(" "),
                             _c("input", {
                               directives: [
@@ -66221,7 +66219,17 @@ var render = function() {
                           _c("strong", [_vm._v("Label Font Settings")]),
                           _vm._v(" "),
                           _c("div", { staticClass: "form-group" }, [
-                            _c("label", [_vm._v("Font Size (px)")]),
+                            _c(
+                              "label",
+                              {
+                                attrs: {
+                                  "data-toggle": "tooltip",
+                                  "data-original-title":
+                                    "Size will be adjusted on smaller devices"
+                                }
+                              },
+                              [_vm._v("Base Font Size (px)")]
+                            ),
                             _vm._v(" "),
                             _c("input", {
                               directives: [

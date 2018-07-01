@@ -46407,7 +46407,7 @@ exports = module.exports = __webpack_require__(38)(false);
 
 
 // module
-exports.push([module.i, "\n.slidemonster-col {\n  padding-top: 8px;\n  padding-bottom: 8px;\n}\ndiv.slide-feature {\n  padding-bottom: 4px;\n  padding-top: 4px;\n}\n", ""]);
+exports.push([module.i, "\n.slidemonster-col {\n  padding-bottom: 8px;\n}\ndiv.slide-feature {\n  padding-bottom: 4px;\n  padding-top: 4px;\n  padding-right: 15px;\n}\n", ""]);
 
 // exports
 
@@ -46732,20 +46732,14 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "col-md-12",
-                  staticStyle: { position: "absolute" }
-                },
-                [
-                  _c("i", {
-                    staticClass: "icon-remove icon-larger pull-right",
-                    attrs: { id: "spp-slup-close" },
-                    on: { click: _vm.close }
-                  })
-                ]
-              )
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("i", {
+                  staticClass: "icon-remove icon-larger pull-right",
+                  staticStyle: { padding: "0" },
+                  attrs: { id: "spp-slup-close" },
+                  on: { click: _vm.close }
+                })
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "row", attrs: { id: "slide_row" } }, [
@@ -46858,20 +46852,14 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "col-md-12",
-                  staticStyle: { position: "absolute", height: "2px" }
-                },
-                [
-                  _c("i", {
-                    staticClass: "icon-remove icon-larger pull-right",
-                    attrs: { id: "spp-slup-close" },
-                    on: { click: _vm.close }
-                  })
-                ]
-              )
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("i", {
+                  staticClass: "icon-remove icon-larger pull-right",
+                  staticStyle: { padding: "0" },
+                  attrs: { id: "spp-slup-close" },
+                  on: { click: _vm.close }
+                })
+              ])
             ]),
             _vm._v(" "),
             _c(
@@ -48150,7 +48138,7 @@ exports = module.exports = __webpack_require__(38)(false);
 
 
 // module
-exports.push([module.i, "/* COUNTDOWN */\r\n#countdown {\r\n    width: 90%;\r\n    margin: auto;\r\n    display: block;\r\n}\r\n\r\n#countdown label {\r\n    clear: both;\r\n    display: block;\r\n    font-weight: 100;\r\n    font-size: 0.5em;\r\n}\r\n\r\n#countdown span {\r\n    background: #313233;\r\n    color: #FFF;\r\n    font-size: 20px;\r\n    font-weight: normal;\r\n    text-align: center;\r\n    width: 16.66%;\r\n    display: block;\r\n    float: left;\r\n    border-right: 1px solid #FFF;\r\n    padding-top: 6px;\r\n},\r\n\r\n#countdown span.value {\r\n    border: 1px solid white;\r\n    padding-top: 4px;\r\n}\r\n\r\n#countdown span.sep {\r\n    width: 6%;\r\n    text-align: center;\r\n    font-size: 5em;\r\n    padding-top: 2.1%;\r\n    padding-bottom: 2.1%;\r\n}\r\n\r\n#countdown span:last-child {\r\n  border-right: 1px solid #313233;\r\n}\r\n\r\n\r\n/*<!-- EVERGREEN -->*/\r\n\r\n#timermonster {\r\n    /*width: 96%; */\r\n    margin: auto;\r\n    display: block;\r\n    max-width: 520px;\r\n}\r\n#timermonster .timer-monster-box:after {\r\n    content: '';\r\n    clear: both;\r\n    display: block;\r\n}\r\n#timermonster pre {\r\n    display: block;\r\n    font-family: monospace;\r\n    margin: 0;\r\n    padding: 0;\r\n    background: initial;\r\n    white-space: initial;\r\n    word-break: initial;\r\n    word-wrap: initial;\r\n}\r\n#timermonster div {\r\n    line-height: initial;\r\n}\r\n.timer-monster-box {\r\n    width: 100%;\r\n    text-align: center;\r\n    margin: 0 auto; \r\n}\r\n\r\n.timer-monster-column {\r\n    width: 21.25%;\r\n}\r\n.timer-monster-separator {\r\n    width: 5%; \r\n}\r\n.timer-monster-top {\r\n    font-size: 25px;\r\n}\r\n.timer-monster-bottom {\r\n    font-size: 12px;\r\n}\r\n\r\n.rect .timer-monster-top {\r\n    /*font-size: 50px;*/\r\n    font-size: 40px;\r\n}\r\n\r\n.rect .timer-monster-bottom {\r\n    font-size: 16px;\r\n}\r\n\r\n@media  only screen and (min-width : 360px) {\r\n    .timer-monster-top {\r\n        font-size: 28px;\r\n    }\r\n}\r\n\r\n@media  only screen and (min-width : 480px) {\r\n    .timer-monster-column {\r\n        width: 19%;\r\n    }\r\n    .timer-monster-separator {\r\n        width: 8%; \r\n    }\r\n    .timer-monster-top {\r\n        font-size: 50px;\r\n    }\r\n    .timer-monster-bottom {\r\n        font-size: 16px;\r\n    }\r\n}\r\n\r\n.timer-monster-column, .timer-monster-separator {\r\n    float: left;\r\n    color: #000;\r\n}\r\n\r\n@media  only screen and (min-width : 768px) {\r\n    .timer-monster-top {\r\n        font-size: 80px;\r\n    }\r\n    .timer-monster-bottom {\r\n        font-size: 20px;\r\n    }\r\n}\r\n\r\n#timermonsterbar {\r\n    display: block;\r\n    width: 100%;\r\n    background-color: white;\r\n    margin: 0;\r\n    color: black;\r\n    text-align: center;\r\n}\r\n#timermonsterbar .tmb-col {\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    padding: 5px;\r\n}\r\n#timermonsterbar #timermonster {\r\n    width: 100%;\r\n}\r\n#timermonsterbar #timermonster pre {\r\n    overflow: initial;\r\n    margin: 0!important;\r\n    padding: 0!important;\r\n    border: initial!important;\r\n    font-family: monospace!important;\r\n    background: initial!important;\r\n}\r\n\r\n.tmb-col .timer-monster-column {\r\n    width: auto;\r\n}\r\n.tmb-col .timer-monster-separator {\r\n    width: auto;\r\n}\r\na.icon-twitter-sign{color:#00ACEE}\r\na.icon-facebook-sign{color:#374F8A}\r\na.icon-pinterest-sign{color:#CB2027}\r\na.icon-linkedin-sign{color:#1582BB}\r\na.icon-youtube-sign{color:#CC181E}\r\na.icon-rss-sign{color:#E4722D}\r\n.tmb-col>left-img,.tmb-col>right-img{max-width:96px;height:auto}\r\n.tm-social-icon{font-size: 30px;}", ""]);
+exports.push([module.i, "/* COUNTDOWN */\r\n#countdown {\r\n    width: 90%;\r\n    margin: auto;\r\n    display: block;\r\n}\r\n\r\n#countdown label {\r\n    clear: both;\r\n    display: block;\r\n    font-weight: 100;\r\n    font-size: 0.5em;\r\n}\r\n\r\n#countdown span {\r\n    background: #313233;\r\n    color: #FFF;\r\n    font-size: 20px;\r\n    font-weight: normal;\r\n    text-align: center;\r\n    width: 16.66%;\r\n    display: block;\r\n    float: left;\r\n    border-right: 1px solid #FFF;\r\n    padding-top: 6px;\r\n},\r\n\r\n#countdown span.value {\r\n    border: 1px solid white;\r\n    padding-top: 4px;\r\n}\r\n\r\n#countdown span.sep {\r\n    width: 6%;\r\n    text-align: center;\r\n    font-size: 5em;\r\n    padding-top: 2.1%;\r\n    padding-bottom: 2.1%;\r\n}\r\n\r\n#countdown span:last-child {\r\n  border-right: 1px solid #313233;\r\n}\r\n\r\n\r\n/*<!-- EVERGREEN -->*/\r\n\r\n#timermonster {\r\n    /*width: 96%; */\r\n    margin: auto;\r\n    display: block;\r\n    max-width: 520px;\r\n}\r\n#timermonster .timer-monster-box:after {\r\n    content: '';\r\n    clear: both;\r\n    display: block;\r\n}\r\n#timermonster pre {\r\n    display: block;\r\n    font-family: monospace;\r\n    margin: 0;\r\n    padding: 0;\r\n    background: initial;\r\n    white-space: initial;\r\n    word-break: initial;\r\n    word-wrap: initial;\r\n}\r\n#timermonster div {\r\n    line-height: initial;\r\n}\r\n.timer-monster-box {\r\n    width: 100%;\r\n    text-align: center;\r\n    margin: 0 auto; \r\n}\r\n\r\n.timer-monster-column {\r\n    width: 21.25%;\r\n}\r\n.timer-monster-separator {\r\n    width: 5%; \r\n}\r\n.timer-monster-top {\r\n    font-size: 25px;\r\n}\r\n.timer-monster-bottom {\r\n    font-size: 12px;\r\n}\r\n\r\n.rect .timer-monster-top {\r\n    /*font-size: 50px;*/\r\n    /*font-size: 40px;*/\r\n    font-size: 30px;\r\n}\r\n\r\n.rect .timer-monster-bottom {\r\n    /*font-size: 16px;*/\r\n    font-size: 14px;\r\n}\r\n\r\n@media  only screen and (min-width : 360px) {\r\n    .timer-monster-top {\r\n        font-size: 28px;\r\n    }\r\n}\r\n\r\n@media  only screen and (min-width : 480px) {\r\n    .timer-monster-column {\r\n        width: 19%;\r\n    }\r\n    .timer-monster-separator {\r\n        width: 8%; \r\n    }\r\n    .timer-monster-top {\r\n        font-size: 50px;\r\n    }\r\n    .timer-monster-bottom {\r\n        font-size: 16px;\r\n    }\r\n}\r\n\r\n.timer-monster-column, .timer-monster-separator {\r\n    float: left;\r\n    color: #000;\r\n}\r\n\r\n@media  only screen and (min-width : 768px) {\r\n    .timer-monster-top {\r\n        font-size: 80px;\r\n    }\r\n    .timer-monster-bottom {\r\n        font-size: 20px;\r\n    }\r\n}\r\n\r\n#timermonsterbar {\r\n    display: block;\r\n    width: 100%;\r\n    background-color: white;\r\n    margin: 0;\r\n    color: black;\r\n    text-align: center;\r\n}\r\n#timermonsterbar .tmb-col {\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    padding: 5px;\r\n}\r\n#timermonsterbar #timermonster {\r\n    width: 100%;\r\n}\r\n#timermonsterbar #timermonster pre {\r\n    overflow: initial;\r\n    margin: 0!important;\r\n    padding: 0!important;\r\n    border: initial!important;\r\n    font-family: monospace!important;\r\n    background: initial!important;\r\n}\r\n\r\n.tmb-col .timer-monster-column {\r\n    width: auto;\r\n}\r\n.tmb-col .timer-monster-separator {\r\n    width: auto;\r\n}\r\na.icon-twitter-sign{color:#00ACEE}\r\na.icon-facebook-sign{color:#374F8A}\r\na.icon-pinterest-sign{color:#CB2027}\r\na.icon-linkedin-sign{color:#1582BB}\r\na.icon-youtube-sign{color:#CC181E}\r\na.icon-rss-sign{color:#E4722D}\r\n.tmb-col>left-img,.tmb-col>right-img{max-width:96px;height:auto}\r\n.tm-social-icon{font-size: 30px;}", ""]);
 
 // exports
 
