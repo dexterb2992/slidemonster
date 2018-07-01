@@ -194,6 +194,8 @@
             if (this.prod != 'true') {
                 $.getScript('https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', () => {
                     // Do jQueryUI things here
+                    require('../plugins/touch-punch/jquery.ui.touch-punch.min.js')
+
                     let _self = this;
 
                     $(".slidemonster-col").sortable({
@@ -212,6 +214,30 @@
                         $(".slide-feature[data-id='social]").sortable("destroy");
                     }
                 });
+
+                /*$.when(
+                    $.getScript('https://code.jquery.com/ui/1.12.1/jquery-ui.min.js'),
+                    $.getScript('')
+                ).done(() => {
+                    // Do jQueryUI things here
+                    let _self = this;
+
+                    $(".slidemonster-col").sortable({
+                        connectWith: ".slidemonster-col"
+                    });
+
+                    $("#single_col_slide").sortable({
+                        connectWith: '#single_col_slide'
+                    });
+
+                    if ($('.slide-feature').hasClass('ui-sortable')) {
+                        $('.slide-feature').sortable('destroy');
+                    }
+
+                    if ($(".slide-feature[data-id='social']").hasClass("ui-sortable")) {
+                        $(".slide-feature[data-id='social]").sortable("destroy");
+                    }
+                })*/
             }
         },
 
