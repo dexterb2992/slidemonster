@@ -1,9 +1,13 @@
 <template>
     <div>
         <div v-if="form.layout == 3" v-show="isInAction" id="demo_content" :class="'rect spp_slideup_container '+form.background_image" :style="'border-top-width: '+form.border_width+'px; border-top-style: '+form.border_style+'; border-top-color: '+form.border_color+'; background-color: '+form.background_color+'; display: block;'">
-            <i id="spp-slup-close" class="icon-remove icon-larger" @click="close"></i>
+            <div class="row">
+                <div class="col-md-12" style="position: absolute;">
+                    <i id="spp-slup-close" class="icon-remove icon-larger pull-right" @click="close"></i>
+                </div>
+            </div>
             <div class="row" id="slide_row">
-                <div class="col slidemonster-col" id="left_col">
+                <div class="col-md-4 slidemonster-col" id="left_col">
                     <template v-for="(feature, key) in newColumnChildren.left_col">
                         <slide-feature :prod="prod" :form="form" :feature="feature"
                             v-if="(getPosition(feature) == 'left')">
@@ -11,7 +15,7 @@
                     </template>
                 </div>
 
-                <div class="col slidemonster-col" id="center_col">
+                <div class="col-md-4 slidemonster-col" id="center_col">
                     <template v-for="(feature, key) in newColumnChildren.center_col">
                         <slide-feature :prod="prod" :form="form" :feature="feature"
                             v-if="(getPosition(feature) == 'center')">
@@ -19,7 +23,7 @@
                     </template>
                 </div>
 
-                <div class="col slidemonster-col" id="right_col">
+                <div class="col-md-4 slidemonster-col" id="right_col">
                     <template v-for="(feature, key) in newColumnChildren.right_col">
                         <slide-feature :prod="prod" :form="form" :feature="feature"
                             v-if="(getPosition(feature) == 'right')">
@@ -30,7 +34,11 @@
         </div>
 
         <div v-else v-show="isInAction" id="demo_content" :class="'spp_slideup_container '+form.background_image" :style="'border-top-width: '+form.border_width+'px; border-top-style: '+form.border_style+'; border-top-color: '+form.border_color+'; background-color: '+form.background_color+'; display: block;'">
-            <i id="spp-slup-close" class="icon-remove icon-larger" @click="close"></i>
+            <div class="row">
+                <div class="col-md-12" style="position: absolute;height: 2px;">
+                    <i id="spp-slup-close" class="icon-remove icon-larger pull-right" @click="close"></i>
+                </div>
+            </div>
             <div class="block_content" id="single_col_slide">
                 <template v-for="feature in form.one_col">
                     <!-- Ad/Content & CTA Button -->

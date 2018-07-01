@@ -1,6 +1,6 @@
 <?php
 Route::get('test', function () {
-    dd(env('STRIPE_KEY'));   
+    // dd(env('STRIPE_KEY'));   
     ?>
     <!DOCTYPE html>
     <html>

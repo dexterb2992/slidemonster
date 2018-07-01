@@ -192,3 +192,23 @@ color:#fff;
     text-align: center;
     margin: auto;
 }
+
+.slidemonster-col {
+    text-align: center;
+    margin: auto;
+}
+
+.section {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+*[data-id="adcontent"] {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+*[data-id="optin"] {
+    max-width: 400px;
+    margin: auto;
+}

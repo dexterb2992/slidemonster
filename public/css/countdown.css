@@ -46,9 +46,10 @@
 /*<!-- EVERGREEN -->*/
 
 #timermonster {
-    width: 96%; 
+    /*width: 96%; */
     margin: auto;
     display: block;
+    max-width: 520px;
 }
 #timermonster .timer-monster-box:after {
     content: '';
@@ -88,7 +89,8 @@
 }
 
 .rect .timer-monster-top {
-    font-size: 50px;
+    /*font-size: 50px;*/
+    font-size: 40px;
 }
 
 .rect .timer-monster-bottom {

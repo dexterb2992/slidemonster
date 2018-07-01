@@ -105,17 +105,17 @@
                                 </legend>
                                 <div class="form-group">
                                     <label>Submit Button Color</label><br/>
-                                    <button-colors :form="form"></button-colors>
+                                    <button-colors :form="form" class="btns-container"></button-colors>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Button Style</label><br/>
-                                    <button-styles :form="form"></button-styles>
+                                    <button-styles :form="form" class="btns-container"></button-styles>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Button Size</label><br/>
-                                    <button-sizes :form="form"></button-sizes>
+                                    <button-sizes :form="form" class="btns-container"></button-sizes>
                                 </div>
                             </div>
 

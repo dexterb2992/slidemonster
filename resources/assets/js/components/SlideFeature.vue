@@ -1,7 +1,7 @@
 <template>
     <div class="slide-feature" :data-id="feature">
         <!-- adcontent -->
-        <p v-if="feature == 'adcontent'" v-html="form.content"></p>
+        <span v-if="feature == 'adcontent'" v-html="form.content"></span>
         <!-- cta button -->
         <cta-button v-if="feature == 'cta_btn'" :form="form" :class="`btn ${form.button_style} ${form.button_color}  ${form.button_size}`"></cta-button>
 
