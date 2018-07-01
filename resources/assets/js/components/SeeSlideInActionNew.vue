@@ -2,8 +2,8 @@
     <div>
         <div v-if="form.layout == 3" v-show="isInAction" id="demo_content" :class="'rect spp_slideup_container '+form.background_image" :style="'border-top-width: '+form.border_width+'px; border-top-style: '+form.border_style+'; border-top-color: '+form.border_color+'; background-color: '+form.background_color+'; display: block;'">
             <div class="row">
-                <div class="col-md-12" style="position: absolute;">
-                    <i id="spp-slup-close" class="icon-remove icon-larger pull-right" @click="close"></i>
+                <div class="col-md-12">
+                    <i id="spp-slup-close" class="icon-remove icon-larger pull-right" style="padding:0;" @click="close"></i>
                 </div>
             </div>
             <div class="row" id="slide_row">
@@ -36,8 +36,8 @@
 
         <div v-else v-show="isInAction" id="demo_content" :class="'spp_slideup_container '+form.background_image" :style="'border-top-width: '+form.border_width+'px; border-top-style: '+form.border_style+'; border-top-color: '+form.border_color+'; background-color: '+form.background_color+'; display: block;'">
             <div class="row">
-                <div class="col-md-12" style="position: absolute;height: 2px;">
-                    <i id="spp-slup-close" class="icon-remove icon-larger pull-right" @click="close"></i>
+                <div class="col-md-12">
+                    <i id="spp-slup-close" class="icon-remove icon-larger pull-right" style="padding:0;" @click="close"></i>
                 </div>
             </div>
             <div class="block_content" id="single_col_slide">
@@ -82,12 +82,12 @@
 
 <style lang="scss">
     .slidemonster-col {
-        padding-top: 8px;
         padding-bottom: 8px;
     }
     div.slide-feature {
         padding-bottom: 4px;
         padding-top: 4px;
+        padding-right: 15px;
     }
 </style>
 
@@ -195,6 +195,8 @@
             if (this.prod != 'true') {
                 $.getScript('https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', () => {
                     // Do jQueryUI things here
+                    require('../plugins/touch-punch/jquery.ui.touch-punch.min.js')
+
                     let _self = this;
 
                     $(".slidemonster-col").sortable({
@@ -213,6 +215,30 @@
                         $(".slide-feature[data-id='social]").sortable("destroy");
                     }
                 });
+
+                /*$.when(
+                    $.getScript('https://code.jquery.com/ui/1.12.1/jquery-ui.min.js'),
+                    $.getScript('')
+                ).done(() => {
+                    // Do jQueryUI things here
+                    let _self = this;
+
+                    $(".slidemonster-col").sortable({
+                        connectWith: ".slidemonster-col"
+                    });
+
+                    $("#single_col_slide").sortable({
+                        connectWith: '#single_col_slide'
+                    });
+
+                    if ($('.slide-feature').hasClass('ui-sortable')) {
+                        $('.slide-feature').sortable('destroy');
+                    }
+
+                    if ($(".slide-feature[data-id='social']").hasClass("ui-sortable")) {
+                        $(".slide-feature[data-id='social]").sortable("destroy");
+                    }
+                })*/
             }
         },
 

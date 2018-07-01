@@ -271,12 +271,12 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 br-green">
                                         <strong>Digit Font Settings</strong>
-                                        <div class="form-group">
-                                            <label>Font Size (px)</label>
+                                        <!-- <div class="form-group">
+                                            <label data-toggle="tooltip" data-original-title="Size will be adjusted on smaller devices">Base Font Size (px)</label>
                                             <input type="number" v-model="form.timer_digit_size" class="form-control">
-                                        </div>
+                                        </div> -->
                                         <div class="form-group">
                                             <label>Font Color</label>
                                             <input type="text" id="timer_digit_color" class="form-control">
@@ -307,10 +307,10 @@
                                     </div>
                                     <div class="col-md-6">
                                         <strong>Label Font Settings</strong>
-                                        <div class="form-group">
-                                            <label>Font Size (px)</label>
+                                        <!-- <div class="form-group">
+                                            <label data-toggle="tooltip" data-original-title="Size will be adjusted on smaller devices">Base Font Size (px)</label>
                                             <input type="number" v-model="form.timer_label_size" class="form-control">
-                                        </div>
+                                        </div> -->
                                         <div class="form-group">
                                             <label>Font Color</label>
                                             <input type="text" id="timer_label_color" class="form-control">

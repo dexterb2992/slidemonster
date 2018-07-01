@@ -32,7 +32,7 @@
                     </div>
                     <div class="timer-monster-column tm-minute">
                         <div class="timer-monster-top">{{ props.minutes }}</div>
-                        <div class="timer-monster-bottom" data-label="minutes,minute">minutes</div>
+                        <div class="timer-monster-bottom" data-label="minutes,minute">min</div>
                     </div>
                     <div class="timer-monster-separator">
                         <div class="timer-monster-top">:</div>
@@ -40,7 +40,7 @@
                     </div>
                     <div class="timer-monster-column tm-second">
                         <div class="timer-monster-top">{{ props.seconds }}</div>
-                        <div class="timer-monster-bottom" data-label="seconds,second">seconds</div>
+                        <div class="timer-monster-bottom" data-label="seconds,second">sec</div>
                     </div>
                 </div>
             </div>
