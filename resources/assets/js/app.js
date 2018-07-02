@@ -1,10 +1,6 @@
 require('./bootstrap');
 
 import Vue from 'vue';
-
-/*import App from './App.vue';
-import IEApp from './IEApp.vue';*/
-
 import router from './router';
 
 require('./helpers/toast.min.js');
@@ -74,8 +70,8 @@ window.app = new Vue({
                 // Activate the image for the navbar-collapse
                 nowuiKit.initNavbarImage();
 
-                $navbar = $('.navbar[color-on-scroll]');
-                scroll_distance = $navbar.attr('color-on-scroll') || 500;
+                var $navbar = $('.navbar[color-on-scroll]');
+                var scroll_distance = $navbar.attr('color-on-scroll') || 500;
 
                 // Check if we have the class "navbar-color-on-scroll" then add the function to remove the class "navbar-transparent" so it will transform to a plain color.
 

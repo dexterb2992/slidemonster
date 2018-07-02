@@ -101,7 +101,7 @@
                     if(res.data.authenticated) {
                         // set token
                         Auth.set(res.data.api_token, res.data.user_id, res.data.user_name);
-                        Flash.setSuccess('You have successfully logged in.');
+                        Flash.setSuccess('You have logged in successfully!');
                         this.$router.push('/');
                     }
                     this.isProcessing = false;
