@@ -28,32 +28,40 @@
                 </div>
                 <div class="collapse navbar-collapse justify-content-end" id="navigation" :data-nav-image="base_url+'img/blurred-image-1.jpg'">
                     <ul class="navbar-nav">
-                        <li v-if="guest" class="nav-item">
-                            <router-link to="/login" class="nav-link">Login</router-link>
-                        </li>
-                        <li v-if="guest" class="nav-item">
-                            <router-link to="/register" class="nav-link">Register</router-link>
-                        </li>
-                        
-                        <li class="nav-item"  v-if="auth">
-                            <router-link to="/slides/create" class="nav-link">Add new</router-link>
-                        </li>
+                        <template v-if="guest">
+                            <li class="nav-item">
+                                <router-link to="/login" class="nav-link">Login</router-link>
+                            </li>
+                            <li class="nav-item">
+                                <router-link to="/register" class="nav-link">Register</router-link>
+                            </li>
+                        </template>
 
-                        <li class="nav-item" v-if="auth">
-                            <router-link to="/profile" class="nav-link">Profile</router-link>
-                        </li>
+                        <template v-else>
+                            <li class="nav-item">
+                                <router-link to="/slides/create" class="nav-link">Add new</router-link>
+                            </li>
 
-                        <li class="nav-item" v-if="auth && user && user.role == 1">
-                            <router-link to="/users" class="nav-link">Users</router-link>
-                        </li>
+                            <li class="nav-item">
+                                <router-link to="/profile" class="nav-link">Profile</router-link>
+                            </li>
 
-                        <li class="nav-item" v-if="auth && user && user.role == 1">
-                            <router-link to="/subscription-plans" class="nav-link">Subscriptions</router-link>
-                        </li>
+                            <li class="nav-item" v-if="user && user.role != 1">
+                                <router-link to="/subscribe" class="nav-link">Subscribe</router-link>
+                            </li>
 
-                        <li class="nav-item" v-if="auth">
-                            <a class="nav-link" @click="logout"><i class="fa fa-sign-out"></i> Logout</a>
-                        </li>
+                            <li class="nav-item" v-if="user && user.role == 1">
+                                <router-link to="/users" class="nav-link">Users</router-link>
+                            </li>
+
+                            <li class="nav-item" v-if="user && user.role == 1">
+                                <router-link to="/subscription-plans" class="nav-link">Subscriptions</router-link>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" @click="logout"><i class="fa fa-sign-out"></i> Logout</a>
+                            </li>
+                        </template>
                     </ul>
                 </div>
             </div>
