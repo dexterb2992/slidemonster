@@ -303,6 +303,7 @@ class UserController extends Controller
                 $user->subscription($plan)->cancel();
             }
         } catch (\Exception $e) {
+            \Log::error($e);
             return [
                 'success' => 0,
                 'message' => "Something went wrong while trying cancel your subscription. Please try again later."
