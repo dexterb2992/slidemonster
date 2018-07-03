@@ -53,11 +53,15 @@ class UserController extends Controller
 
         $subscription_status = false;
 
+        $data['subscribed'] = false;
+
         if (!empty($subscription)) {
             $subscription_status = $subscription->valid();
 
             $data['subscription_on_grace_period'] = $subscription->cancelled() && $subscription->onGracePeriod();
             $data['subscription_ends_at'] = Carbon::parse($subscription->ends_at)->toDayDateTimeString();
+            $data['subscription_expired'] = !$subscription_status && $subscription->cancelled();
+            $data['subscribed'] = $user->subscribed($subscription->stripe_plan);
         }
 
         $data['on_trial'] = $subscription_status ? $subscription->onTrial() : false;
@@ -78,9 +82,13 @@ class UserController extends Controller
             $user->perms = $this->getPerms($user);
 
             $user->on_trial = false;
+            $user->subscribed = false;
 
             if ($user->subscriptions->count()) {
-                $user->on_trial = $user->subscriptions->first()->onTrial();
+                $subscription = $user->subscriptions->first();
+
+                $user->on_trial = $subscription->onTrial();
+                $user->subscribed = $user->subscribed($subscription->stripe_plan);
             }
 
             return $user;

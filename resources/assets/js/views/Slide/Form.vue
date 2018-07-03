@@ -35,6 +35,12 @@
                                     <input type="checkbox"  :id="'_'+type.id" :value="type.id" v-model="form.types" @change="formTypesChanged">
                                     <label :for="'_'+type.id">{{ type.value }}</label>
                                 </div>
+
+                                <div v-if="!this.$parent.user.subscribed" style="margin-bottom: 20px;">
+                                    <router-link to="/subscribe" class="text-danger" style="font-weight:bold;">
+                                        Upgrade to Premium to get access to Opt-in and Social Features
+                                    </router-link>
+                                </div>
                             </div>
 
                             <div class="form-group">
