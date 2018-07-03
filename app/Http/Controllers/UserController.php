@@ -53,12 +53,18 @@ class UserController extends Controller
 
         $subscription_status = false;
 
+        $data['subscribed'] = false;
+
         if (!empty($subscription)) {
             $subscription_status = $subscription->valid();
 
             $data['subscription_on_grace_period'] = $subscription->cancelled() && $subscription->onGracePeriod();
             $data['subscription_ends_at'] = Carbon::parse($subscription->ends_at)->toDayDateTimeString();
+            $data['subscription_expired'] = !$subscription_status && $subscription->cancelled();
+            $data['subscribed'] = $user->subscribed($subscription->stripe_plan);
         }
+
+        $data['on_trial'] = $subscription_status ? $subscription->onTrial() : false;
 
         $data['subscriptions'] = $subscription_status ? array_wrap($subscription) : [];
 
@@ -74,6 +80,17 @@ class UserController extends Controller
     {
         if (auth('api')->user()->id == $user->id) {
             $user->perms = $this->getPerms($user);
+
+            $user->on_trial = false;
+            $user->subscribed = false;
+
+            if ($user->subscriptions->count()) {
+                $subscription = $user->subscriptions->first();
+
+                $user->on_trial = $subscription->onTrial();
+                $user->subscribed = $user->subscribed($subscription->stripe_plan);
+            }
+
             return $user;
         }
 
@@ -178,9 +195,9 @@ class UserController extends Controller
 
     public function hasPreviousSubscription($user, $plans)
     {
-        foreach ($plans as $value) {
-            if ($user->subscribed($value['id'])) {
-                return $value;
+        foreach ($plans as $plan) {
+            if ($user->subscribed($plan['id'])) {
+                return $plan;
             }
         }
 
@@ -233,25 +250,41 @@ class UserController extends Controller
         // $previous = $this->hasPreviousSubscription($user, $plans->data);
         $previous = $this->hasPreviousSubscription($user, $plans);
 
-        if ($previous == false) {
+        if ($previous === false) {
             // create a new subscription
-           
             try {
                 if ($request->coupon != "") {
                     // $user->newSubscription($plan['id'], $plan['id'])
-                    $user->newSubscription($plan['stripe_plan'], $plan['stripe_plan'])
-                        ->withCoupon($request->coupon)
-                        ->create($stripeToken, [
-                            'email' => $user->email
-                        ]);
+                    if ($plan->trial_days > 0) {
+                        $user->newSubscription($plan['stripe_plan'], $plan['stripe_plan'])
+                            ->trialDays($plan->trial_days)
+                            ->withCoupon($request->coupon)
+                            ->create($stripeToken, [
+                                'email' => $user->email
+                            ]);
+                    } else {
+                        $user->newSubscription($plan['stripe_plan'], $plan['stripe_plan'])
+                            ->withCoupon($request->coupon)
+                            ->create($stripeToken, [
+                                'email' => $user->email
+                            ]);
+                    }
                 } else {
                     // $user->newSubscription($plan['id'], $plan['id'])
                     \Log::info($plan);
 
-                    $user->newSubscription($plan['stripe_plan'], $plan['stripe_plan'])
-                        ->create($stripeToken, [
-                            'email' => $user->email
-                        ]);
+                    if ($plan->trial_days > 0) {
+                        $user->newSubscription($plan['stripe_plan'], $plan['stripe_plan'])
+                            ->trialDays($plan->trial_days)
+                            ->create($stripeToken, [
+                                'email' => $user->email
+                            ]);
+                    } else {
+                        $user->newSubscription($plan['stripe_plan'], $plan['stripe_plan'])
+                            ->create($stripeToken, [
+                                'email' => $user->email
+                            ]);   
+                    }
                 }
             } catch (\Exception $e) {
                 \Log::error($e);
@@ -297,12 +330,14 @@ class UserController extends Controller
         $plan = $request->plan_id;
         
         try {
-            if ($user->subscription($plan)->onTrial()) {
+            $user->subscription($plan)->cancel();
+            /*if ($user->subscription($plan)->onTrial()) {
                 $user->subscription($plan)->cancelNow();
             } else {
                 $user->subscription($plan)->cancel();
-            }
+            }*/
         } catch (\Exception $e) {
+            \Log::error($e);
             return [
                 'success' => 0,
                 'message' => "Something went wrong while trying cancel your subscription. Please try again later."
@@ -321,10 +356,17 @@ class UserController extends Controller
     {
         $user = $request->user();
         $plan = $request->plan_id;
-        
         try {
-            $user->subscription($plan)->resume();
+            if ($user->subscription($plan)->onGracePeriod()) {
+                $user->subscription($plan)->resume();
+            } else {
+                return [
+                    'success' => 0,
+                    'message' => "You are no longer on your grace period and we can't resume this subscription anymore."
+                ];
+            }
         } catch (\Exception $e) {
+            \Log::error($e);
             return [
                 'success' => 0,
                 'message' => "Something went wrong while trying resume your subscription. Please try again later."

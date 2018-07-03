@@ -6,23 +6,11 @@
             <div class="container">
                 <div class="content-center">
                     <div class="photo-container">
-                        <img :src="this.$router.options.base+'img/default-avatar.png'" :alt="form.name">
+                        <img :src="`${baseUrl}img/default-avatar.png`" :alt="form.name">
                     </div>
                     <h3 class="title" v-text="form.name"></h3>
                     <p class="category" v-text="form.email"></p>
                     <div class="content">
-                       <!--  <div class="social-description">
-                            <h2>26</h2>
-                            <p>Ad/Content </p>
-                        </div>
-                        <div class="social-description">
-                            <h2>26</h2>
-                            <p>Opt-in</p>
-                        </div>
-                        <div class="social-description">
-                            <h2>48</h2>
-                            <p>Social</p>
-                        </div> -->
                     </div>
                 </div>
             </div>
@@ -32,52 +20,50 @@
                 <div class="row justify-content-md-center">
                     <div class="col-md col-md-offset-4">
                         <div class="card">
-                            <tabs class="card-body">
-                                <tab name="Profile" selected="true">
-                                    <form @submit.prevent="update">
+                            <div class="card-title pl-4">
+                                <h4>Profile</h4>
+                            </div>
+                            <div class="card-body">
+                                <form @submit.prevent="update" class="form col-md-6">
 
-                                        <div class="form-group">
-                                            <label for="name">Name</label>
-                                            <input id="name" type="text" class="form-control"  v-model="form.name">
-                                            <small class="error__control" v-if="error.name">{{error.name[0]}}</small>
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="name">Name</label>
+                                        <input id="name" type="text" class="form-control"  v-model="form.name">
+                                        <small class="error__control" v-if="error.name">{{error.name[0]}}</small>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label for="email">Email Address</label>
-                                            <input id="email" type="email" class="form-control"  v-model="form.email" readonly>
-                                            <small class="error__control" v-if="error.email">{{error.email[0]}}</small>
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="email">Email Address</label>
+                                        <input id="email" type="email" class="form-control"  v-model="form.email" readonly>
+                                        <small class="error__control" v-if="error.email">{{error.email[0]}}</small>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label for="license_key">License key</label>
-                                            <input type="license_key" class="form-control" v-model="form.license_key">
-                                            <small class="error__control" v-if="error.license_key">{{error.license_key[0]}}</small>
-                                        </div>
+                                    <!-- <div class="form-group">
+                                        <label for="license_key">License key</label>
+                                        <input type="license_key" class="form-control" v-model="form.license_key">
+                                        <small class="error__control" v-if="error.license_key">{{error.license_key[0]}}</small>
+                                    </div> -->
 
-                                        <div class="form-group">
-                                            <label for="password">Password</label>
-                                            <input id="password" type="password" class="form-control"  v-model="form.password" placeholder="Leave empty to keep current password.">
-                                            <small class="error__control" v-if="error.password">{{error.password[0]}}</small>
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input id="password" type="password" class="form-control"  v-model="form.password" placeholder="Leave empty to keep current password.">
+                                        <small class="error__control" v-if="error.password">{{error.password[0]}}</small>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label for="password_confirmation">Confirm Password</label>
-                                            <input id="password_confirmation" type="password" class="form-control"  v-model="form.password_confirmation" placeholder="Leave empty to keep current password.">
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="password_confirmation">Confirm Password</label>
+                                        <input id="password_confirmation" type="password" class="form-control"  v-model="form.password_confirmation" placeholder="Leave empty to keep current password.">
+                                    </div>
 
-                                        <div class="form-group">
-                                            <button :disabled="isProcessing" class="btn btn-primary pull-right">
-                                                <i class="fa fa-check" v-if="!isProcessing"></i>
-                                                <i class="fa fa-refresh fa-spin" v-if="isProcessing"></i> Update 
-                                            </button>
-                                        </div>
+                                    <div class="form-group">
+                                        <button :disabled="isProcessing" class="btn btn-primary">
+                                            <i class="fa fa-check" v-if="!isProcessing"></i>
+                                            <i class="fa fa-refresh fa-spin" v-if="isProcessing"></i> Update 
+                                        </button>
+                                    </div>
 
-                                    </form>
-                                </tab>
-                                <tab name="Upgrade">
-                                    <pricing></pricing>
-                                </tab>
-                            </tabs>
+                                </form>
+                            </div>
                         </div>
                         
                     </div>
@@ -112,6 +98,7 @@
                     password_confirmation: '',
                     license_key: ''
                 },
+                baseUrl: this.$router.options.base,
                 error: {},
                 isProcessing: false,
                 initializeURL: this.$router.options.base+`api/profile`,

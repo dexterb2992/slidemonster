@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-4" v-if="previousSubscriptions.length < 1">
+            <div class="col-4" v-if="previousSubscriptions.length < 1 || this.$parent.form.subscription_expired">
                 <div class="card card-pricing card-plain">
                     <div class="card-body">
                         <h6 class="category">Free</h6>

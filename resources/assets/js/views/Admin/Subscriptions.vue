@@ -27,6 +27,12 @@
                                 <label>interval</label>
                                 <input type="number" class="form-control" v-model="newPlan.interval">
                             </div> -->
+
+                            <div class="form-group">
+                                <label>Trial Days</label>
+                                <input type="number" class="form-control" v-model="newPlan.trial_days">
+                            </div>
+
                             <div class="form-group">
                                 <label>Billing Interval</label>
                                 <select class="form-control" v-model="newPlan.billing_interval" @change="setPlanUnit">
