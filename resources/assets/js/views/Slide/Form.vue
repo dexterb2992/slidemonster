@@ -36,7 +36,7 @@
                                     <label :for="'_'+type.id">{{ type.value }}</label>
                                 </div>
 
-                                <div v-if="!this.$parent.user.subscribed" style="margin-bottom: 20px;">
+                                <div v-if="user.subscribed == false" style="margin-bottom: 20px;">
                                     <router-link to="/subscribe" class="text-danger" style="font-weight:bold;">
                                         Upgrade to Premium to get access to Opt-in and Social Features
                                     </router-link>
@@ -423,7 +423,8 @@
                 dtpConfig: {
                     format: 'DD/MM/YYYY',
                     useCurrent: false,
-                }
+                },
+                user: {}
             };
         },
 
@@ -448,6 +449,8 @@
                 if (!!user && user.perms) {
                     this.types = user.perms;
                 }
+
+                this.user = user;
             });
 
             Event.listen('slideLayoutChanged', () => {
